@@ -6,7 +6,7 @@ using UnityEditor.Callbacks;
 
 public class goRightScript : MonoBehaviour
 {
-    float speed = 5f;
+    float speed = 10f;
     [SerializeField] right_traffic_light trafficlight;
     bool startedCollision = false;
 
@@ -14,7 +14,7 @@ public class goRightScript : MonoBehaviour
     void Start()
     {
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
-        speed = 5f;
+        float speed = UnityEngine.Random.Range(2.5f, 7.5f);
         startCar();
         gameObject.AddComponent<BoxCollider2D>();
     }
@@ -102,14 +102,14 @@ public class goRightScript : MonoBehaviour
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         // Debug.Log(rb.name+" is starting with speed="+speed);
-        rb.velocity = new Vector2(speed, 0);  
+        rb.linearVelocity = new Vector2(speed, 0);  
         // Debug.Log(rb.name+" v="+rb.velocity);
     }
 
     private void stopCar()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.zero;  // Stop the object from moving
+        rb.linearVelocity = Vector2.zero;  // Stop the object from moving
         rb.angularVelocity = 0f;
     }
 

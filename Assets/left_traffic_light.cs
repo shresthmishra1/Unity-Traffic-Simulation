@@ -35,17 +35,17 @@ public class left_traffic_light : MonoBehaviour
         //     isRed = !isRed;
         // }
         
-        if(i % 1000 == 0)
+        if(i % 10000 == 0)
         {
             isRed = !isRed;
             prevRed = isRed;
         }
         
-        if(1000< i && i % 1000 <= 300)
+        if(10000< i && i % 10000 <= 3000)
         {
             isRed = true;
         }
-        else if(1000< i && i%1000 > 300)
+        else if(10000< i && i%10000 > 3000)
         {
             isRed = prevRed;
         }
