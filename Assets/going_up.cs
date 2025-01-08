@@ -67,13 +67,14 @@ public class goUpScript : MonoBehaviour
         // Debug.Log("objects updating");
         if(inStopRange()) 
         {
+            bool isRed = up_traffic_light.isRed;
             // Debug.Log("inStopRange true block");
-            if(trafficlight.isGreenLight()) 
+            if(!isRed) 
             {
                 // Debug.Log("greenlight block");
                 startCar();
             }
-            else if(trafficlight.isRedLight())
+            else if(isRed)
             {
                 // Debug.Log("redlight block");
                 stopCar();

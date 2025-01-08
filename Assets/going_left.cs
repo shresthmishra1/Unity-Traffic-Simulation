@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEditor.Callbacks;
 
+
 public class goLeftScript : MonoBehaviour
 {
     float speed = 10f;
@@ -71,13 +72,14 @@ public class goLeftScript : MonoBehaviour
         // Debug.Log("objects updating");
         if(inStopRange()) 
         {
+            bool isRed = left_traffic_light.isRed;
             // Debug.Log("inStopRange true block");
-            if(leftTrafficLight.isGreenLight()) 
+            if(!isRed) 
             {
                 // Debug.Log("greenlight block");
                 startCar();
             }
-            else if(leftTrafficLight.isRedLight())
+            else if(isRed)
             {
                 // Debug.Log("redlight block");
                 stopCar();
