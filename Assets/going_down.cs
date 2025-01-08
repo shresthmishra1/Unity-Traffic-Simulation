@@ -7,7 +7,7 @@ using UnityEditor.Callbacks;
 public class goDownScript : MonoBehaviour
 {
     float speed = 10f;
-    [SerializeField] down_traffic_light trafficlight;
+    //[SerializeField] down_traffic_light trafficlight;
     bool startedCollision = false;
 
 

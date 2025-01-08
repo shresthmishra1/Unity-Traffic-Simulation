@@ -5,7 +5,7 @@ using UnityEngine;
 public class goUpScript : MonoBehaviour
 {
     float speed = 10f;
-    [SerializeField] up_traffic_light trafficlight;
+    //[SerializeField] up_traffic_light trafficlight;
     bool startedCollision = false;
 
 
