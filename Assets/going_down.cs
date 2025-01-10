@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEditor.Callbacks;
 
-public class goDownScript : MonoBehaviour
+public class going_down : MonoBehaviour
 {
     float speed = 10f;
     //[SerializeField] down_traffic_light trafficlight;
@@ -14,7 +14,7 @@ public class goDownScript : MonoBehaviour
     void Start()
     {
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
-        float speed = UnityEngine.Random.Range(2.5f, 7.5f);
+        float speed = UnityEngine.Random.Range(2.5f, 12.5f);
         startCar();
         gameObject.AddComponent<BoxCollider2D>();
     }
@@ -64,7 +64,7 @@ public class goDownScript : MonoBehaviour
         // Step 1: resets car position if car goes off screen
         if(-21 >= transform.position.y) 
         {
-            transform.position = new Vector3(-2.3f, 21f, 0);
+            Destroy(gameObject);
         }
         // Debug.Log("objects updating");
         if(inStopRange()) 

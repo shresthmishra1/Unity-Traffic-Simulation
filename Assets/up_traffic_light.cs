@@ -34,18 +34,19 @@ public class up_traffic_light : MonoBehaviour
         // {
         //     isRed = !isRed;
         // }
-        
-        if(i % 10000 == 0)
+        int lightTime = 1000;
+        int timeAllRed = 300;
+        if(i % lightTime == 0)
         {
             isRed = !isRed;
             prevRed = isRed;
         }
         
-        if(10000< i && i % 10000 <= 300)
+        if(lightTime< i && i % lightTime <= timeAllRed)
         {
             isRed = true;
         }
-        else if(10000< i && i%10000 > 3000)
+        else if(lightTime< i && i%lightTime > timeAllRed)
         {
             isRed = prevRed;
         }

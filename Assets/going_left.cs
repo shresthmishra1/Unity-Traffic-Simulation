@@ -4,8 +4,7 @@ using UnityEngine;
 using System;
 using UnityEditor.Callbacks;
 
-
-public class goLeftScript : MonoBehaviour
+public class going_left : MonoBehaviour
 {
     float speed = 10f;
     //[SerializeField] left_traffic_light leftTrafficLight;
@@ -15,7 +14,7 @@ public class goLeftScript : MonoBehaviour
     void Start()
     {
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
-        float speed = UnityEngine.Random.Range(2.5f, 7.5f);
+        float speed = UnityEngine.Random.Range(2.5f, 12.5f);
         startCar();
         gameObject.AddComponent<BoxCollider2D>();
     }
@@ -67,7 +66,7 @@ public class goLeftScript : MonoBehaviour
         // Step 1: resets car position if car goes off screen
         if(-21 >= transform.position.x) 
         {
-            transform.position = new Vector3(21, 2, 0);
+            Destroy(gameObject);
         }
         // Debug.Log("objects updating");
         if(inStopRange()) 

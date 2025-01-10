@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -42,8 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 0
@@ -156,6 +153,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -236,7 +236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5b71e384729411fa56b886818e31bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficlight: {fileID: 1435619594}
 --- !u!212 &56725460
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -254,6 +253,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -334,7 +336,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8027415b527874022b7fc89d8f649b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficlight: {fileID: 1178296634}
 --- !u!212 &109818503
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -352,6 +353,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -432,7 +436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8027415b527874022b7fc89d8f649b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficlight: {fileID: 1178296634}
 --- !u!212 &132590611
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -450,6 +453,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -640,6 +646,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -738,6 +747,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -837,6 +849,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -917,7 +932,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fc570d6ab63647a3820b31685bbe1df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficlight: {fileID: 901243927}
 --- !u!212 &986960154
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -935,6 +949,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1020,6 +1037,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1082,7 +1102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 452d647ae0f9e40cf988def3d0855db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftTrafficLight: {fileID: 747892892}
 --- !u!1 &1046037599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,6 +1136,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1197,7 +1219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fc570d6ab63647a3820b31685bbe1df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficlight: {fileID: 901243927}
 --- !u!212 &1064270159
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1215,6 +1236,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1295,7 +1319,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8027415b527874022b7fc89d8f649b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficlight: {fileID: 1178296634}
 --- !u!212 &1065514656
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1313,6 +1336,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1393,7 +1419,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 452d647ae0f9e40cf988def3d0855db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftTrafficLight: {fileID: 747892892}
 --- !u!212 &1095741039
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1411,6 +1436,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1491,7 +1519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 452d647ae0f9e40cf988def3d0855db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftTrafficLight: {fileID: 747892892}
 --- !u!212 &1149321440
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1509,6 +1536,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1593,6 +1623,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1673,7 +1706,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8027415b527874022b7fc89d8f649b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficlight: {fileID: 1178296634}
 --- !u!212 &1177753204
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1691,6 +1723,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1776,6 +1811,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1875,6 +1913,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1937,7 +1978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fc570d6ab63647a3820b31685bbe1df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficlight: {fileID: 901243927}
 --- !u!1 &1435619593
 GameObject:
   m_ObjectHideFlags: 0
@@ -1987,6 +2027,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2067,7 +2110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8027415b527874022b7fc89d8f649b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficlight: {fileID: 1178296634}
 --- !u!212 &1444147244
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2085,6 +2127,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2170,6 +2215,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2232,7 +2280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8027415b527874022b7fc89d8f649b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficlight: {fileID: 1178296634}
 --- !u!1 &1697537855
 GameObject:
   m_ObjectHideFlags: 0
@@ -2263,7 +2310,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 452d647ae0f9e40cf988def3d0855db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftTrafficLight: {fileID: 747892892}
 --- !u!212 &1697537857
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2281,6 +2327,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2361,7 +2410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5b71e384729411fa56b886818e31bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficlight: {fileID: 1435619594}
 --- !u!212 &1994050405
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2379,6 +2427,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2459,7 +2510,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5b71e384729411fa56b886818e31bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficlight: {fileID: 1435619594}
 --- !u!212 &2067539946
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2477,6 +2527,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
