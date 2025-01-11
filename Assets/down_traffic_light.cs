@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,9 @@ public class down_traffic_light : MonoBehaviour
 {
     public Sprite greenlight;
     public Sprite redlight;
+    public Sprite yellowlight;
     public static bool isRed = true;
+    public static bool isYellow = false;
     int i = 1;
 
     public bool isGreenLight(){
@@ -44,13 +47,25 @@ public class down_traffic_light : MonoBehaviour
         
         if(lightTime< i && i % lightTime <= timeAllRed)
         {
-            isRed = true;
+            if(prevRed == true)
+            {
+                isYellow = true;
+            }
+            else
+            {
+                isRed = true;
+            }
         }
         else if(lightTime< i && i%lightTime > timeAllRed)
         {
             isRed = prevRed;
         }
-        if(isRed)
+        if(isYellow)
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = yellowlight;
+            isYellow = false;
+        }
+        else if(isRed)
         {
         	this.gameObject.GetComponent<SpriteRenderer>().sprite = redlight;
         }

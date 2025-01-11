@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class left_traffic_light : MonoBehaviour
 {
-   public Sprite greenlight;
+    public Sprite greenlight;
     public Sprite redlight;
+    public Sprite yellowlight;
     public static bool isRed = false;
+    public static bool isYellow = false;
     int i = 1;
 
     public bool isGreenLight(){
@@ -44,13 +46,25 @@ public class left_traffic_light : MonoBehaviour
         
         if(lightTime< i && i % lightTime <= timeAllRed)
         {
-            isRed = true;
+            if(prevRed == true)
+            {
+                isYellow = true;
+            }
+            else
+            {
+                isRed = true;
+            }
         }
         else if(lightTime< i && i%lightTime > timeAllRed)
         {
             isRed = prevRed;
         }
-        if(isRed)
+        if(isYellow)
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = yellowlight;
+            isYellow = false;
+        }
+        else if(isRed)
         {
         	this.gameObject.GetComponent<SpriteRenderer>().sprite = redlight;
         }
@@ -60,5 +74,4 @@ public class left_traffic_light : MonoBehaviour
         }
         i ++;
     }
-
 }

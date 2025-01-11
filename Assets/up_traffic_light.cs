@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class up_traffic_light : MonoBehaviour
 {
-    // Start is called before the first frame update
     public Sprite greenlight;
     public Sprite redlight;
+    public Sprite yellowlight;
     public static bool isRed = true;
+    public static bool isYellow = false;
     int i = 1;
 
     public bool isGreenLight(){
@@ -23,6 +24,7 @@ public class up_traffic_light : MonoBehaviour
     {
         
     }
+
     bool prevRed = false;
     void Update()
     {
@@ -44,13 +46,25 @@ public class up_traffic_light : MonoBehaviour
         
         if(lightTime< i && i % lightTime <= timeAllRed)
         {
-            isRed = true;
+            if(prevRed == true)
+            {
+                isYellow = true;
+            }
+            else
+            {
+                isRed = true;
+            }
         }
         else if(lightTime< i && i%lightTime > timeAllRed)
         {
             isRed = prevRed;
         }
-        if(isRed)
+        if(isYellow)
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = yellowlight;
+            isYellow = false;
+        }
+        else if(isRed)
         {
         	this.gameObject.GetComponent<SpriteRenderer>().sprite = redlight;
         }
@@ -61,3 +75,4 @@ public class up_traffic_light : MonoBehaviour
         i ++;
     }
 }
+
