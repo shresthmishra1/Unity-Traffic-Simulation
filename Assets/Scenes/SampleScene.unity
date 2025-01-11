@@ -713,6 +713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   greenlight: {fileID: 21300000, guid: 7590693a193574d9b969ff83d0cd4a14, type: 3}
   redlight: {fileID: 21300000, guid: ab2b9754a4c214f688553255ed5213ab, type: 3}
+  yellowlight: {fileID: 21300000, guid: 3fb031e6d4f1040cb940df4d9c65743a, type: 3}
 --- !u!1 &753448504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1879,6 +1880,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   greenlight: {fileID: 21300000, guid: 7590693a193574d9b969ff83d0cd4a14, type: 3}
   redlight: {fileID: 21300000, guid: ab2b9754a4c214f688553255ed5213ab, type: 3}
+  yellowlight: {fileID: 21300000, guid: 3fb031e6d4f1040cb940df4d9c65743a, type: 3}
 --- !u!1 &1353658497
 GameObject:
   m_ObjectHideFlags: 0
@@ -2011,6 +2013,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   greenlight: {fileID: 21300000, guid: 7590693a193574d9b969ff83d0cd4a14, type: 3}
   redlight: {fileID: 21300000, guid: ab2b9754a4c214f688553255ed5213ab, type: 3}
+  yellowlight: {fileID: 21300000, guid: 3fb031e6d4f1040cb940df4d9c65743a, type: 3}
 --- !u!212 &1435619595
 SpriteRenderer:
   m_ObjectHideFlags: 0

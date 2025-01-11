@@ -44,7 +44,7 @@ public class right_traffic_light : MonoBehaviour
             prevRed = isRed;
         }
         
-        if(lightTime< i && i % lightTime <= timeAllRed)
+        if(lightTime<= i && i % lightTime <= timeAllRed)
         {
             if(prevRed == true)
             {
@@ -55,7 +55,7 @@ public class right_traffic_light : MonoBehaviour
                 isRed = true;
             }
         }
-        else if(lightTime< i && i%lightTime > timeAllRed)
+        else if(lightTime<= i && i%lightTime > timeAllRed)
         {
             isRed = prevRed;
         }
