@@ -25,7 +25,7 @@ public class main : MonoBehaviour
         float topBound = 0.0045f;
         float bottomBound = 0f;
         double output = (double)UnityEngine.Random.Range(bottomBound, topBound);
-        Debug.Log(output);
+        // Debug.Log(output);
         return output;
     }
 
