@@ -19,7 +19,8 @@ public class going_left : MonoBehaviour
     {
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
         float speed = UnityEngine.Random.Range(2.5f, 12.5f);
-        startCar();
+        // startCar();
+        graduallyStartCar();
         gameObject.AddComponent<BoxCollider2D>();
         gameObject.tag = "Car";
         BoxCollider2D boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
@@ -87,7 +88,8 @@ public class going_left : MonoBehaviour
             if(!isRed) 
             {
                 // Debug.Log("greenlight block");
-                startCar();
+                // startCar();
+                graduallyStartCar();
             }
             else if(isRed)
             {
@@ -121,14 +123,16 @@ public class going_left : MonoBehaviour
                     }
                     else
                     {
-                        startCar();
+                        // startCar();
+                        graduallyStartCar();
                     }
                 }
                 
             }
             else
             {
-                startCar();
+                // startCar();
+                graduallyStartCar();
             }
         }
     }
@@ -148,6 +152,13 @@ public class going_left : MonoBehaviour
         // Debug.Log(rb.name+" v="+rb.velocity);
     }
 
+    private void graduallyStartCar()
+    {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        // rb.linearVelocity = new Vector2(0, 0);
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed*Vector2.left, decelerationRate*Time.fixedDeltaTime); 
+
+    }
     private void stopCar()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
