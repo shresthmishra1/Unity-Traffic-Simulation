@@ -10,8 +10,8 @@ public class going_left : MonoBehaviour
     //[SerializeField] right_traffic_light trafficlight;
     bool startedCollision = false;
     // public float detectionDistance = 0.5f; // Distance to detect the car in front.
-    public float stopDistance = 2f; // Minimum distance to stop the car a little before.
-    public float decelerationRate = 3f; // Rate to slow down smoothly.
+    public float carStopDistance = 2f; // Minimum distance to stop the car a little before.
+    public float decelerationRate = 2.5f; // Rate to slow down smoothly.
     float offset;
 
 
@@ -26,49 +26,11 @@ public class going_left : MonoBehaviour
         BoxCollider2D boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
         Vector2 size = boxCollider.size;
         Vector3 scale = this.transform.localScale;
-        Debug.Log(size);
+        // Debug.Log(size);
         offset = size.x*0.5f*scale.x+0.000001f;
         // offset = size.x*0.5f;
     }
 
-    void OnCollisionEnter2D(Collision2D collision) //called when collision begins
-    {
-        Rigidbody2D thisrb = GetComponent<Rigidbody2D>(); 
-        Rigidbody2D otherRb = collision.rigidbody;
-
-        if (thisrb.position.x > otherRb.position.x) //compares velocities of collided objs
-        {
-            startedCollision = true;
-            // Debug.Log("i am starting collision");
-            stopCar();
-        }
-        else
-        {
-            startedCollision = false;
-        }
-        
-    }
-
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        if(collision.transform.position.x < this.transform.position.x)
-        {
-             //signifies that car is no longer starting a collision
-            // Debug.Log("Setting startedCollision to false");
-            stopCar();
-        }
-    }
-    
-    void OnCollisionExit2D(Collision2D collision) //called when cars seperate (forward car moves on intersection)
-    {
-        
-        if(collision.transform.position.x < this.transform.position.x)
-        {
-            startedCollision = false; //signifies that car is no longer starting a collision
-            // Debug.Log("Setting startedCollision to false");
-            startCar();
-        }
-    }
     
 
     void Update()
@@ -80,45 +42,41 @@ public class going_left : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        // Debug.Log("objects updating");
-        if(inStopRange()) 
-        {
-            bool isRed = left_traffic_light.isRed;
-            // Debug.Log("inStopRange true block");
-            if(!isRed) 
-            {
-                // Debug.Log("greenlight block");
-                // startCar();
-                graduallyStartCar();
-            }
-            else if(isRed)
-            {
-                // Debug.Log("redlight block");
-                stopCar();
-            }
-            else
-            {
-                // Debug.Log("should not be coming here");
-            }
-        } 
         else
         {
             int layerNum = 0;
             string layerName = LayerMask.LayerToName(layerNum);
             int layerMask = LayerMask.GetMask(layerName);
-            RaycastHit2D hit = Physics2D.Raycast(transform.transform.position + new Vector3(-offset,0f,0f), Vector3.left, stopDistance, layerMask);
+            RaycastHit2D hit = Physics2D.Raycast(transform.transform.position + new Vector3(-offset,0f,0f), Vector3.left, carStopDistance);
             if(hit.collider != null )
             {
+                float distanceToOther = hit.distance;
                 // Debug.Log(hit.transform);
                 if(hit.collider.gameObject.tag == "Car")
                 {
-                    Debug.Log(hit.collider.gameObject.tag);
-                    Debug.Log("jIOWEFJIOWFJIEWFJEWIOFJWEIOFJEWIOFJWEIOJFWEIOJFEIO");
-                    float distanceToOther = hit.distance;
+                    // Debug.Log(hit.collider.gameObject.tag);
+                    // Debug.Log("jIOWEFJIOWFJIEWFJEWIOFJWEIOFJEWIOFJWEIOJFWEIOJFEIO");
+                    
 
-                    if(distanceToOther <= stopDistance)
+                    if(distanceToOther <= carStopDistance)
                     {
-                        Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
+                        // Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
+                        stopCar();
+                    }
+                    else
+                    {
+                        // startCar();
+                        graduallyStartCar();
+                    }
+                }
+
+
+                else if (hit.collider.gameObject.tag == "Finish")
+                {
+                    bool isRed = left_traffic_light.isRed;
+                    if(distanceToOther <= carStopDistance && isRed)
+                    {
+                        // Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
                         stopCar();
                     }
                     else
@@ -137,20 +95,6 @@ public class going_left : MonoBehaviour
         }
     }
 
-    private bool inStopRange()
-    {
-
-        return 6f <= transform.position.x && transform.position.x <= 7.7f;
-    }
-
-    private void startCar()
-    {
-
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        // Debug.Log(rb.name+" is starting with speed="+speed);
-        rb.linearVelocity = new Vector2(-speed, 0);  
-        // Debug.Log(rb.name+" v="+rb.velocity);
-    }
 
     private void graduallyStartCar()
     {
@@ -171,7 +115,7 @@ public class going_left : MonoBehaviour
     // {
     //     // Visualize the ray in the Scene view.
     //     Gizmos.color = Color.red;
-    //     Gizmos.DrawRay(transform.transform.position + new Vector3(-offset,0f,0f), Vector2.left * stopDistance);
+    //     Gizmos.DrawRay(transform.transform.position + new Vector3(-offset,0f,0f), Vector2.left * carStopDistance);
     // }
 
 }
