@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class going_up : MonoBehaviour
 {
@@ -58,6 +59,8 @@ public class going_up : MonoBehaviour
     void Update()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        var Lightlist = new List<traffic_light>(FindObjectsOfType<traffic_light>());
+        var sortedLightList = Lightlist.OrderBy(traffic_light => traffic_light.light_number).ToList();
 
         // Step 1: resets car position if car goes off screen
         if(transform.position.y >= 21) 
@@ -67,7 +70,7 @@ public class going_up : MonoBehaviour
         // Debug.Log("objects updating");
         if(inStopRange()) 
         {
-            bool isRed = up_traffic_light.isRed;
+            bool isRed = sortedLightList[0].isRed;
             // Debug.Log("inStopRange true block");
             if(!isRed) 
             {
