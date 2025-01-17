@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class going_up : MonoBehaviour
 {
@@ -35,6 +36,8 @@ public class going_up : MonoBehaviour
     void Update()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        var Lightlist = new List<traffic_light>(FindObjectsOfType<traffic_light>());
+        var sortedLightList = Lightlist.OrderBy(traffic_light => traffic_light.light_number).ToList();
 
         // Step 1: resets car position if car goes off screen
         if(transform.position.y >= 21) 
@@ -48,6 +51,9 @@ public class going_up : MonoBehaviour
             int layerMask = LayerMask.GetMask(layerName);
             RaycastHit2D hit = Physics2D.Raycast(transform.transform.position + new Vector3(0f,offset,0f), Vector3.up, carStopDistance);
             if(hit.collider != null )
+            bool isRed = sortedLightList[0].isRed;
+            // Debug.Log("inStopRange true block");
+            if(!isRed) 
             {
                 // Debug.Log(hit.transform);
                 float distanceToOther = hit.distance;

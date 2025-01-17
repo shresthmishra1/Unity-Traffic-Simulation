@@ -7,6 +7,7 @@ using UnityEditor;
 using JetBrains.Annotations;
 using UnityEngine.SocialPlatforms;
 using System.Threading.Tasks;
+using System.Linq;
 
 public class going_right : MonoBehaviour
 {
@@ -41,6 +42,8 @@ public class going_right : MonoBehaviour
     void Update()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        var Lightlist = new List<traffic_light>(FindObjectsOfType<traffic_light>());
+        var sortedLightList = Lightlist.OrderBy(traffic_light => traffic_light.light_number).ToList();
 
         // Step 1: resets car position if car goes off screen
         if (transform.position.x >= 21)
@@ -55,6 +58,14 @@ public class going_right : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.transform.position + new Vector3(offset, 0f, 0f), Vector3.right, carStopDistance);
             
             if (hit.collider != null)
+            bool isRed = sortedLightList[2].isRed;
+            // Debug.Log("inStopRange true block");
+            if(!isRed) 
+            {
+                // Debug.Log("greenlight block");
+                startCar();
+            }
+            else if(isRed)
             {
                 // Debug.Log(hit.collider.gameObject.tag + " THIS IS WHAT THE CAR IS DETECTING");
                 // Debug.Log(hit.transform);
@@ -105,7 +116,6 @@ public class going_right : MonoBehaviour
 
     private bool inStopRange()
     {
-
         return -7.7f <= transform.position.x && transform.position.x <= -6f;
     }
 
