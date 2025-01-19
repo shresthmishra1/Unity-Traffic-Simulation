@@ -13,14 +13,14 @@ public class main : MonoBehaviour
     double bottomLeft = 0;
     double leftLeft = 0;
     double rightLeft = 0;
-    double topSpawn = 0;
-    double bottomSpawn = 0;
-    double leftSpawn = 0;
-    double rightSpawn = 0;
-    double topLeftSpawn = 0;
-    double bottomLeftSpawn = 0;
-    double leftLeftSpawn = 0;
-    double rightLeftSpawn = 0;
+    double topSpawn = 1;
+    double bottomSpawn = 1;
+    double leftSpawn = 1;
+    double rightSpawn = 1;
+    double topLeftSpawn = 0.5;
+    double bottomLeftSpawn = 0.5;
+    double leftLeftSpawn = 0.5;
+    double rightLeftSpawn = 0.5;
 
     // Start is called before the first frame update
     void Start()

@@ -51,13 +51,13 @@ public class going_down : MonoBehaviour
             string layerName = LayerMask.LayerToName(layerNum);
             int layerMask = LayerMask.GetMask(layerName);
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0f,-offset,0f), Vector2.down, carStopDistance);
-            if(hit.collider != null )
+            if(hit.collider != null ) {
             bool isRed = sortedLightList[1].isRed;
             // Debug.Log("inStopRange true block");
             if(!isRed) 
             {
                 // Debug.Log("greenlight block");
-                startCar();
+                graduallyStartCar();
             }
             else if(isRed)
             {
@@ -84,7 +84,6 @@ public class going_down : MonoBehaviour
 
                 else if (hit.collider.gameObject.tag == "Finish")
                 {
-                    bool isRed = down_traffic_light.isRed;
                     if(distanceToOther <= carStopDistance && isRed)
                     {
                         // Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
@@ -96,6 +95,7 @@ public class going_down : MonoBehaviour
                         graduallyStartCar();
                     }
                 }
+            }
                 
             }
             else
