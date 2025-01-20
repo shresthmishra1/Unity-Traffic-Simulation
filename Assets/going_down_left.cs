@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
-
+using Unity.Mathematics;
 public class going_down_left : MonoBehaviour
 {
     float speed = 10f;
@@ -13,6 +13,11 @@ public class going_down_left : MonoBehaviour
     public Transform[] waypoints; // Array of waypoints for the path
     public int currentWaypointIndex = 0; // Tracks the current waypoint
 
+    public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
+    public float decelerationRate = 13f; // Rate to slow down smoothly.
+    Vector2 size;
+    Vector3 scale;
+    Vector3 offset;
     void Start()
     {
         // Automatically find all GameObjects with the tag "Waypoint"
@@ -27,11 +32,16 @@ public class going_down_left : MonoBehaviour
         {
             waypoints[i] = waypointObjects[i].transform;
         }
-
+        gameObject.tag = "Car";
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
-        float speed = UnityEngine.Random.Range(2.5f, 12.5f);
-        startCar();
+        speed = UnityEngine.Random.Range(7.5f, 12f);
+        graduallyStartCar();
         gameObject.AddComponent<BoxCollider2D>();
+        BoxCollider2D boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
+        size = boxCollider.size;
+        scale = this.transform.localScale;
+        // Debug.Log(size);
+        // offset = size.x * 0.5f * scale.x + 0.000001f;
     }
 
     void FixedUpdate()
@@ -40,49 +50,72 @@ public class going_down_left : MonoBehaviour
         var Lightlist = new List<traffic_light>(FindObjectsOfType<traffic_light>());
         var sortedLightList = Lightlist.OrderBy(traffic_light => traffic_light.light_number).ToList();
         
-        if(21 <= transform.position.x) 
+        if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex].position) < 1f)
         {
-            Destroy(gameObject);
-        }
-        if(inStopRange()) 
-        {
-            bool isRed = sortedLightList[1].isRed;
-            // Debug.Log("inStopRange true block");
-            if(!isRed) 
+            if(currentWaypointIndex == waypoints.Length -1)
             {
-                 //Debug.Log("greenlight block");
-                startCar();
-            }
-            else if(isRed)
-            {
-                // Debug.Log("redlight block");
-                stopCar();
+                Destroy(gameObject);
             }
             else
             {
-                // Debug.Log("should not be coming here");
-            }
-        } 
-        else
-        {
-            // Debug.Log("DEFINETLY should not be coming here");
-        }
-
-        // Move towards the current waypoint
-        if (!stopped) {
-             if (currentWaypointIndex < waypoints.Length)
-            {
-            var direction = FindDirection();
-            // Move the car towards the waypoint
-            rb.linearVelocity = direction * speed;
-            RotateSprite(direction);
-
-            // Check if the car is close to the waypoint
-            if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex].position) < 1f)
-            {
                 currentWaypointIndex++;
             }
+        }
+        // graduallyStartCar();
+
+        var direction = FindDirection().normalized;
+        offset = direction * size.y * scale.y * 0.5f + 0.25f * direction;
+        int layerNum = 0;
+        string layerName = LayerMask.LayerToName(layerNum);
+        int layerMask = LayerMask.GetMask(layerName);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + offset, direction, carStopDistance);
+        if (hit.collider != null) 
+        {
+            Debug.Log("raycast hitting something");
+            bool isRed = sortedLightList[1].isRed;
+            bool isYellow = sortedLightList[1].isYellow;
+        // Debug.Log("inStopRange true block");
+        
+            // Debug.Log(hit.collider.gameObject.tag + " THIS IS WHAT THE CAR IS DETECTING");
+            // Debug.Log(hit.transform);
+            float distanceToOther = hit.distance;
+            if (hit.collider.gameObject.tag == "Car")
+            {
+                Debug.Log(hit.collider.gameObject.tag);
+                // Debug.Log("jIOWEFJIOWFJIEWFJEWIOFJWEIOFJEWIOFJWEIOJFWEIOJFEIO");
+                
+
+                if (distanceToOther <= carStopDistance)
+                {
+                    // Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
+                    stopCar();
+                }
+                else
+                {
+                    // startCar();
+                    graduallyStartCar();
+                }
             }
+            
+
+
+            else if (hit.collider.gameObject.tag == "Finish")
+            {
+                if(distanceToOther <= carStopDistance && (isRed || isYellow))
+                {
+                    // Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
+                    stopCar();
+                }
+                else
+                {
+                    // startCar();
+                    graduallyStartCar();
+                }
+            }
+        }
+        else
+        {
+            graduallyStartCar();
         }
     }
 
@@ -93,67 +126,49 @@ public class going_down_left : MonoBehaviour
         return direction;
     }
 
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        Rigidbody2D thisrb = GetComponent<Rigidbody2D>();
-        Rigidbody2D otherRb = collision.rigidbody;
-
-        if (thisrb.position.y > otherRb.position.y)
-        {
-            startedCollision = true;
-            stopCar();
-        }
-        else
-        {
-            startedCollision = false;
-        }
-    }
-
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.transform.position.y < this.transform.position.y)
-        {
-            stopCar();
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.transform.position.y < this.transform.position.y)
-        {
-            startedCollision = false;
-            startCar();
-        }
-    }
     
-    private bool inStopRange()
-    {
 
-        return 6f <= transform.position.y && transform.position.y <= 7.7f;
-    }
-
-    private void startCar()
+    private void graduallyStartCar()
     {
+        
+
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.linearVelocity = new Vector2(0, -speed);
-        stopped = false;
+        // rb.linearVelocity = new Vector2(speed, 0);
+        // stopped = false;
+        
+        var direction = FindDirection();
+        // Move the car towards the waypoint
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed * direction, decelerationRate * Time.fixedDeltaTime);
+        // rb.linearVelocity = speed*direction;
+        RotateSprite(direction);
+
+        // Check if the car is close to the waypoint
+
+        
     }
 
     private void stopCar()
     {
+        Debug.Log("car will stop");
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.linearVelocity = Vector2.zero;
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, decelerationRate * Time.fixedDeltaTime); //Stop car from moving
         rb.angularVelocity = 0f;
         stopped = true;
     }
 
     private void RotateSprite(Vector3 direction)
     {
-        // Calculate the angle based on the direction vector
-        float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
-
-        // Rotate the GameObject to match the angle
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        float angle = Mathf.Atan2(math.abs(direction.y), math.abs(direction.x)) * Mathf.Rad2Deg - 90;
+        // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
+        Quaternion targetRotation = Quaternion.Euler(0, 0, -angle);
+        // transform.rotation = targetRotation;
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 5f);
     }
+
+    // void OnDrawGizmos()
+    // {
+    //     // Visualize the ray in the Scene view.
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawRay(transform.transform.position + offset, FindDirection() * carStopDistance);
+    // }
 }

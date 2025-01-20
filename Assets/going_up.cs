@@ -9,10 +9,10 @@ public class going_up : MonoBehaviour
     //[SerializeField] right_traffic_light trafficlight;
     bool startedCollision = false;
     // public float detectionDistance = 0.5f; // Distance to detect the car in front.
-    public float carStopDistance = 2f; // Minimum distance to stop the car a little before.
-    public float decelerationRate = 2.5f; // Rate to slow down smoothly.
+    public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
+    public float decelerationRate = 10f; // Rate to slow down smoothly.
     float offset;
-    public float lightStopDistance = 10f;
+    public float lightStopDistance = 13f;
 
 
     void Start()
@@ -33,7 +33,7 @@ public class going_up : MonoBehaviour
 
     
 
-    void Update()
+    void FixedUpdate()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         var Lightlist = new List<traffic_light>(FindObjectsOfType<traffic_light>());
@@ -50,47 +50,47 @@ public class going_up : MonoBehaviour
             string layerName = LayerMask.LayerToName(layerNum);
             int layerMask = LayerMask.GetMask(layerName);
             RaycastHit2D hit = Physics2D.Raycast(transform.transform.position + new Vector3(0f,offset,0f), Vector3.up, carStopDistance);
-            if(hit.collider != null ) {
-            bool isRed = sortedLightList[0].isRed;
-            
-            // Debug.Log("inStopRange true block");
-            if(!isRed) 
+            if(hit.collider != null ) 
             {
-                // Debug.Log(hit.transform);
-                float distanceToOther = hit.distance;
-                if(hit.collider.gameObject.tag == "Car")
-                {
-                    // Debug.Log(hit.collider.gameObject.tag);
-                    // Debug.Log("jIOWEFJIOWFJIEWFJEWIOFJWEIOFJEWIOFJWEIOJFWEIOJFEIO");
-                    
+                bool isRed = sortedLightList[0].isRed;
+                bool isYellow = sortedLightList[0].isYellow;
+                
+                // Debug.Log("inStopRange true block");
 
-                    if(distanceToOther <= carStopDistance)
+                    // Debug.Log(hit.transform);
+                    float distanceToOther = hit.distance;
+                    if(hit.collider.gameObject.tag == "Car")
                     {
-                        // Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
-                        stopCar();
-                    }
-                    else
-                    {
-                        // startCar();
-                        graduallyStartCar();
-                    }
-                }
+                        // Debug.Log(hit.collider.gameObject.tag);
+                        // Debug.Log("jIOWEFJIOWFJIEWFJEWIOFJWEIOFJEWIOFJWEIOJFWEIOJFEIO");
+                        
 
-                else if (hit.collider.gameObject.tag == "Finish")
-                {
-                    if(distanceToOther <= carStopDistance && isRed)
-                    {
-                        // Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
-                        stopCar();
+                        if(distanceToOther <= carStopDistance)
+                        {
+                            // Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
+                            stopCar();
+                        }
+                        else
+                        {
+                            // startCar();
+                            graduallyStartCar();
+                        }
                     }
-                    else
+
+                    else if (hit.collider.gameObject.tag == "Finish")
                     {
-                        // startCar();
-                        graduallyStartCar();
+                        if(distanceToOther <= carStopDistance && (isRed || isYellow))
+                        {
+                            // Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
+                            stopCar();
+                        }
+                        else
+                        {
+                            // startCar();
+                            graduallyStartCar();
+                        }
                     }
-                }
             }
-        }
             else
             {
                 // startCar();

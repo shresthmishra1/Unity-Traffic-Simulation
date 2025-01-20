@@ -15,8 +15,8 @@ public class going_right : MonoBehaviour
     //[SerializeField] right_traffic_light trafficlight;
     bool startedCollision = false;
     // public float detectionDistance = 0.5f; // Distance to detect the car in front.
-    public float carStopDistance = 2f; // Minimum distance to stop the car a little before.
-    public float decelerationRate = 2.5f; // Rate to slow down smoothly.
+    public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
+    public float decelerationRate = 13f; // Rate to slow down smoothly.
     float offset;
 
     void Start()
@@ -39,7 +39,7 @@ public class going_right : MonoBehaviour
 
 
 
-    void Update()
+    void FixedUpdate()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         var Lightlist = new List<traffic_light>(FindObjectsOfType<traffic_light>());
@@ -57,16 +57,12 @@ public class going_right : MonoBehaviour
             int layerMask = LayerMask.GetMask(layerName);
             RaycastHit2D hit = Physics2D.Raycast(transform.transform.position + new Vector3(offset, 0f, 0f), Vector3.right, carStopDistance);
             
-            if (hit.collider != null) {
-            bool isRed = sortedLightList[2].isRed;
+            if (hit.collider != null) 
+            {
+                bool isRed = sortedLightList[2].isRed;
+                bool isYellow = sortedLightList[2].isYellow;
             // Debug.Log("inStopRange true block");
-            if(!isRed) 
-            {
-                // Debug.Log("greenlight block");
-                graduallyStartCar();
-            }
-            else if(isRed)
-            {
+            
                 // Debug.Log(hit.collider.gameObject.tag + " THIS IS WHAT THE CAR IS DETECTING");
                 // Debug.Log(hit.transform);
                 float distanceToOther = hit.distance;
@@ -92,7 +88,7 @@ public class going_right : MonoBehaviour
 
                 else if (hit.collider.gameObject.tag == "Finish")
                 {
-                    if(distanceToOther <= carStopDistance && isRed)
+                    if(distanceToOther <= carStopDistance && (isRed || isYellow))
                     {
                         // Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
                         stopCar();
@@ -102,7 +98,6 @@ public class going_right : MonoBehaviour
                         // startCar();
                         graduallyStartCar();
                     }
-                }
                 }
             }
             else

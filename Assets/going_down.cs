@@ -11,8 +11,8 @@ public class going_down : MonoBehaviour
     //[SerializeField] right_traffic_light trafficlight;
     bool startedCollision = false;
     // public float detectionDistance = 0.5f; // Distance to detect the car in front.
-    public float carStopDistance = 2f; // Minimum distance to stop the car a little before.
-    public float decelerationRate = 2.5f; // Rate to slow down smoothly.
+    public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
+    public float decelerationRate = 13f; // Rate to slow down smoothly.
     float offset;
 
 
@@ -33,7 +33,7 @@ public class going_down : MonoBehaviour
     }
     
 
-    void Update()
+    void FixedUpdate()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         var Lightlist = new List<traffic_light>(FindObjectsOfType<traffic_light>());
@@ -51,16 +51,11 @@ public class going_down : MonoBehaviour
             string layerName = LayerMask.LayerToName(layerNum);
             int layerMask = LayerMask.GetMask(layerName);
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0f,-offset,0f), Vector2.down, carStopDistance);
-            if(hit.collider != null ) {
+            if(hit.collider != null ) 
+            {
             bool isRed = sortedLightList[1].isRed;
+            bool isYellow = sortedLightList[1].isYellow;
             // Debug.Log("inStopRange true block");
-            if(!isRed) 
-            {
-                // Debug.Log("greenlight block");
-                graduallyStartCar();
-            }
-            else if(isRed)
-            {
                 // Debug.Log(hit.transform);
                 float distanceToOther = hit.distance;
                 if(hit.collider.gameObject.tag == "Car")
@@ -84,7 +79,7 @@ public class going_down : MonoBehaviour
 
                 else if (hit.collider.gameObject.tag == "Finish")
                 {
-                    if(distanceToOther <= carStopDistance && isRed)
+                    if(distanceToOther <= carStopDistance && (isRed || isYellow))
                     {
                         // Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
                         stopCar();
@@ -97,7 +92,6 @@ public class going_down : MonoBehaviour
                 }
             }
                 
-            }
             else
             {
                 // startCar();

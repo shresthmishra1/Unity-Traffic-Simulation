@@ -5,8 +5,8 @@ using System.Linq;
 
 public class TrafficLightManager : MonoBehaviour
 {
-    public int greenDuration = 10;
-    public int yellowDuration = 3;
+    public int greenDuration = 5;
+    public int yellowDuration = 2;
         void Start()
     {
         StartCoroutine(ManageTrafficLights());

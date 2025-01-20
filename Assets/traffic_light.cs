@@ -25,7 +25,7 @@ public class traffic_light : MonoBehaviour
         
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if(isYellow)
         {
