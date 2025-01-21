@@ -71,7 +71,7 @@ public class going_up_left : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position + offset, direction, carStopDistance);
         if (hit.collider != null) 
         {
-            Debug.Log("raycast hitting something");
+            //Debug.Log("raycast hitting something");
             bool isRed = sortedLightList[0].isRed;
             bool isYellow = sortedLightList[1].isYellow;
         // Debug.Log("inStopRange true block");
@@ -149,7 +149,7 @@ public class going_up_left : MonoBehaviour
 
     private void stopCar()
     {
-        Debug.Log("car will stop");
+        //Debug.Log("car will stop");
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, decelerationRate * Time.fixedDeltaTime); //Stop car from moving
         rb.angularVelocity = 0f;

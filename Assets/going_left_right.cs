@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
-using Unity.VisualScripting;
 using Unity.Mathematics;
 
-public class going_right_left : MonoBehaviour
+public class going_left_right : MonoBehaviour
 {
     float speed = 10f;
     bool startedCollision = false;
@@ -23,7 +22,8 @@ public class going_right_left : MonoBehaviour
     void Start()
     {
         // Automatically find all GameObjects with the tag "Waypoint"
-        GameObject[] waypointObjects = GameObject.FindGameObjectsWithTag("RightLeftWaypoint");
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        GameObject[] waypointObjects = GameObject.FindGameObjectsWithTag("LeftRightWaypoint");
 
         // Sort waypoints by name or position if needed
         System.Array.Sort(waypointObjects, (a, b) => string.Compare(a.name, b.name));
@@ -36,6 +36,7 @@ public class going_right_left : MonoBehaviour
         }
         gameObject.tag = "Car";
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
+        rb.angularVelocity = 0f;
         speed = UnityEngine.Random.Range(7.5f, 12f);
         graduallyStartCar();
         gameObject.AddComponent<BoxCollider2D>();
@@ -74,8 +75,8 @@ public class going_right_left : MonoBehaviour
         if (hit.collider != null) 
         {
             //Debug.Log("raycast hitting something");
-            bool isRed = sortedLightList[2].isRed;
-            bool isYellow = sortedLightList[2].isYellow;
+            bool isRed = false;
+            bool isYellow = false;
         // Debug.Log("inStopRange true block");
         
             // Debug.Log(hit.collider.gameObject.tag + " THIS IS WHAT THE CAR IS DETECTING");
@@ -125,6 +126,7 @@ public class going_right_left : MonoBehaviour
     public Vector3 FindDirection() {
         Vector3 targetPosition = waypoints[currentWaypointIndex].position;
         Vector3 direction = (targetPosition - this.transform.position).normalized;
+        // Debug.Log(direction);
         return direction;
     }
 
@@ -160,9 +162,9 @@ public class going_right_left : MonoBehaviour
 
     private void RotateSprite(Vector3 direction)
     {
-        float angle = Mathf.Atan2(math.abs(direction.y), math.abs(direction.x)) * Mathf.Rad2Deg;
+        float angle = -Mathf.Atan2(math.abs(direction.y), math.abs(direction.x)) * Mathf.Rad2Deg;
+        //Debug.Log("ANGLE: --> " + angle);
         Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
-        // transform.rotation = targetRotation;
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 5f);
     }
 

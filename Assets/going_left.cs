@@ -89,11 +89,12 @@ public class going_left : MonoBehaviour
                     {
                         if(distanceToOther <= carStopDistance && (isRed || isYellow))
                         {
-                            // Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
+                            //Debug.Log("THE CAR WILL NOW BE STOPPED AHAHAHAHAHAHAHAH");
                             stopCar();
                         }
                         else
                         {
+                            Debug.Log("car started");
                             // startCar();
                             graduallyStartCar();
                         }

@@ -6,7 +6,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using Unity.Mathematics;
 
-public class going_right_left : MonoBehaviour
+public class going_right_right : MonoBehaviour
 {
     float speed = 10f;
     bool startedCollision = false;
@@ -23,7 +23,7 @@ public class going_right_left : MonoBehaviour
     void Start()
     {
         // Automatically find all GameObjects with the tag "Waypoint"
-        GameObject[] waypointObjects = GameObject.FindGameObjectsWithTag("RightLeftWaypoint");
+        GameObject[] waypointObjects = GameObject.FindGameObjectsWithTag("RightRightWaypoint");
 
         // Sort waypoints by name or position if needed
         System.Array.Sort(waypointObjects, (a, b) => string.Compare(a.name, b.name));
@@ -74,8 +74,8 @@ public class going_right_left : MonoBehaviour
         if (hit.collider != null) 
         {
             //Debug.Log("raycast hitting something");
-            bool isRed = sortedLightList[2].isRed;
-            bool isYellow = sortedLightList[2].isYellow;
+            bool isRed = false;
+            bool isYellow = false;
         // Debug.Log("inStopRange true block");
         
             // Debug.Log(hit.collider.gameObject.tag + " THIS IS WHAT THE CAR IS DETECTING");
@@ -160,7 +160,7 @@ public class going_right_left : MonoBehaviour
 
     private void RotateSprite(Vector3 direction)
     {
-        float angle = Mathf.Atan2(math.abs(direction.y), math.abs(direction.x)) * Mathf.Rad2Deg;
+        float angle = -Mathf.Atan2(math.abs(direction.y), math.abs(direction.x)) * Mathf.Rad2Deg;
         Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
         // transform.rotation = targetRotation;
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 5f);
