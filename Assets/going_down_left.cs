@@ -64,7 +64,7 @@ public class going_down_left : MonoBehaviour
         // graduallyStartCar();
 
         var direction = FindDirection().normalized;
-        offset = direction * size.y * scale.y * 0.5f + 0.6f * direction;
+        offset = direction * size.y * scale.y * 0.6f + 0.6f * direction;
         int layerNum = 0;
         string layerName = LayerMask.LayerToName(layerNum);
         int layerMask = LayerMask.GetMask(layerName);
@@ -81,7 +81,7 @@ public class going_down_left : MonoBehaviour
             float distanceToOther = hit.distance;
             if (hit.collider.gameObject.tag == "Car")
             {
-                Debug.Log(hit.collider.gameObject.tag);
+                //Debug.Log(hit.collider.gameObject.tag);
                 // Debug.Log("jIOWEFJIOWFJIEWFJEWIOFJWEIOFJEWIOFJWEIOJFWEIOJFEIO");
                 
 

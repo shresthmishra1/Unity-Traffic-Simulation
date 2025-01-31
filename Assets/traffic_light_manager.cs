@@ -19,6 +19,7 @@ public class TrafficLightManager : MonoBehaviour
 
         while (true)
         {
+                Debug.Log("lights running");
                 sortedLightList[0].isRed = false;
                 yield return new WaitForSeconds(greenDuration);
                 sortedLightList[0].isYellow = true;

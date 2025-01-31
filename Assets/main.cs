@@ -230,50 +230,53 @@ public class main : MonoBehaviour
 
     void SpawnCar(string name, Vector2 position, float rotation, System.Type componentType)
     {
-        GameObject car = new GameObject($"car_{name}");
-        car.transform.position = position;
-        car.transform.rotation = Quaternion.Euler(0, 0, rotation);
+        bool isOpen = Physics2D.OverlapPoint(position) == null;
+        if (isOpen)
+        {
+            GameObject car = new GameObject($"car_{name}");
+            car.transform.position = position;
+            car.transform.rotation = Quaternion.Euler(0, 0, rotation);
 
-        SpriteRenderer spriteRenderer = car.AddComponent<SpriteRenderer>();
-        spriteRenderer.sortingOrder = 1;
-        int typeOfCar = Random.Range(0, carColors.Length);
-        spriteRenderer.sprite = Resources.Load<Sprite>(carColors[typeOfCar]);
-        if (typeOfCar == 0) {
-            car.transform.localScale = new Vector2(0.1f, 0.1f);
+            SpriteRenderer spriteRenderer = car.AddComponent<SpriteRenderer>();
+            spriteRenderer.sortingOrder = 1;
+            int typeOfCar = Random.Range(0, carColors.Length);
+            spriteRenderer.sprite = Resources.Load<Sprite>(carColors[typeOfCar]);
+            if (typeOfCar == 0) {
+                car.transform.localScale = new Vector2(0.1f, 0.1f);
+            }
+            else if (typeOfCar == 1) {
+                car.transform.localScale = new Vector2(0.28f, 0.28f);
+            }
+            else if (typeOfCar == 2 || typeOfCar == 3) {
+                car.transform.localScale = new Vector2(0.35f, 0.35f);
+            }
+            car.AddComponent(componentType);
         }
-        else if (typeOfCar == 1) {
-            car.transform.localScale = new Vector2(0.28f, 0.28f);
-        }
-        else if (typeOfCar == 2 || typeOfCar == 3) {
-            car.transform.localScale = new Vector2(0.35f, 0.35f);
-        }
-        
-        
-
-        car.AddComponent(componentType);
     }
     void SpawnBike(string name, Vector2 position, float rotation, System.Type componentType)
-{
-    GameObject bike = new GameObject($"bike_{name}");
-    bike.transform.position = position;
-    bike.transform.rotation = Quaternion.Euler(0, 0, rotation);
-    
-    SpriteRenderer spriteRenderer = bike.AddComponent<SpriteRenderer>();
-    spriteRenderer.sortingOrder = 1;
-    int typeOfBike = Random.Range(0, bikeColors.Length);
-    spriteRenderer.sprite = Resources.Load<Sprite>(bikeColors[typeOfBike]);
-    bike.AddComponent(componentType);
+    {
+        bool isOpen = Physics2D.OverlapPoint(position) == null;
+        if (isOpen) {
+            GameObject bike = new GameObject($"bike_{name}");
+            bike.transform.position = position;
+            bike.transform.rotation = Quaternion.Euler(0, 0, rotation);
+            
+            SpriteRenderer spriteRenderer = bike.AddComponent<SpriteRenderer>();
+            spriteRenderer.sortingOrder = 1;
+            int typeOfBike = Random.Range(0, bikeColors.Length);
+            spriteRenderer.sprite = Resources.Load<Sprite>(bikeColors[typeOfBike]);
+            bike.AddComponent(componentType);
 
-    if (typeOfBike == 0) {
-        bike.transform.localScale = new Vector2(1f, 1f);
+            if (typeOfBike == 0) {
+                bike.transform.localScale = new Vector2(1f, 1f);
+            }
+            else if (typeOfBike == 1 || typeOfBike == 2) {
+                bike.transform.localScale = new Vector2(0.5f, 0.5f);
+            }
+            else if (typeOfBike == 3) {
+                bike.transform.localScale = new Vector2(0.35f, 0.35f);
+            }
+        }
     }
-    else if (typeOfBike == 1 || typeOfBike == 2) {
-        bike.transform.localScale = new Vector2(0.5f, 0.5f);
-    }
-    else if (typeOfBike == 3) {
-        bike.transform.localScale = new Vector2(0.35f, 0.35f);
-    }
-
-}
 
 }

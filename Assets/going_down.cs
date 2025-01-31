@@ -117,10 +117,10 @@ public class going_down : MonoBehaviour
         rb.angularVelocity = 0f;
     }
 
-    void OnDrawGizmos()
-    {
-        // Visualize the ray in the Scene view.
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position + new Vector3(0f,-offset,0f), Vector2.down * carStopDistance);
-    }
+    // void OnDrawGizmos()
+    // {
+    //     // Visualize the ray in the Scene view.
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawRay(transform.position + new Vector3(0f,-offset,0f), Vector2.down * carStopDistance);
+    // }
 }

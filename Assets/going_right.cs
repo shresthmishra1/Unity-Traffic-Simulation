@@ -30,8 +30,7 @@ public class going_right : MonoBehaviour
         BoxCollider2D boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
         Vector2 size = boxCollider.size;
         Vector3 scale = this.transform.localScale;
-        Debug.Log(size);
-        offset = size.x * 0.5f * scale.x + 0.6f;
+        offset = size.x * 0.5f * scale.x + 0.4f;
         // offset = size.x*0.5f;
 
     }
@@ -68,7 +67,7 @@ public class going_right : MonoBehaviour
                 float distanceToOther = hit.distance;
                 if (hit.collider.gameObject.tag == "Car")
                 {
-                    Debug.Log(hit.collider.gameObject.tag);
+                    //Debug.Log(hit.collider.gameObject.tag);
                     // Debug.Log("jIOWEFJIOWFJIEWFJEWIOFJWEIOFJEWIOFJWEIOJFWEIOJFEIO");
                     
 
@@ -128,11 +127,11 @@ public class going_right : MonoBehaviour
         rb.angularVelocity = 0f;
     }
 
-    void OnDrawGizmos()
-    {
-        // Visualize the ray in the Scene view.
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position + new Vector3(offset,0f,0f), Vector2.right * carStopDistance);
-    }
+    // void OnDrawGizmos()
+    // {
+    //     // Visualize the ray in the Scene view.
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawRay(transform.position + new Vector3(offset,0f,0f), Vector2.right * carStopDistance);
+    // }
 
 }

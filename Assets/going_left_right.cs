@@ -83,7 +83,7 @@ public class going_left_right : MonoBehaviour
             float distanceToOther = hit.distance;
             if (hit.collider.gameObject.tag == "Car")
             {
-                Debug.Log(hit.collider.gameObject.tag);
+                //Debug.Log(hit.collider.gameObject.tag);
                 // Debug.Log("jIOWEFJIOWFJIEWFJEWIOFJWEIOFJEWIOFJWEIOJFWEIOJFEIO");
                 
 
