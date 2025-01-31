@@ -66,7 +66,7 @@ public class going_right_right : MonoBehaviour
         // graduallyStartCar();
 
         var direction = FindDirection().normalized;
-        offset = direction * size.x * scale.x * 0.5f + 0.25f * direction;
+        offset = direction * size.x * scale.x * 0.6f + 0.6f * direction;
         int layerNum = 0;
         string layerName = LayerMask.LayerToName(layerNum);
         int layerMask = LayerMask.GetMask(layerName);

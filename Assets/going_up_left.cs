@@ -40,8 +40,8 @@ public class going_up_left : MonoBehaviour
         BoxCollider2D boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
         size = boxCollider.size;
         scale = this.transform.localScale;
-        // Debug.Log(size);
-        // offset = size.x * 0.5f * scale.x + 0.000001f;
+       // Debug.Log(size);
+        // offset = size.x * 0.5f * scale.x + 0.6f;
     }
 
     void FixedUpdate()
@@ -64,7 +64,7 @@ public class going_up_left : MonoBehaviour
         // graduallyStartCar();
 
         var direction = FindDirection().normalized;
-        offset = direction * size.y * scale.y * 0.5f + 0.25f * direction;
+        offset = direction * size.y * scale.y * 0.6f + 0.8f * direction;
         int layerNum = 0;
         string layerName = LayerMask.LayerToName(layerNum);
         int layerMask = LayerMask.GetMask(layerName);
@@ -158,7 +158,7 @@ public class going_up_left : MonoBehaviour
 
     private void RotateSprite(Vector3 direction)
     {
-        float angle = Mathf.Atan2(math.abs(direction.y), math.abs(direction.x)) * Mathf.Rad2Deg - 90;
+        float angle = Mathf.Atan2(math.abs(direction.y), math.abs(direction.x)) * Mathf.Rad2Deg - 180;
         // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
         Quaternion targetRotation = Quaternion.Euler(0, 0, -angle);
         // transform.rotation = targetRotation;

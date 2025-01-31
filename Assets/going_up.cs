@@ -11,7 +11,7 @@ public class going_up : MonoBehaviour
     // public float detectionDistance = 0.5f; // Distance to detect the car in front.
     public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
     public float decelerationRate = 10f; // Rate to slow down smoothly.
-    float offset;
+    public float offset;
     public float lightStopDistance = 13f;
 
 
@@ -27,7 +27,7 @@ public class going_up : MonoBehaviour
         Vector2 size = boxCollider.size;
         Vector3 scale = this.transform.localScale;
         // Debug.Log(size);
-        offset = size.y*0.5f*scale.y+0.000001f;
+        offset = size.y*0.5f*scale.y+0.6f;
         // offset = size.x*0.5f;
     }
 
@@ -115,11 +115,12 @@ public class going_up : MonoBehaviour
         rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, decelerationRate*Time.fixedDeltaTime); //Stop car from moving
         rb.angularVelocity = 0f;
     }
-
-    // void OnDrawGizmos()
-    // {
-    //     // Visualize the ray in the Scene view.
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawRay(transform.transform.position + new Vector3(0f,offset,0f), Vector2.up * carStopDistance);
-    // }
+    
+     void OnDrawGizmos()
+     {
+        // Visualize the ray in the Scene view.
+         Gizmos.color = Color.red;
+         Gizmos.DrawRay(transform.transform.position + new Vector3(0f,offset,0f), Vector2.up * carStopDistance);
+     }
+     
 }

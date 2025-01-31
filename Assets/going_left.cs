@@ -28,7 +28,7 @@ public class going_left : MonoBehaviour
         Vector2 size = boxCollider.size;
         Vector3 scale = this.transform.localScale;
         // Debug.Log(size);
-        offset = size.x*0.5f*scale.x+0.000001f;
+        offset = size.x*0.5f*scale.x+0.6f;
         // offset = size.x*0.5f;
     }
 
@@ -127,11 +127,11 @@ public class going_left : MonoBehaviour
         rb.angularVelocity = 0f;
     }
 
-    // void OnDrawGizmos()
-    // {
-    //     // Visualize the ray in the Scene view.
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawRay(transform.transform.position + new Vector3(-offset,0f,0f), Vector2.left * carStopDistance);
-    // }
+    void OnDrawGizmos()
+    {
+        // Visualize the ray in the Scene view.
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.transform.position + new Vector3(-offset,0f,0f), Vector2.left * carStopDistance);
+    }
 
 }

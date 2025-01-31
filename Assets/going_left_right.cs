@@ -22,7 +22,6 @@ public class going_left_right : MonoBehaviour
     void Start()
     {
         // Automatically find all GameObjects with the tag "Waypoint"
-        transform.rotation = Quaternion.Euler(0, 0, 0);
         GameObject[] waypointObjects = GameObject.FindGameObjectsWithTag("LeftRightWaypoint");
 
         // Sort waypoints by name or position if needed
@@ -67,7 +66,7 @@ public class going_left_right : MonoBehaviour
         // graduallyStartCar();
 
         var direction = FindDirection().normalized;
-        offset = direction * size.x * scale.x * 0.5f + 0.25f * direction;
+        offset = direction * size.x * scale.x * 0.6f + 0.25f * direction;
         int layerNum = 0;
         string layerName = LayerMask.LayerToName(layerNum);
         int layerMask = LayerMask.GetMask(layerName);
@@ -162,7 +161,7 @@ public class going_left_right : MonoBehaviour
 
     private void RotateSprite(Vector3 direction)
     {
-        float angle = -Mathf.Atan2(math.abs(direction.y), math.abs(direction.x)) * Mathf.Rad2Deg;
+        float angle = -Mathf.Atan2(math.abs(direction.y), math.abs(direction.x)) * Mathf.Rad2Deg + 180;
         //Debug.Log("ANGLE: --> " + angle);
         Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 5f);
