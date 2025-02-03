@@ -100,126 +100,150 @@ public class main : MonoBehaviour
         rightRightBike += randomSpawnLane() * rightRightBikeSpawn;
 
         if (down >= 1)
-        {
-            down -= 1;
-            SpawnCar("down", new Vector2(-2.37f, 21.3f), 270, typeof(going_down));
+        { 
+            if (SpawnCar("down", new Vector2(-2.37f, 21.3f), 270, typeof(going_down))) {
+                down -= 1;
+            }
         }
         if (up >= 1)
         {
-            up -= 1;
-            SpawnCar("up", new Vector2(2.37f, -21.3f), 90, typeof(going_up));
+            if (SpawnCar("up", new Vector2(2.37f, -21.3f), 90, typeof(going_up))) {
+                up -= 1;
+            }
         }
         if (right >= 1)
         {
-            right -= 1;
-            SpawnCar("right", new Vector2(-21.3f, -2.37f), 0, typeof(going_right));
+            if (SpawnCar("right", new Vector2(-21.3f, -2.37f), 0, typeof(going_right))) {
+                right -= 1;
+            }
         }
         if (left >= 1)
-        {
-            left -= 1;
-            SpawnCar("left", new Vector2(21.3f, 2.4f), 180, typeof(going_left));
+        { 
+            if (SpawnCar("left", new Vector2(21.3f, 2.4f), 180, typeof(going_left))) {
+                left -= 1;
+            }
         }
         if (upLeft >= 1)
         {
-            upLeft -= 1;
-            SpawnCar("upLeft", new Vector2(0.8f, -21.5f), 90, typeof(going_up_left));
+            if (SpawnCar("upLeft", new Vector2(0.8f, -21.5f), 90, typeof(going_up_left))) {
+                upLeft -= 1;
+            }
         }
         if (downLeft >= 1)
-        {
-            downLeft -= 1;
-            SpawnCar("downLeft", new Vector2(-0.8f, 21.5f), 270, typeof(going_down_left));
+        {  
+            if (SpawnCar("downLeft", new Vector2(-0.8f, 21.5f), 270, typeof(going_down_left))) {
+                downLeft -= 1;
+            }
         }
         if (leftLeft >= 1)
         {
-            leftLeft -= 1;
-            SpawnCar("leftLeft", new Vector2(21.5f, 0.8f), 180, typeof(going_left_left));
+            if (SpawnCar("leftLeft", new Vector2(21.5f, 0.8f), 180, typeof(going_left_left))) {
+                leftLeft -= 1;
+            }
         }
         if (rightLeft >= 1)
         {
-            rightLeft -= 1;
-            SpawnCar("rightLeft", new Vector2(-21.5f, -0.8f), 0, typeof(going_right_left));
+            if (SpawnCar("rightLeft", new Vector2(-21.5f, -0.8f), 0, typeof(going_right_left))) {
+                rightLeft -= 1;
+            }
         }
         if (upRight >= 1)
         {
-            upRight -= 1;
-            SpawnCar("upRight", new Vector2(3.94f, -21.5f), 90, typeof(going_up_right));
+            if (SpawnCar("upRight", new Vector2(3.94f, -21.5f), 90, typeof(going_up_right))) {
+                upRight -= 1;
+            }
         }
         if (downRight >= 1)
         {
-            downRight -= 1;
-            SpawnCar("downRight", new Vector2(-3.94f, 21.5f), 270, typeof(going_down_right));
+            if (SpawnCar("downRight", new Vector2(-3.94f, 21.5f), 270, typeof(going_down_right))) {
+                downRight -= 1;
+            }
         }
         if (leftRight >= 1)
-        {
-            leftRight -= 1;
-            SpawnCar("leftRight", new Vector2(21.5f, 3.94f), 180, typeof(going_left_right));
+        {  
+            if (SpawnCar("leftRight", new Vector2(21.5f, 3.94f), 180, typeof(going_left_right))) {
+                leftRight -= 1;
+            }
         }
         if (rightRight >= 1)
         {
-            rightRight -= 1;
-            SpawnCar("rightRight", new Vector2(-21.5f, -3.94f), 0, typeof(going_right_right));
+            if (SpawnCar("rightRight", new Vector2(-21.5f, -3.94f), 0, typeof(going_right_right))) {
+                rightRight -= 1;
+            }
         }
 
         if (downBike >= 1)
         {
-            downBike -= 1;
-            SpawnBike("downBike", new Vector2(-2.37f, 21.3f), 270, typeof(going_down));
+            if (SpawnBike("downBike", new Vector2(-2.37f, 21.3f), 270, typeof(going_down))) {
+                downBike -= 1;
+            }
         }
         if (upBike >= 1)
         {
-            upBike -= 1;
-            SpawnBike("upBike", new Vector2(2.37f, -21.3f), 90, typeof(going_up));
+            if (SpawnBike("upBike", new Vector2(2.37f, -21.3f), 90, typeof(going_up))) {
+                upBike -= 1;
+            }
         }
         if (rightBike >= 1)
         {
-            rightBike -= 1;
-            SpawnBike("rightBike", new Vector2(-21.3f, -2.37f), 360, typeof(going_right));
+            if (SpawnBike("rightBike", new Vector2(-21.3f, -2.37f), 360, typeof(going_right))) {
+                rightBike -= 1;
+            }
         }
         if (leftBike >= 1)
         {
-            leftBike -= 1;
-            SpawnBike("leftBike", new Vector2(21.3f, 2.4f), 180, typeof(going_left));
+            if (SpawnBike("leftBike", new Vector2(21.3f, 2.4f), 180, typeof(going_left))) {
+                leftBike -= 1;
+            }
         }
 
         if (upLeftBike >= 1)
-        {
-            upLeftBike -= 1;
-            SpawnBike("upLeftBike", new Vector2(0.8f, -21.5f), 90, typeof(going_up_left));
+        {       
+            if (SpawnBike("upLeftBike", new Vector2(0.8f, -21.5f), 90, typeof(going_up_left))) {
+                upLeftBike -= 1;
+            }
         }
         if (downLeftBike >= 1)
         {
-            downLeftBike -= 1;
-            SpawnBike("downLeftBike", new Vector2(-0.8f, 21.5f), 270, typeof(going_down_left));
+            if (SpawnBike("downLeftBike", new Vector2(-0.8f, 21.5f), 270, typeof(going_down_left))) {
+                downLeftBike -= 1;
+            }
         }
         if (leftLeftBike >= 1)
-        {
-            leftLeftBike -= 1;
-            SpawnBike("leftLeftBike", new Vector2(21.5f, 0.8f), 180, typeof(going_left_left));
+        { 
+            if (SpawnBike("leftLeftBike", new Vector2(21.5f, 0.8f), 180, typeof(going_left_left))) {
+                leftLeftBike -= 1;
+            }
         }
         if (rightLeftBike >= 1)
         {
-            rightLeftBike -= 1;
-            SpawnBike("rightLeftBike", new Vector2(-21.5f, -0.8f), 360, typeof(going_right_left));
+            if (SpawnBike("rightLeftBike", new Vector2(-21.5f, -0.8f), 360, typeof(going_right_left))) {
+                rightLeftBike -= 1;
+            }
         }
         if (upRightBike >= 1)
         {
-            upRightBike -= 1;
-            SpawnBike("upRightBike", new Vector2(3.94f, -21.5f), 90, typeof(going_up_right));
+            if (SpawnBike("upRightBike", new Vector2(3.94f, -21.5f), 90, typeof(going_up_right))) {
+                upRightBike -= 1;
+            }
         }
         if (downRightBike >= 1)
         {
-            downRightBike -= 1;
-            SpawnBike("downRightBike", new Vector2(-3.94f, 21.5f), 270, typeof(going_down_right));
+            if (SpawnBike("downRightBike", new Vector2(-3.94f, 21.5f), 270, typeof(going_down_right))) {
+                downRightBike -= 1;
+            }
         }
         if (leftRightBike >= 1)
         {
-            leftRightBike -= 1;
-            SpawnBike("leftRightBike", new Vector2(21.5f, 3.94f), 180, typeof(going_left_right));
+            if (SpawnBike("leftRightBike", new Vector2(21.5f, 3.94f), 180, typeof(going_left_right))) {
+                leftRightBike -= 1;
+            }
         }
         if (rightRightBike >= 1)
         {
-            rightRightBike -= 1;
-            SpawnBike("rightRightBike", new Vector2(-21.5f, -3.94f), 360, typeof(going_right_right));
+            if (SpawnBike("rightRightBike", new Vector2(-21.5f, -3.94f), 360, typeof(going_right_right))) {
+                rightRightBike -= 1;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -228,7 +252,7 @@ public class main : MonoBehaviour
         }
     }
 
-    void SpawnCar(string name, Vector2 position, float rotation, System.Type componentType)
+    bool SpawnCar(string name, Vector2 position, float rotation, System.Type componentType)
     {
         bool isOpen = Physics2D.OverlapPoint(position) == null;
         if (isOpen)
@@ -251,9 +275,11 @@ public class main : MonoBehaviour
                 car.transform.localScale = new Vector2(0.35f, 0.35f);
             }
             car.AddComponent(componentType);
+            return true;
         }
+        return false;
     }
-    void SpawnBike(string name, Vector2 position, float rotation, System.Type componentType)
+    bool SpawnBike(string name, Vector2 position, float rotation, System.Type componentType)
     {
         bool isOpen = Physics2D.OverlapPoint(position) == null;
         if (isOpen) {
@@ -276,7 +302,9 @@ public class main : MonoBehaviour
             else if (typeOfBike == 3) {
                 bike.transform.localScale = new Vector2(0.35f, 0.35f);
             }
+            return true;
         }
+        return false;
     }
 
 }
