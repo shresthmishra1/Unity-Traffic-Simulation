@@ -72,8 +72,8 @@ public class going_up_left : MonoBehaviour
         if (hit.collider != null) 
         {
             //Debug.Log("raycast hitting something");
-            bool isRed = sortedLightList[0].isRed;
-            bool isYellow = sortedLightList[1].isYellow;
+            bool isRed = sortedLightList[2].isRed;
+            bool isYellow = sortedLightList[2].isYellow;
         // Debug.Log("inStopRange true block");
         
             // Debug.Log(hit.collider.gameObject.tag + " THIS IS WHAT THE CAR IS DETECTING");

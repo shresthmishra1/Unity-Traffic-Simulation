@@ -53,8 +53,8 @@ public class going_left : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.transform.position + new Vector3(-offset,0f,0f), Vector3.left, carStopDistance);
             if(hit.collider != null ) 
             {
-                bool isRed = sortedLightList[3].isRed;
-                bool isYellow = sortedLightList[3].isYellow;
+                bool isRed = sortedLightList[5].isRed;
+                bool isYellow = sortedLightList[5].isYellow;
                 
                 // Debug.Log("inStopRange true block");
                 if(!isRed) 

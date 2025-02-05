@@ -74,8 +74,8 @@ public class going_right_left : MonoBehaviour
         if (hit.collider != null) 
         {
             //Debug.Log("raycast hitting something");
-            bool isRed = sortedLightList[2].isRed;
-            bool isYellow = sortedLightList[2].isYellow;
+            bool isRed = sortedLightList[6].isRed;
+            bool isYellow = sortedLightList[6].isYellow;
         // Debug.Log("inStopRange true block");
         
             // Debug.Log(hit.collider.gameObject.tag + " THIS IS WHAT THE CAR IS DETECTING");

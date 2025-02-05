@@ -58,8 +58,8 @@ public class going_right : MonoBehaviour
             
             if (hit.collider != null) 
             {
-                bool isRed = sortedLightList[2].isRed;
-                bool isYellow = sortedLightList[2].isYellow;
+                bool isRed = sortedLightList[4].isRed;
+                bool isYellow = sortedLightList[4].isYellow;
             // Debug.Log("inStopRange true block");
             
                 // Debug.Log(hit.collider.gameObject.tag + " THIS IS WHAT THE CAR IS DETECTING");
