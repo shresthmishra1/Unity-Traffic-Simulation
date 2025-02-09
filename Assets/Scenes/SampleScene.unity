@@ -2542,9 +2542,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc9abcd13c85d421bb8ada0945f2fe25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  greenlight: {fileID: 21300000, guid: 6f9ecd3b9a7fa4a1b9a2f74494eb5edd, type: 3}
-  redlight: {fileID: 21300000, guid: aee96999809dc4a39bd919527ff752c9, type: 3}
-  yellowlight: {fileID: 21300000, guid: 5ac2d6f776bbf49ffa48dafd2ff5f587, type: 3}
+  greenlight: {fileID: 21300000, guid: f9fb4db1e0763437e902481567a2c5d1, type: 3}
+  redlight: {fileID: 21300000, guid: 9921c1b8cd7ac419581b44e63e60695e, type: 3}
+  yellowlight: {fileID: 21300000, guid: 9e306b332e3e54b9b9dc1715621a6492, type: 3}
   isRed: 1
   isYellow: 0
   light_number: 7
@@ -2592,7 +2592,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 7590693a193574d9b969ff83d0cd4a14, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f9fb4db1e0763437e902481567a2c5d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2611,13 +2611,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1456133084}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -3.52, y: -0.86, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &1492410834
 GameObject:
   m_ObjectHideFlags: 0
@@ -2648,9 +2648,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc9abcd13c85d421bb8ada0945f2fe25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  greenlight: {fileID: 21300000, guid: 6f9ecd3b9a7fa4a1b9a2f74494eb5edd, type: 3}
-  redlight: {fileID: 21300000, guid: aee96999809dc4a39bd919527ff752c9, type: 3}
-  yellowlight: {fileID: 21300000, guid: 5ac2d6f776bbf49ffa48dafd2ff5f587, type: 3}
+  greenlight: {fileID: 21300000, guid: f9fb4db1e0763437e902481567a2c5d1, type: 3}
+  redlight: {fileID: 21300000, guid: 9921c1b8cd7ac419581b44e63e60695e, type: 3}
+  yellowlight: {fileID: 21300000, guid: 9e306b332e3e54b9b9dc1715621a6492, type: 3}
   isRed: 1
   isYellow: 0
   light_number: 3
@@ -2698,7 +2698,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 7590693a193574d9b969ff83d0cd4a14, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f9fb4db1e0763437e902481567a2c5d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2717,13 +2717,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1492410834}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0.92, y: -3.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1541889282
 GameObject:
   m_ObjectHideFlags: 0
@@ -3033,9 +3033,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc9abcd13c85d421bb8ada0945f2fe25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  greenlight: {fileID: 21300000, guid: 6f9ecd3b9a7fa4a1b9a2f74494eb5edd, type: 3}
-  redlight: {fileID: 21300000, guid: aee96999809dc4a39bd919527ff752c9, type: 3}
-  yellowlight: {fileID: 21300000, guid: 5ac2d6f776bbf49ffa48dafd2ff5f587, type: 3}
+  greenlight: {fileID: 21300000, guid: f9fb4db1e0763437e902481567a2c5d1, type: 3}
+  redlight: {fileID: 21300000, guid: 9921c1b8cd7ac419581b44e63e60695e, type: 3}
+  yellowlight: {fileID: 21300000, guid: 9e306b332e3e54b9b9dc1715621a6492, type: 3}
   isRed: 1
   isYellow: 0
   light_number: 8
@@ -3083,7 +3083,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 7590693a193574d9b969ff83d0cd4a14, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f9fb4db1e0763437e902481567a2c5d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3102,13 +3102,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1865975444}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.0070166127, w: 0.9999754}
+  m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
   m_LocalPosition: {x: 3.1, y: 0.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
 --- !u!1 &1878090492
 GameObject:
   m_ObjectHideFlags: 0
@@ -3245,9 +3245,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc9abcd13c85d421bb8ada0945f2fe25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  greenlight: {fileID: 21300000, guid: 6f9ecd3b9a7fa4a1b9a2f74494eb5edd, type: 3}
-  redlight: {fileID: 21300000, guid: aee96999809dc4a39bd919527ff752c9, type: 3}
-  yellowlight: {fileID: 21300000, guid: 5ac2d6f776bbf49ffa48dafd2ff5f587, type: 3}
+  greenlight: {fileID: 21300000, guid: f9fb4db1e0763437e902481567a2c5d1, type: 3}
+  redlight: {fileID: 21300000, guid: 9921c1b8cd7ac419581b44e63e60695e, type: 3}
+  yellowlight: {fileID: 21300000, guid: 9e306b332e3e54b9b9dc1715621a6492, type: 3}
   isRed: 1
   isYellow: 0
   light_number: 4
@@ -3295,7 +3295,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 7590693a193574d9b969ff83d0cd4a14, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f9fb4db1e0763437e902481567a2c5d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
