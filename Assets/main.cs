@@ -20,10 +20,10 @@ public class main : MonoBehaviour
     double downSpawn = 1.5;
     double leftSpawn = 1.5;
     double rightSpawn = 1.5;
-    double upLeftSpawn = 0.75;
-    double downLeftSpawn = 0.75;
-    double leftLeftSpawn = 0.75;
-    double rightLeftSpawn = 0.75;
+    double upLeftSpawn = 0;
+    double downLeftSpawn = 0;
+    double leftLeftSpawn = 0;
+    double rightLeftSpawn = 0;
     double upRightSpawn = 0.75;
     double downRightSpawn = 0.75;
     double leftRightSpawn = 0.75;
@@ -41,18 +41,18 @@ public class main : MonoBehaviour
     double leftRightBike = 0;
     double rightRightBike = 0;
 
-    double upBikeSpawn = 0.4;
-    double downBikeSpawn = 0.4;
-    double leftBikeSpawn = 0.4;
-    double rightBikeSpawn = 0.4;
-    double upLeftBikeSpawn = 0.2;
-    double downLeftBikeSpawn = 0.2;
-    double leftLeftBikeSpawn = 0.2;
-    double rightLeftBikeSpawn = 0.2;
-    double upRightBikeSpawn = 0.2;
-    double downRightBikeSpawn = 0.2;
-    double leftRightBikeSpawn = 0.2;
-    double rightRightBikeSpawn = 0.2;
+    double upBikeSpawn = 0;
+    double downBikeSpawn = 0;
+    double leftBikeSpawn = 0;
+    double rightBikeSpawn = 0;
+    double upLeftBikeSpawn = 0;
+    double downLeftBikeSpawn = 0;
+    double leftLeftBikeSpawn = 0;
+    double rightLeftBikeSpawn = 0;
+    double upRightBikeSpawn = 0;
+    double downRightBikeSpawn = 0;
+    double leftRightBikeSpawn = 0;
+    double rightRightBikeSpawn = 0;
     double frameCount = 0;
 
     private string[] bikeColors = { "orange_bike", "green_bike"};

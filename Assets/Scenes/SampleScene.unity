@@ -1281,7 +1281,7 @@ MonoBehaviour:
   yellowlight: {fileID: 21300000, guid: 3fb031e6d4f1040cb940df4d9c65743a, type: 3}
   isRed: 1
   isYellow: 0
-  light_number: 6
+  light_number: 3
 --- !u!1 &753448504
 GameObject:
   m_ObjectHideFlags: 0
@@ -2188,7 +2188,7 @@ MonoBehaviour:
   yellowlight: {fileID: 21300000, guid: 3fb031e6d4f1040cb940df4d9c65743a, type: 3}
   isRed: 1
   isYellow: 0
-  light_number: 5
+  light_number: 4
 --- !u!1 &1242810722
 GameObject:
   m_ObjectHideFlags: 0
@@ -2529,7 +2529,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1456133085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2635,7 +2635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1492410835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3020,7 +3020,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1865975445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3232,7 +3232,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1937010337
 MonoBehaviour:
   m_ObjectHideFlags: 0
