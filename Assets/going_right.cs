@@ -47,6 +47,9 @@ public class going_right : MonoBehaviour
         // Step 1: resets car position if car goes off screen
         if (transform.position.x >= 21)
         {
+            GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+            main mainscript = mainObj.GetComponent<main>();
+            mainscript.CARSPASSED += 1;
             Destroy(gameObject);
         }
         else
@@ -58,8 +61,8 @@ public class going_right : MonoBehaviour
             
             if (hit.collider != null) 
             {
-                bool isRed = sortedLightList[3].isRed;
-                bool isYellow = sortedLightList[3].isYellow;
+                bool isRed = sortedLightList[3].lightPhase == 2;
+                bool isYellow = sortedLightList[3].lightPhase == 1;
             // Debug.Log("inStopRange true block");
             
                 // Debug.Log(hit.collider.gameObject.tag + " THIS IS WHAT THE CAR IS DETECTING");

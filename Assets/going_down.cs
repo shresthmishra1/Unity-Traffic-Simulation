@@ -42,6 +42,9 @@ public class going_down : MonoBehaviour
         // Step 1: resets car position if car goes off screen
         if(-21 >= transform.position.y) 
         {
+            GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+            main mainscript = mainObj.GetComponent<main>();
+            mainscript.CARSPASSED += 1;
             Destroy(gameObject);
         }
         else
@@ -53,8 +56,8 @@ public class going_down : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0f,-offset,0f), Vector2.down, carStopDistance);
             if(hit.collider != null ) 
             {
-            bool isRed = sortedLightList[1].isRed;
-            bool isYellow = sortedLightList[1].isYellow;
+            bool isRed = sortedLightList[1].lightPhase == 2;
+            bool isYellow = sortedLightList[1].lightPhase == 1;
             // Debug.Log("inStopRange true block");
                 // Debug.Log(hit.transform);
                 float distanceToOther = hit.distance;

@@ -55,6 +55,9 @@ public class main : MonoBehaviour
     double rightRightBikeSpawn = 0;
     double frameCount = 0;
 
+
+    public int CARSPASSED = 0;
+
     private string[] bikeColors = { "orange_bike", "green_bike"};
     private string[] carColors = { "red_car", "blue_car", "white_car", "pink_car" };
 

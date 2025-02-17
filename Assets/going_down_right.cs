@@ -54,6 +54,9 @@ public class going_down_right : MonoBehaviour
         {
             if(currentWaypointIndex == waypoints.Length -1)
             {
+                GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+                main mainscript = mainObj.GetComponent<main>();
+                mainscript.CARSPASSED += 1;
                 Destroy(gameObject);
             }
             else

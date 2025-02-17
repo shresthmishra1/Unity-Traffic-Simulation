@@ -11,6 +11,7 @@ public class traffic_light : MonoBehaviour
     public bool isYellow = false;
     public int light_number;
 
+    public int lightPhase; // 0:green   1:yellow   2:red
     public bool isGreenLight(){
         return !isRed;
     }
@@ -27,11 +28,11 @@ public class traffic_light : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(isYellow)
+        if(lightPhase == 1)
         {
             this.gameObject.GetComponent<SpriteRenderer>().sprite = yellowlight;
         }
-        else if(isRed)
+        else if(lightPhase == 2)
         {
         	this.gameObject.GetComponent<SpriteRenderer>().sprite = redlight;
         }

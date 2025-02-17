@@ -1069,6 +1069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e44c2a624cde4a788fbc4f006b0e1b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CARSPASSED: 0
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1081,8 +1082,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fd904dcfc9c249cd86227db7f315bf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  greenDuration: 10
-  yellowDuration: 2
+  greenDuration: 5
+  yellowDuration: 1
+  phasenum: 0
+  optimized: 0
 --- !u!1 &552693732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,6 +1285,7 @@ MonoBehaviour:
   isRed: 1
   isYellow: 0
   light_number: 3
+  lightPhase: 0
 --- !u!1 &753448504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1723,6 +1727,7 @@ MonoBehaviour:
   isRed: 1
   isYellow: 0
   light_number: 2
+  lightPhase: 0
 --- !u!1 &1019174341
 GameObject:
   m_ObjectHideFlags: 0
@@ -2189,6 +2194,7 @@ MonoBehaviour:
   isRed: 1
   isYellow: 0
   light_number: 4
+  lightPhase: 0
 --- !u!1 &1242810722
 GameObject:
   m_ObjectHideFlags: 0
@@ -2512,6 +2518,7 @@ MonoBehaviour:
   isRed: 1
   isYellow: 0
   light_number: 1
+  lightPhase: 0
 --- !u!1 &1456133084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2548,6 +2555,7 @@ MonoBehaviour:
   isRed: 1
   isYellow: 0
   light_number: 7
+  lightPhase: 0
 --- !u!212 &1456133086
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2654,6 +2662,7 @@ MonoBehaviour:
   isRed: 1
   isYellow: 0
   light_number: 3
+  lightPhase: 0
 --- !u!212 &1492410836
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3039,6 +3048,7 @@ MonoBehaviour:
   isRed: 1
   isYellow: 0
   light_number: 8
+  lightPhase: 0
 --- !u!212 &1865975446
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3251,6 +3261,7 @@ MonoBehaviour:
   isRed: 1
   isYellow: 0
   light_number: 4
+  lightPhase: 0
 --- !u!212 &1937010338
 SpriteRenderer:
   m_ObjectHideFlags: 0
