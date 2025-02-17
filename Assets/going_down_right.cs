@@ -56,7 +56,7 @@ public class going_down_right : MonoBehaviour
             {
                 GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
                 main mainscript = mainObj.GetComponent<main>();
-                mainscript.CARSPASSED += 1;
+                mainscript.AddCar();
                 Destroy(gameObject);
             }
             else

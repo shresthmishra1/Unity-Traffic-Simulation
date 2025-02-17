@@ -1070,6 +1070,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CARSPASSED: 0
+  isTimerComplete: 0
+  duration: 60
+  elapsedTime: 0
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1085,7 +1088,7 @@ MonoBehaviour:
   greenDuration: 5
   yellowDuration: 1
   phasenum: 0
-  optimized: 0
+  optimized: 1
 --- !u!1 &552693732
 GameObject:
   m_ObjectHideFlags: 0

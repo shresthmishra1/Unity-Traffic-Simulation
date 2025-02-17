@@ -15,14 +15,14 @@ public class TrafficLightManager : MonoBehaviour
     private bool isRunning;
     private readonly Queue<Action> mainThreadActions = new Queue<Action>();
     public int greenDuration = 2;
-    public int yellowDuration = 1;
+    public float yellowDuration = 0.5f;
 
     // Use phasenum to track which phase is active:
     // Phase 0: lights 0 & 1 are green and lights 2 & 3 are red.
     // Phase 1: lights 0 & 1 are red and lights 2 & 3 are green.
     public int phasenum = 0; 
 
-    public Boolean optimized = false;
+    public Boolean optimized = true;
     void Start()
     {
         // Set the initial state of the lights.
@@ -33,6 +33,7 @@ public class TrafficLightManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("KFWEKAFKWEKLFWELKKLFWEKLKLFKLKLKLKKLKLKLKLKLKWKELFJEFEWFEWFEWFEWFEWFEWFWEFEWFEWFEWFWEFEWFEWFWE");
             StartCoroutine(NonOptimized());
         }
         
@@ -55,7 +56,7 @@ public class TrafficLightManager : MonoBehaviour
     {
         var Lightlist = new List<traffic_light>(FindObjectsOfType<traffic_light>());
         var sortedLightList = Lightlist.OrderBy(traffic_light => traffic_light.light_number).ToList();
-
+        // Debug.Log("KFWEKAFKWEKLFWELKKLFWEKLKLFKLKLKLKKLKLKLKLKLKWKELFJEFEWFEWFEWFEWFEWFEWFWEFEWFEWFEWFWEFEWFEWFWE");
         while (true)
         {
                 sortedLightList[0].lightPhase = 0;
@@ -227,7 +228,7 @@ public class TrafficLightManager : MonoBehaviour
             sortedLightList[1].lightPhase = 2;
 
             Debug.Log("Phase 0 transition: Lights 2 and 3 set to yellow.");
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(yellowDuration);
 
             // After 1 second, switch lights 2 and 3 to red.
             sortedLightList[2].lightPhase = 2;
@@ -250,7 +251,7 @@ public class TrafficLightManager : MonoBehaviour
             sortedLightList[3].lightPhase = 2;
 
             Debug.Log("Phase 1 transition: Lights 0 and 1 set to yellow.");
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(yellowDuration);
 
             // set lights 2 and 3 to green
             sortedLightList[2].lightPhase = 0;

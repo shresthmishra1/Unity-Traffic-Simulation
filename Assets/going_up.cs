@@ -18,7 +18,7 @@ public class going_up : MonoBehaviour
     void Start()
     {
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
-        float speed = UnityEngine.Random.Range(2.5f, 12.5f);
+        // float speed = UnityEngine.Random.Range(2.5f, 12.5f);
         // startCar();
         graduallyStartCar();
         gameObject.AddComponent<BoxCollider2D>();
@@ -47,7 +47,8 @@ public class going_up : MonoBehaviour
         {
             GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
             main mainscript = mainObj.GetComponent<main>();
-            mainscript.CARSPASSED += 1;
+            mainscript.AddCar();
+            
             Destroy(gameObject);
         }
         else
