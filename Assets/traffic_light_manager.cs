@@ -135,5 +135,9 @@ public class TrafficLightManager : MonoBehaviour
         }
 
         Debug.Log("Traffic lights updated!");
+        // sortedLightList[0].isRed = true;
+        // sortedLightList[1].isRed = true;
+        // sortedLightList[2].isRed = true;
+        // sortedLightList[3].isRed = true;
     }
 }
