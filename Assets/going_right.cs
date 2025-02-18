@@ -20,6 +20,7 @@ public class going_right : MonoBehaviour
     public float acelerationRate = 1f;
     float offset;
 
+    public float startTime;
     void Start()
     {
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
@@ -33,6 +34,8 @@ public class going_right : MonoBehaviour
         Vector3 scale = this.transform.localScale;
         offset = size.x * 0.5f * scale.x + 0.4f;
         // offset = size.x*0.5f;
+
+        startTime = Time.time;
 
     }
 
@@ -51,6 +54,8 @@ public class going_right : MonoBehaviour
             GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
             main mainscript = mainObj.GetComponent<main>();
             mainscript.AddCar();
+            float endTime = Time.time;
+            mainscript.timeSpent.Add(endTime - startTime);
             Destroy(gameObject);
         }
         else

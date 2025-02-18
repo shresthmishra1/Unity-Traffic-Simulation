@@ -16,6 +16,7 @@ public class going_down : MonoBehaviour
     public float acelerationRate = 1f;
     float offset;
 
+    public float startTime;
 
     void Start()
     {
@@ -31,6 +32,7 @@ public class going_down : MonoBehaviour
         // Debug.Log(size);
         offset = size.y*0.5f*scale.y+0.6f;
         // offset = size.x*0.5f;
+        startTime = Time.time;
     }
     
 
@@ -46,6 +48,10 @@ public class going_down : MonoBehaviour
             GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
             main mainscript = mainObj.GetComponent<main>();
             mainscript.AddCar();
+            float endTime = Time.time;
+
+            mainscript.timeSpent.Add(endTime - startTime);
+
             Destroy(gameObject);
         }
         else

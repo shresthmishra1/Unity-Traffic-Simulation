@@ -456,6 +456,7 @@ MonoBehaviour:
   carStopDistance: 2
   decelerationRate: 2.5
   acelerationRate: 1
+  startTime: 0
 --- !u!212 &109818503
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -559,6 +560,7 @@ MonoBehaviour:
   carStopDistance: 2
   decelerationRate: 2.5
   acelerationRate: 1
+  startTime: 0
 --- !u!212 &132590611
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1076,6 +1078,7 @@ MonoBehaviour:
   isTimerComplete: 0
   duration: 30
   elapsedTime: 0
+  timeSpent: []
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0

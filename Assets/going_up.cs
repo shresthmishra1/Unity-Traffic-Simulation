@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using JetBrains.Annotations;
 
 public class going_up : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class going_up : MonoBehaviour
     public float acelerationRate = 1f; 
     public float offset;
     public float lightStopDistance = 13f;
+
+    public float startTime;
 
 
     void Start()
@@ -30,6 +33,8 @@ public class going_up : MonoBehaviour
         // Debug.Log(size);
         offset = size.y*0.5f*scale.y+0.95f;
         // offset = size.x*0.5f;
+        startTime = Time.time;
+
     }
 
     
@@ -46,10 +51,17 @@ public class going_up : MonoBehaviour
 
         if(transform.position.y >= 21) 
         {
+
             GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
             main mainscript = mainObj.GetComponent<main>();
+
+            // track that car is passed
             mainscript.AddCar();
-            
+
+            //track time taken to pass
+            float endTime = Time.time;
+            mainscript.timeSpent.Add(endTime - startTime);
+
             Destroy(gameObject);
         }
         else

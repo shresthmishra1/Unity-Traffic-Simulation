@@ -5,6 +5,7 @@ using System.IO;
 using System.Diagnostics;
 
 using Newtonsoft.Json;
+using JetBrains.Annotations;
 
 public class main : MonoBehaviour
 {
@@ -20,8 +21,8 @@ public class main : MonoBehaviour
     double downRight = 0;
     double leftRight = 0;
     double rightRight = 0;
-    double upSpawn = 2.5;
-    double downSpawn = 2.5;
+    double upSpawn = 0.5;
+    double downSpawn = 0.5;
     double leftSpawn = 2.5;  
     double rightSpawn = 2.5;
     double upLeftSpawn = 0;
@@ -84,8 +85,43 @@ public class main : MonoBehaviour
     private string pythonExecutable = "/Users/shresthmishra/Documents/Code/other/trafficenv/bin/python3"; // Ensure Python is in your system PATH, or provide full path
 
     // Start is called before the first frame update
+
+    public List<float> timeSpent;
+
+    public Dictionary<string, object> upStats;
+    public Dictionary<string, object> downStats;
+    public Dictionary<string, object> leftStats;
+    public Dictionary<string, object> rightStats;
+
     void Start()
     {
+        upStats = new Dictionary<string, object> 
+        {
+            { "up spawn", upSpawn },
+            { "total up cars generated", 0 },
+            {"up cars present", new int[(int)duration]}
+        };
+
+        downStats = new Dictionary<string, object> 
+        {
+            { "down spawn", downSpawn },
+            { "total down cars generated", 0 },
+            {"down cars present", new int[(int)duration]}
+        };
+
+        leftStats = new Dictionary<string, object> 
+        {
+            { "left spawn", leftSpawn },  // Fixed to use leftSpawn
+            { "total left cars generated", 0 },
+            {"left cars present", new int[(int)duration]}
+        };
+
+        rightStats = new Dictionary<string, object> 
+        {
+            { "right spawn", rightSpawn },  // Fixed to use rightSpawn
+            { "total right cars generated", 0 },
+            {"right cars present", new int[(int)duration]}
+        };
         Application.targetFrameRate = 120;
         carCounts = new int[(int) duration];
         carspassed = new int[(int) duration];
@@ -115,14 +151,15 @@ public class main : MonoBehaviour
         // Create a dictionary to hold the metrics
         Dictionary<string, object> metrics = new Dictionary<string, object>
         {
-            { "Up", up },
-            { "Down", down },
-            { "Left", left },
-            { "Right", right },
+            {"optimized lights (bool)", gameObject.GetComponent<TrafficLightManager>().optimized},
+            { "Up", upStats },
+            { "Down", downStats },
+            { "Left", leftStats },
+            { "Right", rightStats },
             { "car counts", carCounts },
             {"cars passed", carspassed},
-            {"optimized lights (bool)", gameObject.GetComponent<TrafficLightManager>().optimized},
-            {"congested car count", congestedCars}
+            {"congested car count", congestedCars},
+            {"time spent", timeSpent}
         };
 
         // Serialize the dictionary to JSON with indentation for readability
@@ -204,12 +241,14 @@ public class main : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if(!isTimerComplete)
         {
             int currentSecond = Mathf.FloorToInt(elapsedTime);
+            
+            // update overall carcounts
+            
             if(currentSecond > lastRecordedSecond && currentSecond < carCounts.Length)
             {
                 lastRecordedSecond = currentSecond;
@@ -220,6 +259,69 @@ public class main : MonoBehaviour
 
                 carspassed[currentSecond] = CARSPASSED;
             }
+
+
+
+            int[] upCarsPresent = (int[]) upStats["up cars present"];
+            int[] downCarsPresent = (int[]) downStats["down cars present"];
+            int[] leftCarsPresent = (int[]) leftStats["left cars present"];
+            int[] rightCarsPresent = (int[]) rightStats["right cars present"];
+            // upCarsGenerated[(int)elapsedTime] = upCarsGenerated[(int)elapsedTime - 1] + 1;
+
+            
+            //update side by side car count
+            GameObject[] objects = GameObject.FindObjectsOfType<GameObject>();
+            int upCars = 0;
+            int downCars = 0;
+            int leftCars = 0;
+            int rightCars = 0;
+            foreach (GameObject obj in objects)
+            {
+                if (obj.name == "car_up")
+                {
+                    upCars++;
+                }
+                else if (obj.name == "car_down")
+                {
+                    downCars++;
+                }
+                else if(obj.name == "car_left")
+                {
+                    leftCars++;
+                }
+                else if(obj.name == "car_right")
+                {
+                    rightCars++;
+                }
+            }
+            print(upCars);
+            upCarsPresent[currentSecond] = upCars;
+            downCarsPresent[currentSecond] = downCars;
+            leftCarsPresent[currentSecond] = leftCars;
+            rightCarsPresent[currentSecond] = rightCars;
+
+
+
+
+
+            
+
+            int upCarsGenerated = (int) upStats["total up cars generated"];
+            int downCarsGenerated = (int) downStats["total down cars generated"];
+            int leftCarsGenerated = (int) leftStats["total left cars generated"];
+            int rightCarsGenerated = (int) rightStats["total right cars generated"];
+
+            // // If we are beyond the first second, copy the previous second's count
+            // if (currentSecond > lastRecordedSecond && currentSecond < carCounts.Length && currentSecond > 0)
+            // {
+            //     upCarsGenerated[currentSecond] = upCarsGenerated[currentSecond - 1];
+            //     downCarsGenerated[currentSecond] = downCarsGenerated[currentSecond - 1];
+            //     leftCarsGenerated[currentSecond] = leftCarsGenerated[currentSecond - 1];
+            //     rightCarsGenerated[currentSecond] = rightCarsGenerated[currentSecond - 1];
+            // }   
+
+
+
 
             frameCount += 1;
             up += randomSpawnLane() * upSpawn;
@@ -250,6 +352,8 @@ public class main : MonoBehaviour
                 if (down >= 1 && doesSpawn()) {
                     if (SpawnCar("down", new Vector2(-2.37f, 21.3f), 270, typeof(going_down))) {
                         down -= 1;
+                        downCarsGenerated ++;
+                        downStats["total down cars generated"] = downCarsGenerated;
                     }
                 }
             }
@@ -257,6 +361,8 @@ public class main : MonoBehaviour
                 if (up >= 1 && doesSpawn()) {
                     if (SpawnCar("up", new Vector2(2.37f, -21.3f), 90, typeof(going_up))) {
                         up -= 1;
+                        upCarsGenerated ++;
+                        upStats["total up cars generated"] = upCarsGenerated;
                     }
                 }
             }
@@ -264,6 +370,8 @@ public class main : MonoBehaviour
                 if (right >= 1 && doesSpawn()) {
                     if (SpawnCar("right", new Vector2(-21.3f, -2.37f), 0, typeof(going_right))) {
                         right -= 1;
+                        rightCarsGenerated ++;
+                        rightStats["total right cars generated"] = rightCarsGenerated;
                     }
                 }
             }
@@ -271,6 +379,8 @@ public class main : MonoBehaviour
                 if (left >= 1 && doesSpawn()) {
                     if (SpawnCar("left", new Vector2(21.3f, 2.4f), 180, typeof(going_left))) {
                         left -= 1;
+                        leftCarsGenerated ++;
+                        leftStats["total left cars generated"] = leftCarsGenerated;
                     }
                 }
             }
