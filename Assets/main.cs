@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Diagnostics;
+
+using Newtonsoft.Json;
 
 public class main : MonoBehaviour
 {
@@ -16,10 +20,10 @@ public class main : MonoBehaviour
     double downRight = 0;
     double leftRight = 0;
     double rightRight = 0;
-    double upSpawn = 12;
-    double downSpawn = 12;
-    double leftSpawn = 96;
-    double rightSpawn = 36;
+    double upSpawn = 2.5;
+    double downSpawn = 2.5;
+    double leftSpawn = 2.5;  
+    double rightSpawn = 2.5;
     double upLeftSpawn = 0;
     double downLeftSpawn = 0;
     double leftLeftSpawn = 0;
@@ -55,23 +59,36 @@ public class main : MonoBehaviour
     double rightRightBikeSpawn = 0;
     double frameCount = 0;
 
-
-    
+    private int lastRecordedSecond = -1;
+    public int congestedCars = 0;
 
     private string[] bikeColors = { "orange_bike", "green_bike"};
     private string[] carColors = { "red_car", "blue_car", "white_car", "pink_car" };
 
+
      
-     public int CARSPASSED = 0;
+    public int CARSPASSED = 0;
     //  public bool isTimerComplete { get; private set; } = false;
     public bool isTimerComplete = false;
     public float duration = 30f;
     public float elapsedTime;
 
+    
+    private int[] carCounts;
+
+    private int[] carspassed;
+
+    // File paths (update these paths according to your system)
+    private string jsonDataFolderPath = "/Users/shresthmishra/Documents/Code/unity_data_handling/data";
+    private string pythonScriptPath = "/Users/shresthmishra/Documents/Code/other/traffic_data_to_graph.py"; // Update this path!
+    private string pythonExecutable = "/Users/shresthmishra/Documents/Code/other/trafficenv/bin/python3"; // Ensure Python is in your system PATH, or provide full path
+
     // Start is called before the first frame update
     void Start()
     {
         Application.targetFrameRate = 120;
+        carCounts = new int[(int) duration];
+        carspassed = new int[(int) duration];
         StartCoroutine(StartTimer(duration));
     }
 
@@ -85,16 +102,97 @@ public class main : MonoBehaviour
             elapsedTime += Time.deltaTime; // Increment elapsed time each frame
             yield return null; // Wait for next frame
         }
-
         isTimerComplete = true;
+
+        ExportDataToJSON();
+        // string pythonScriptPath = @"C:\Path\To\generate_graph.py";  // <<< Update this path!
+        // RunPythonScript();
     }
+
+
+    void ExportDataToJSON()
+    {
+        // Create a dictionary to hold the metrics
+        Dictionary<string, object> metrics = new Dictionary<string, object>
+        {
+            { "Up", up },
+            { "Down", down },
+            { "Left", left },
+            { "Right", right },
+            { "car counts", carCounts },
+            {"cars passed", carspassed},
+            {"optimized lights (bool)", gameObject.GetComponent<TrafficLightManager>().optimized},
+            {"congested car count", congestedCars}
+        };
+
+        // Serialize the dictionary to JSON with indentation for readability
+        string json = JsonConvert.SerializeObject(metrics, Formatting.Indented);
+
+        // Define the folder where you want to save the JSON files.
+        // Update this path to your desired folder outside of the Unity project, if needed.
+        // string jsonDataFolderPath = "/Users/shresthmishra/Documents/SimulationData";
+
+        // Ensure the export folder exists; if not, create it.
+        if (!Directory.Exists(jsonDataFolderPath))
+        {
+            Directory.CreateDirectory(jsonDataFolderPath);
+        }
+
+        // Get all files in the folder that match the pattern "data *.json"
+        string[] existingResultsFolders = Directory.GetDirectories(jsonDataFolderPath, "results*");
+    
+
+        // The new file index is one more than the count of existing files (1-indexed)
+        int newIndex = existingResultsFolders.Length + 1;
+
+        string newResultsFolderName = $"results{newIndex}";
+        string newResultsFolderPath = Path.Combine(jsonDataFolderPath, newResultsFolderName);
+        Directory.CreateDirectory(newResultsFolderPath);
+
+        // Define the JSON file path inside the new results folder
+        string newFilePath = Path.Combine(newResultsFolderPath, "data.json");
+
+        // Write the JSON string to the new file
+        File.WriteAllText(newFilePath, json);
+        UnityEngine.Debug.Log("Exported data to JSON at: " + newFilePath);
+    }
+
+
+    // void RunPythonScript()
+    // {
+    //     ProcessStartInfo startInfo = new ProcessStartInfo
+    //     {
+    //         FileName = pythonExecutable,
+    //         // Pass both the Python script path and the JSON file path as arguments
+    //         Arguments = $"\"{pythonScriptPath}\" \"{jsonFilePath}\"",
+    //         RedirectStandardOutput = true,
+    //         RedirectStandardError = true,
+    //         UseShellExecute = false,
+    //         CreateNoWindow = true
+    //     };
+
+    //     Process process = new Process { StartInfo = startInfo };
+    //     process.Start();
+
+    //     // (Optional) Capture the output and errors for debugging
+    //     string output = process.StandardOutput.ReadToEnd();
+    //     string errors = process.StandardError.ReadToEnd();
+    //     process.WaitForExit();
+
+    //     UnityEngine.Debug.Log("Python script output: " + output);
+    //     if (!string.IsNullOrEmpty(errors))
+    //     {
+    //         UnityEngine.Debug.LogError("Python script errors: " + errors);
+    //     }
+    // }
+
     public static double randomSpawnLane()
     {
         // float upperBound = 0.0045f;
         // float lowerBound = 0f;
         // double output = (double)UnityEngine.Random.Range(upperBound, lowerBound);
         // return output;
-        return 0.05;
+        return 0.005;
     }
 
 
@@ -111,6 +209,18 @@ public class main : MonoBehaviour
     {
         if(!isTimerComplete)
         {
+            int currentSecond = Mathf.FloorToInt(elapsedTime);
+            if(currentSecond > lastRecordedSecond && currentSecond < carCounts.Length)
+            {
+                lastRecordedSecond = currentSecond;
+
+                int count = GameObject.FindGameObjectsWithTag("Car").Length;
+                carCounts[currentSecond] = count;
+                UnityEngine.Debug.Log("Second " + currentSecond + ": Car count = " + count);
+
+                carspassed[currentSecond] = CARSPASSED;
+            }
+
             frameCount += 1;
             up += randomSpawnLane() * upSpawn;
             down += randomSpawnLane() * downSpawn;
@@ -297,7 +407,7 @@ public class main : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.A))
             {
-                Debug.Log("A key was pressed");
+                UnityEngine.Debug.Log("A key was pressed");
             }
         }
     }
@@ -305,6 +415,16 @@ public class main : MonoBehaviour
     bool SpawnCar(string name, Vector2 position, float rotation, System.Type componentType)
     {
         bool isOpen = Physics2D.OverlapPoint(position) == null;
+        float radians = rotation * Mathf.Deg2Rad; // convert to radian
+        if(!isOpen)
+        {
+            congestedCars++;
+        }
+        while(!isOpen)
+        {
+            position += -10 * new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
+            isOpen = Physics2D.OverlapPoint(position) == null;
+        }
         if (isOpen)
         {
             GameObject car = new GameObject($"car_{name}");
@@ -355,13 +475,14 @@ public class main : MonoBehaviour
     }
 
     bool doesSpawn() {
-        int doesSpawn = Random.Range(0, 3);
-        if (doesSpawn == 1) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        // int doesSpawn = Random.Range(0, 3);
+        // if (doesSpawn == 1) {
+        //     return false;
+        // }
+        // else {
+        //     return true;
+        // }
+        return true;
     }
 
 }

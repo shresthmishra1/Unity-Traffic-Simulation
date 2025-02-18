@@ -12,7 +12,8 @@ public class going_left : MonoBehaviour
     bool startedCollision = false;
     // public float detectionDistance = 0.5f; // Distance to detect the car in front.
     public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
-    public float decelerationRate = 13f; // Rate to slow down smoothly.
+    public float decelerationRate = 10f; // Rate to slow down smoothly.
+    public float acelerationRate = 1f;
     float offset;
 
 
@@ -113,7 +114,7 @@ public class going_left : MonoBehaviour
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         // rb.linearVelocity = new Vector2(0, 0);
-        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed*Vector2.left, decelerationRate*Time.fixedDeltaTime); 
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed*Vector2.left, acelerationRate*Time.fixedDeltaTime); 
 
     }
     private void stopCar()

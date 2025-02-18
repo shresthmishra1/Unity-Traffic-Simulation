@@ -14,15 +14,19 @@ public class TrafficLightManager : MonoBehaviour
     private Thread serverThread;
     private bool isRunning;
     private readonly Queue<Action> mainThreadActions = new Queue<Action>();
-    public int greenDuration = 2;
-    public float yellowDuration = 0.5f;
+    private int greenDuration = 15;
+    private float yellowDuration = 3f;
 
     // Use phasenum to track which phase is active:
     // Phase 0: lights 0 & 1 are green and lights 2 & 3 are red.
     // Phase 1: lights 0 & 1 are red and lights 2 & 3 are green.
     public int phasenum = 0; 
 
+    public int lightSwitchCount = 0;
     public Boolean optimized = true;
+
+    
+
     void Start()
     {
         // Set the initial state of the lights.
@@ -56,9 +60,13 @@ public class TrafficLightManager : MonoBehaviour
     {
         var Lightlist = new List<traffic_light>(FindObjectsOfType<traffic_light>());
         var sortedLightList = Lightlist.OrderBy(traffic_light => traffic_light.light_number).ToList();
+        GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+        main mainscript = mainObj.GetComponent<main>();
+        bool timeup = mainscript.isTimerComplete;
         // Debug.Log("KFWEKAFKWEKLFWELKKLFWEKLKLFKLKLKLKKLKLKLKLKLKWKELFJEFEWFEWFEWFEWFEWFEWFWEFEWFEWFEWFWEFEWFEWFWE");
         while (true)
         {
+                
                 sortedLightList[0].lightPhase = 0;
                 sortedLightList[1].lightPhase = 0;
                 yield return new WaitForSeconds(greenDuration);
@@ -67,6 +75,10 @@ public class TrafficLightManager : MonoBehaviour
                 yield return new WaitForSeconds(yellowDuration);
                 sortedLightList[0].lightPhase = 2;
                 sortedLightList[1].lightPhase = 2;
+                if(!mainscript.isTimerComplete)
+                {
+                    lightSwitchCount += 1;
+                }
 
                 sortedLightList[2].lightPhase = 0;
                 sortedLightList[3].lightPhase = 0;
@@ -76,6 +88,10 @@ public class TrafficLightManager : MonoBehaviour
                 yield return new WaitForSeconds(yellowDuration);
                 sortedLightList[2].lightPhase = 2;
                 sortedLightList[3].lightPhase = 2;
+                if(!mainscript.isTimerComplete)
+                {
+                    lightSwitchCount += 1;
+                }
                 
                 // sortedLightList[4].isRed = false;
                 // sortedLightList[5].isRed = false;
@@ -212,6 +228,12 @@ public class TrafficLightManager : MonoBehaviour
     // Coroutine that handles switching traffic lights with a yellow transition.
     IEnumerator SwitchTrafficLights(int newPhase)
     {
+
+        GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+        main mainscript = mainObj.GetComponent<main>();
+        bool timeup = mainscript.isTimerComplete;
+
+
         var lightList = new List<traffic_light>(FindObjectsOfType<traffic_light>());
         var sortedLightList = lightList.OrderBy(light => light.light_number).ToList();
 
@@ -219,6 +241,11 @@ public class TrafficLightManager : MonoBehaviour
         {
             // In phase 0, lights 2 and 3 will become red.
             // First, set them to yellow.
+            if(!timeup)
+            {
+                lightSwitchCount += 1;
+            }
+            
             sortedLightList[2].lightPhase = 1;
             sortedLightList[3].lightPhase = 1;
             
@@ -243,6 +270,10 @@ public class TrafficLightManager : MonoBehaviour
         {
             // In phase 1, lights 0 and 1 will become red.
             // First, set them to yellow.
+            if(!timeup)
+            {
+                lightSwitchCount += 1;
+            }
             sortedLightList[0].lightPhase = 1;
             sortedLightList[1].lightPhase = 1;
 
