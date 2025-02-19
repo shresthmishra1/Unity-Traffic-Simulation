@@ -72,8 +72,8 @@ public class going_up : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.transform.position + new Vector3(0f,offset,0f), Vector3.up, carStopDistance);
             if(hit.collider != null ) 
             {
-                bool isRed = sortedLightList[0].lightPhase == 2;
-                bool isYellow = sortedLightList[0].lightPhase == 1;
+                bool isRed = sortedLightList[2].lightPhase == 2;
+                bool isYellow = sortedLightList[2].lightPhase == 1;
                 
                 // Debug.Log("inStopRange true block");
 

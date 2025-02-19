@@ -23,12 +23,12 @@ public class main : MonoBehaviour
     double rightRight = 0;
     double upSpawn = 0.5;
     double downSpawn = 0.5;
-    double leftSpawn = 2.5;  
-    double rightSpawn = 2.5;
-    double upLeftSpawn = 0;
-    double downLeftSpawn = 0;
-    double leftLeftSpawn = 0;
-    double rightLeftSpawn = 0;
+    double leftSpawn = 0.5;  
+    double rightSpawn = 0.5;
+    double upLeftSpawn = 0.5;
+    double downLeftSpawn = 0.5;
+    double leftLeftSpawn = 0.5;
+    double rightLeftSpawn = 0.5;
     double upRightSpawn = 0.75;
     double downRightSpawn = 0.75;
     double leftRightSpawn = 0.75;
@@ -97,30 +97,30 @@ public class main : MonoBehaviour
     {
         upStats = new Dictionary<string, object> 
         {
-            { "up spawn", upSpawn },
-            { "total up cars generated", 0 },
-            {"up cars present", new int[(int)duration]}
+            { "spawn coeff", upSpawn },
+            { "total cars generated", 0 },
+            {"cars present", new int[(int)duration]}
         };
 
         downStats = new Dictionary<string, object> 
         {
-            { "down spawn", downSpawn },
-            { "total down cars generated", 0 },
-            {"down cars present", new int[(int)duration]}
+            { "spawn coeff", downSpawn },
+            { "total cars generated", 0 },
+            {"cars present", new int[(int)duration]}
         };
 
         leftStats = new Dictionary<string, object> 
         {
-            { "left spawn", leftSpawn },  // Fixed to use leftSpawn
-            { "total left cars generated", 0 },
-            {"left cars present", new int[(int)duration]}
+            { "spawn coeff", leftSpawn },  // Fixed to use leftSpawn
+            { "total cars generated", 0 },
+            {"cars present", new int[(int)duration]}
         };
 
         rightStats = new Dictionary<string, object> 
         {
-            { "right spawn", rightSpawn },  // Fixed to use rightSpawn
-            { "total right cars generated", 0 },
-            {"right cars present", new int[(int)duration]}
+            { "spawn coeff", rightSpawn },  // Fixed to use rightSpawn
+            { "total cars generated", 0 },
+            {"cars present", new int[(int)duration]}
         };
         Application.targetFrameRate = 120;
         carCounts = new int[(int) duration];
@@ -152,14 +152,16 @@ public class main : MonoBehaviour
         Dictionary<string, object> metrics = new Dictionary<string, object>
         {
             {"optimized lights (bool)", gameObject.GetComponent<TrafficLightManager>().optimized},
+            {"duration", duration},
+            {"cars passed", carspassed},
+            {"congested car count", congestedCars},
+            {"additional info", "N/A"}, // MAKE SURE TO ADJUST
+            {"time spent", timeSpent},
             { "Up", upStats },
             { "Down", downStats },
             { "Left", leftStats },
             { "Right", rightStats },
-            { "car counts", carCounts },
-            {"cars passed", carspassed},
-            {"congested car count", congestedCars},
-            {"time spent", timeSpent}
+            { "car counts", carCounts }
         };
 
         // Serialize the dictionary to JSON with indentation for readability
@@ -262,10 +264,10 @@ public class main : MonoBehaviour
 
 
 
-            int[] upCarsPresent = (int[]) upStats["up cars present"];
-            int[] downCarsPresent = (int[]) downStats["down cars present"];
-            int[] leftCarsPresent = (int[]) leftStats["left cars present"];
-            int[] rightCarsPresent = (int[]) rightStats["right cars present"];
+            int[] upCarsPresent = (int[]) upStats["cars present"];
+            int[] downCarsPresent = (int[]) downStats["cars present"];
+            int[] leftCarsPresent = (int[]) leftStats["cars present"];
+            int[] rightCarsPresent = (int[]) rightStats["cars present"];
             // upCarsGenerated[(int)elapsedTime] = upCarsGenerated[(int)elapsedTime - 1] + 1;
 
             
@@ -295,10 +297,14 @@ public class main : MonoBehaviour
                 }
             }
             print(upCars);
-            upCarsPresent[currentSecond] = upCars;
-            downCarsPresent[currentSecond] = downCars;
-            leftCarsPresent[currentSecond] = leftCars;
-            rightCarsPresent[currentSecond] = rightCars;
+            if(currentSecond < duration)
+            {
+                upCarsPresent[currentSecond] = upCars;
+                downCarsPresent[currentSecond] = downCars;
+                leftCarsPresent[currentSecond] = leftCars;
+                rightCarsPresent[currentSecond] = rightCars;
+            }
+            
 
 
 
@@ -306,10 +312,10 @@ public class main : MonoBehaviour
 
             
 
-            int upCarsGenerated = (int) upStats["total up cars generated"];
-            int downCarsGenerated = (int) downStats["total down cars generated"];
-            int leftCarsGenerated = (int) leftStats["total left cars generated"];
-            int rightCarsGenerated = (int) rightStats["total right cars generated"];
+            int upCarsGenerated = (int) upStats["total cars generated"];
+            int downCarsGenerated = (int) downStats["total cars generated"];
+            int leftCarsGenerated = (int) leftStats["total cars generated"];
+            int rightCarsGenerated = (int) rightStats["total cars generated"];
 
             // // If we are beyond the first second, copy the previous second's count
             // if (currentSecond > lastRecordedSecond && currentSecond < carCounts.Length && currentSecond > 0)
@@ -353,7 +359,7 @@ public class main : MonoBehaviour
                     if (SpawnCar("down", new Vector2(-2.37f, 21.3f), 270, typeof(going_down))) {
                         down -= 1;
                         downCarsGenerated ++;
-                        downStats["total down cars generated"] = downCarsGenerated;
+                        downStats["total cars generated"] = downCarsGenerated;
                     }
                 }
             }
@@ -362,7 +368,7 @@ public class main : MonoBehaviour
                     if (SpawnCar("up", new Vector2(2.37f, -21.3f), 90, typeof(going_up))) {
                         up -= 1;
                         upCarsGenerated ++;
-                        upStats["total up cars generated"] = upCarsGenerated;
+                        upStats["total cars generated"] = upCarsGenerated;
                     }
                 }
             }
@@ -371,7 +377,7 @@ public class main : MonoBehaviour
                     if (SpawnCar("right", new Vector2(-21.3f, -2.37f), 0, typeof(going_right))) {
                         right -= 1;
                         rightCarsGenerated ++;
-                        rightStats["total right cars generated"] = rightCarsGenerated;
+                        rightStats["total cars generated"] = rightCarsGenerated;
                     }
                 }
             }
@@ -380,7 +386,7 @@ public class main : MonoBehaviour
                     if (SpawnCar("left", new Vector2(21.3f, 2.4f), 180, typeof(going_left))) {
                         left -= 1;
                         leftCarsGenerated ++;
-                        leftStats["total left cars generated"] = leftCarsGenerated;
+                        leftStats["total cars generated"] = leftCarsGenerated;
                     }
                 }
             }
@@ -526,14 +532,52 @@ public class main : MonoBehaviour
     {
         bool isOpen = Physics2D.OverlapPoint(position) == null;
         float radians = rotation * Mathf.Deg2Rad; // convert to radian
+        Vector2 unitVector = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
+        
+
         if(!isOpen)
         {
             congestedCars++;
         }
+
+        for(float i = -3.5f; i<3.5f; i += 0.1f)
+        {
+            if(isOpen)
+            {
+                isOpen = Physics2D.OverlapPoint(position + i * unitVector) == null;
+            }
+            else
+            {
+                break;
+            }
+        }
+        
         while(!isOpen)
         {
-            position += -10 * new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
-            isOpen = Physics2D.OverlapPoint(position) == null;
+            // position += -7 * new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
+
+            // for(float i = -3.5f; i<3.5f; i += 0.1f)
+            // {
+            //     isOpen = Physics2D.OverlapPoint(position + i * unitVector) == null;
+            // }
+
+            // position += -3 * new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
+            // isOpen = Physics2D.OverlapPoint(position) == null;
+            bool openSpot = true;
+            for(float i = -5f; i<5f; i += 0.1f)
+            {
+                if(Physics2D.OverlapPoint(position + i * unitVector) == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    openSpot = false;
+                    break;
+                }
+            }
+            isOpen = openSpot;
+            position += -3 * new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
         }
         if (isOpen)
         {

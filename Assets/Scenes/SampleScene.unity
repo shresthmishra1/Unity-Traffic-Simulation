@@ -1030,7 +1030,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 22.414827
+  orthographic size: 23.130196
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1076,7 +1076,7 @@ MonoBehaviour:
   congestedCars: 0
   CARSPASSED: 0
   isTimerComplete: 0
-  duration: 30
+  duration: 300
   elapsedTime: 0
   timeSpent: []
 --- !u!114 &519420034
@@ -1292,7 +1292,7 @@ MonoBehaviour:
   yellowlight: {fileID: 21300000, guid: 3fb031e6d4f1040cb940df4d9c65743a, type: 3}
   isRed: 1
   isYellow: 0
-  light_number: 3
+  light_number: 7
   greenTime: 0
   redTime: 0
   yellowTime: 0
@@ -1737,7 +1737,7 @@ MonoBehaviour:
   yellowlight: {fileID: 21300000, guid: 3fb031e6d4f1040cb940df4d9c65743a, type: 3}
   isRed: 1
   isYellow: 0
-  light_number: 2
+  light_number: 4
   greenTime: 0
   redTime: 0
   yellowTime: 0
@@ -2207,7 +2207,7 @@ MonoBehaviour:
   yellowlight: {fileID: 21300000, guid: 3fb031e6d4f1040cb940df4d9c65743a, type: 3}
   isRed: 1
   isYellow: 0
-  light_number: 4
+  light_number: 8
   greenTime: 0
   redTime: 0
   yellowTime: 0
@@ -2534,7 +2534,7 @@ MonoBehaviour:
   yellowlight: {fileID: 21300000, guid: 3fb031e6d4f1040cb940df4d9c65743a, type: 3}
   isRed: 1
   isYellow: 0
-  light_number: 1
+  light_number: 3
   greenTime: 0
   redTime: 0
   yellowTime: 0
@@ -2556,7 +2556,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1456133085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2574,7 +2574,7 @@ MonoBehaviour:
   yellowlight: {fileID: 21300000, guid: 9e306b332e3e54b9b9dc1715621a6492, type: 3}
   isRed: 1
   isYellow: 0
-  light_number: 7
+  light_number: 5
   greenTime: 0
   redTime: 0
   yellowTime: 0
@@ -2666,7 +2666,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1492410835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2684,7 +2684,7 @@ MonoBehaviour:
   yellowlight: {fileID: 21300000, guid: 9e306b332e3e54b9b9dc1715621a6492, type: 3}
   isRed: 1
   isYellow: 0
-  light_number: 3
+  light_number: 1
   greenTime: 0
   redTime: 0
   yellowTime: 0
@@ -3055,7 +3055,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1865975445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3073,7 +3073,7 @@ MonoBehaviour:
   yellowlight: {fileID: 21300000, guid: 9e306b332e3e54b9b9dc1715621a6492, type: 3}
   isRed: 1
   isYellow: 0
-  light_number: 8
+  light_number: 6
   greenTime: 0
   redTime: 0
   yellowTime: 0
@@ -3271,7 +3271,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1937010337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3289,7 +3289,7 @@ MonoBehaviour:
   yellowlight: {fileID: 21300000, guid: 9e306b332e3e54b9b9dc1715621a6492, type: 3}
   isRed: 1
   isYellow: 0
-  light_number: 4
+  light_number: 2
   greenTime: 0
   redTime: 0
   yellowTime: 0

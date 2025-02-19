@@ -67,53 +67,66 @@ public class TrafficLightManager : MonoBehaviour
         while (true)
         {
                 
-                sortedLightList[0].lightPhase = 0;
-                sortedLightList[1].lightPhase = 0;
-                yield return new WaitForSeconds(greenDuration);
-                sortedLightList[0].lightPhase = 1;
-                sortedLightList[1].lightPhase = 1;
-                yield return new WaitForSeconds(yellowDuration);
-                sortedLightList[0].lightPhase = 2;
-                sortedLightList[1].lightPhase = 2;
-                if(!mainscript.isTimerComplete)
-                {
-                    lightSwitchCount += 1;
-                }
-
-                sortedLightList[2].lightPhase = 0;
-                sortedLightList[3].lightPhase = 0;
-                yield return new WaitForSeconds(greenDuration);
-                sortedLightList[2].lightPhase = 1;
-                sortedLightList[3].lightPhase = 1;
-                yield return new WaitForSeconds(yellowDuration);
-                sortedLightList[2].lightPhase = 2;
-                sortedLightList[3].lightPhase = 2;
-                if(!mainscript.isTimerComplete)
-                {
-                    lightSwitchCount += 1;
-                }
+        //         sortedLightList[0].lightPhase = 0;
+        //         sortedLightList[1].lightPhase = 0;
+        //         yield return new WaitForSeconds(greenDuration);
+        //         sortedLightList[0].lightPhase = 1;
+        //         sortedLightList[1].lightPhase = 1;
+        //         yield return new WaitForSeconds(yellowDuration);
+        //         sortedLightList[0].lightPhase = 2;
+        //         sortedLightList[1].lightPhase = 2;
+        //         if(!mainscript.isTimerComplete)
+        //         {
+        //             lightSwitchCount += 1;
+        //         }
+        //         Debug.Log("FIRST PHASE IS OVER");
+        //         sortedLightList[2].lightPhase = 0;
+        //         sortedLightList[3].lightPhase = 0;
+        //         yield return new WaitForSeconds(greenDuration);
+        //         sortedLightList[2].lightPhase = 1;
+        //         sortedLightList[3].lightPhase = 1;
+        //         yield return new WaitForSeconds(yellowDuration);
+        //         sortedLightList[2].lightPhase = 2;
+        //         sortedLightList[3].lightPhase = 2;
+        //         if(!mainscript.isTimerComplete)
+        //         {
+        //             lightSwitchCount += 1;
+        //         }
                 
-                // sortedLightList[4].isRed = false;
-                // sortedLightList[5].isRed = false;
-                // yield return new WaitForSeconds(greenDuration);
-                // sortedLightList[4].isYellow = true;
-                // sortedLightList[5].isYellow = true;
-                // yield return new WaitForSeconds(yellowDuration);
-                // sortedLightList[4].isYellow = false;
-                // sortedLightList[4].isRed = true;
-                // sortedLightList[5].isYellow = false;
-                // sortedLightList[5].isRed = true;
+        //         sortedLightList[4].lightPhase = 0;
+        //         sortedLightList[5].lightPhase = 0;
+        //         yield return new WaitForSeconds(greenDuration);
+        //         sortedLightList[4].lightPhase = 1;
+        //         sortedLightList[5].lightPhase = 1;
+        //         yield return new WaitForSeconds(yellowDuration);
+        //         sortedLightList[4].lightPhase = 2;
+        //         sortedLightList[5].lightPhase = 2;
+        //         if(!mainscript.isTimerComplete)
+        //         {
+        //             lightSwitchCount += 1;
+        //         }
                                 
-                // sortedLightList[6].isRed = false;
-                // sortedLightList[7].isRed = false;
-                // yield return new WaitForSeconds(greenDuration);
-                // sortedLightList[6].isYellow = true;
-                // sortedLightList[7].isYellow = true;
-                // yield return new WaitForSeconds(yellowDuration);
-                // sortedLightList[6].isYellow = false;
-                // sortedLightList[6].isRed = true;
-                // sortedLightList[7].isYellow = false;
-                // sortedLightList[7].isRed = true;
+        //         sortedLightList[6].lightPhase = 0;
+        //         sortedLightList[7].lightPhase = 0;
+        //         yield return new WaitForSeconds(greenDuration);
+        //         sortedLightList[6].lightPhase = 1;
+        //         sortedLightList[7].lightPhase = 1;
+        //         yield return new WaitForSeconds(yellowDuration);
+        //         sortedLightList[6].lightPhase = 2;
+        //         sortedLightList[7].lightPhase = 2;
+        //         if(!mainscript.isTimerComplete)
+        //         {
+        //             lightSwitchCount += 1;
+        //         }
+            sortedLightList[0].lightPhase = 2;
+            sortedLightList[1].lightPhase = 2;
+            sortedLightList[2].lightPhase = 2;
+            sortedLightList[3].lightPhase = 2;
+            yield return new WaitForSeconds(yellowDuration);
+            sortedLightList[4].lightPhase = 2;
+            sortedLightList[5].lightPhase = 2;
+            sortedLightList[6].lightPhase = 2;
+            sortedLightList[7].lightPhase = 2;
         }
     }
 
@@ -205,23 +218,60 @@ public class TrafficLightManager : MonoBehaviour
         var lightList = new List<traffic_light>(FindObjectsOfType<traffic_light>());
         var sortedLightList = lightList.OrderBy(light => light.light_number).ToList();
 
-        if (phasenum == 0)
-        {
-            // Phase 0: Lights 0 & 1 green, 2 & 3 red.
-            sortedLightList[0].lightPhase = 0;
-            sortedLightList[1].lightPhase = 0;
+        // if (phasenum == 0)
+        // {
+        //     // Phase 0: Lights 0 & 1 green, 2 & 3 red.
+        //     sortedLightList[0].lightPhase = 0;
+        //     sortedLightList[1].lightPhase = 0;
+        //     sortedLightList[2].lightPhase = 2;
+        //     sortedLightList[3].lightPhase = 2;
+        //     sortedLightList[4].lightPhase = 2;
+        //     sortedLightList[5].lightPhase = 2;
+        //     sortedLightList[6].lightPhase = 2;
+        //     sortedLightList[7].lightPhase = 2;
+        // }
+        // else if (phasenum == 1)
+        // {
+        //     // Phase 1: Lights 0 & 1 red, 2 & 3 green.
+        //     sortedLightList[0].lightPhase = 2;
+        //     sortedLightList[1].lightPhase = 2;
+        //     sortedLightList[2].lightPhase = 0;
+        //     sortedLightList[3].lightPhase = 0;
+        //     sortedLightList[4].lightPhase = 2;
+        //     sortedLightList[5].lightPhase = 2;
+        //     sortedLightList[6].lightPhase = 2;
+        //     sortedLightList[7].lightPhase = 2;
+        // }
+        // else if (phasenum == 2)
+        // {
+        //     sortedLightList[0].lightPhase = 2;
+        //     sortedLightList[1].lightPhase = 2;
+        //     sortedLightList[2].lightPhase = 2;
+        //     sortedLightList[3].lightPhase = 2;
+        //     sortedLightList[4].lightPhase = 0;
+        //     sortedLightList[5].lightPhase = 0;
+        //     sortedLightList[6].lightPhase = 2;
+        //     sortedLightList[7].lightPhase = 2;
+        // }
+        // else if (phasenum == 3)
+        // {
+        //     sortedLightList[0].lightPhase = 2;
+        //     sortedLightList[1].lightPhase = 2;
+        //     sortedLightList[2].lightPhase = 2;
+        //     sortedLightList[3].lightPhase = 2;
+        //     sortedLightList[4].lightPhase = 2;
+        //     sortedLightList[5].lightPhase = 2;
+        //     sortedLightList[6].lightPhase = 0;
+        //     sortedLightList[7].lightPhase = 0;
+        // }
+        sortedLightList[0].lightPhase = 2;
+        sortedLightList[1].lightPhase = 2;
             sortedLightList[2].lightPhase = 2;
             sortedLightList[3].lightPhase = 2;
-        }
-        else if (phasenum == 1)
-        {
-            // Phase 1: Lights 0 & 1 red, 2 & 3 green.
-            sortedLightList[0].lightPhase = 2;
-            sortedLightList[1].lightPhase = 2;
-            sortedLightList[2].lightPhase = 0;
-            sortedLightList[3].lightPhase = 0;
-        }
-
+            sortedLightList[4].lightPhase = 2;
+            sortedLightList[5].lightPhase = 2;
+            sortedLightList[6].lightPhase = 2;
+            sortedLightList[7].lightPhase = 2;
         Debug.Log("Initial traffic lights set.");
     }
 

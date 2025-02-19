@@ -67,8 +67,8 @@ public class going_right : MonoBehaviour
             
             if (hit.collider != null) 
             {
-                bool isRed = sortedLightList[3].lightPhase == 2;
-                bool isYellow = sortedLightList[3].lightPhase == 1;
+                bool isRed = sortedLightList[7].lightPhase == 2;
+                bool isYellow = sortedLightList[7].lightPhase == 1;
             // Debug.Log("inStopRange true block");
             
                 // Debug.Log(hit.collider.gameObject.tag + " THIS IS WHAT THE CAR IS DETECTING");
