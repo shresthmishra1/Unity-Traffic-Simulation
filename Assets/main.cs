@@ -581,24 +581,44 @@ public class main : MonoBehaviour
         }
         if (isOpen)
         {
-            GameObject car = new GameObject($"car_{name}");
-            car.transform.position = position;
-            car.transform.rotation = Quaternion.Euler(0, 0, rotation);
+            bool isAmbulance = Random.Range(0, 10) < 1;
+            if(isAmbulance)
+            {
+                GameObject ambulance = new GameObject($"ambulance_{name}");
+                ambulance.transform.position = position;
+                ambulance.transform.rotation = Quaternion.Euler(0, 0, rotation);
 
-            SpriteRenderer spriteRenderer = car.AddComponent<SpriteRenderer>();
-            spriteRenderer.sortingOrder = 1;
-            int typeOfCar = Random.Range(0, carColors.Length);
-            spriteRenderer.sprite = Resources.Load<Sprite>(carColors[typeOfCar]);
-            if (typeOfCar == 0) {
-                car.transform.localScale = new Vector2(0.1f, 0.1f);
+                SpriteRenderer spriteRenderer = ambulance.AddComponent<SpriteRenderer>();
+                spriteRenderer.sortingOrder = 1;
+                spriteRenderer.sprite = Resources.Load<Sprite>("ambulance");
+                ambulance.transform.localScale = new Vector2(0.7f, 0.7f);
+                ambulance.AddComponent(componentType);
+                // ambulance.transform.localScale = new Vector2(0.1f. 0.1f);
+
             }
-            else if (typeOfCar == 1) {
-                car.transform.localScale = new Vector2(0.28f, 0.28f);
+            else
+            {
+                GameObject car = new GameObject($"car_{name}");
+                car.transform.position = position;
+                car.transform.rotation = Quaternion.Euler(0, 0, rotation);
+
+                SpriteRenderer spriteRenderer = car.AddComponent<SpriteRenderer>();
+                spriteRenderer.sortingOrder = 1;
+                int typeOfCar = Random.Range(0, carColors.Length);
+                spriteRenderer.sprite = Resources.Load<Sprite>(carColors[typeOfCar]);
+                // if (typeOfCar == 0) {
+                //     car.transform.localScale = new Vector2(0.07f, 0.07f);
+                // }
+                // else if (typeOfCar == 1) {
+                //     car.transform.localScale = new Vector2(0.24f, 0.24f);
+                // }
+                // else if (typeOfCar == 2 || typeOfCar == 3) {
+                //     car.transform.localScale = new Vector2(0.31f, 0.31f);
+                // }
+                car.transform.localScale = new Vector2(0.3f, 0.3f);
+                car.AddComponent(componentType);
             }
-            else if (typeOfCar == 2 || typeOfCar == 3) {
-                car.transform.localScale = new Vector2(0.35f, 0.35f);
-            }
-            car.AddComponent(componentType);
+            
             return true;
         }
         return false;

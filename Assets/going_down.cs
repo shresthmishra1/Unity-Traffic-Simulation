@@ -30,7 +30,7 @@ public class going_down : MonoBehaviour
         Vector2 size = boxCollider.size;
         Vector3 scale = this.transform.localScale;
         // Debug.Log(size);
-        offset = size.y*0.5f*scale.y+0.6f;
+        offset = size.y*0.5f*scale.y+0.95f;
         // offset = size.x*0.5f;
         startTime = Time.time;
     }
