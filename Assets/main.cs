@@ -93,6 +93,11 @@ public class main : MonoBehaviour
     public Dictionary<string, object> leftStats;
     public Dictionary<string, object> rightStats;
 
+    public Dictionary<string, object> upLeftStats;
+    public Dictionary<string, object> downLeftStats;
+    public Dictionary<string, object> leftLeftStats;
+    public Dictionary<string, object> rightLeftStats;
+
     void Start()
     {
         upStats = new Dictionary<string, object> 
@@ -119,6 +124,33 @@ public class main : MonoBehaviour
         rightStats = new Dictionary<string, object> 
         {
             { "spawn coeff", rightSpawn },  // Fixed to use rightSpawn
+            { "total cars generated", 0 },
+            {"cars present", new int[(int)duration]}
+        };
+        upLeftStats = new Dictionary<string, object> 
+        {
+            { "spawn coeff", upLeftSpawn },
+            { "total cars generated", 0 },
+            {"cars present", new int[(int)duration]}
+        };
+
+        downLeftStats = new Dictionary<string, object> 
+        {
+            { "spawn coeff", downLeftSpawn },
+            { "total cars generated", 0 },
+            {"cars present", new int[(int)duration]}
+        };
+
+        leftLeftStats = new Dictionary<string, object> 
+        {
+            { "spawn coeff", leftLeftSpawn },  // Fixed to use leftSpawn
+            { "total cars generated", 0 },
+            {"cars present", new int[(int)duration]}
+        };
+
+        rightLeftStats = new Dictionary<string, object> 
+        {
+            { "spawn coeff", rightLeftSpawn },  // Fixed to use rightSpawn
             { "total cars generated", 0 },
             {"cars present", new int[(int)duration]}
         };
@@ -161,6 +193,10 @@ public class main : MonoBehaviour
             { "Down", downStats },
             { "Left", leftStats },
             { "Right", rightStats },
+            {"Up Turning Left", upLeftStats},
+            {"Down Turning Left", downLeftStats},
+            {"Left Turning Left", leftLeftStats},
+            {"Right Turning Left", rightLeftStats},
             { "car counts", carCounts }
         };
 
@@ -268,6 +304,10 @@ public class main : MonoBehaviour
             int[] downCarsPresent = (int[]) downStats["cars present"];
             int[] leftCarsPresent = (int[]) leftStats["cars present"];
             int[] rightCarsPresent = (int[]) rightStats["cars present"];
+            int[] upLeftCarsPresent = (int[]) upStats["cars present"];
+            int[] downLeftCarsPresent = (int[]) downStats["cars present"];
+            int[] leftLeftCarsPresent = (int[]) leftStats["cars present"];
+            int[] rightLeftCarsPresent = (int[]) rightStats["cars present"];
             // upCarsGenerated[(int)elapsedTime] = upCarsGenerated[(int)elapsedTime - 1] + 1;
 
             
@@ -277,6 +317,10 @@ public class main : MonoBehaviour
             int downCars = 0;
             int leftCars = 0;
             int rightCars = 0;
+            int upLeftCars = 0;
+            int downLeftCars = 0;
+            int leftLeftCars = 0;
+            int rightLeftCars = 0;
             foreach (GameObject obj in objects)
             {
                 if (obj.name == "car_up")
@@ -295,6 +339,22 @@ public class main : MonoBehaviour
                 {
                     rightCars++;
                 }
+                else if (obj.name == "car_upLeft")
+                {
+                    upLeftCars++;
+                }
+                else if (obj.name == "car_downLeft")
+                {
+                    downLeftCars++;
+                }
+                else if(obj.name == "car_leftLeft")
+                {
+                    leftLeftCars++;
+                }
+                else if(obj.name == "car_rightLeft")
+                {
+                    rightLeftCars++;
+                }
             }
             print(upCars);
             if(currentSecond < duration)
@@ -303,6 +363,10 @@ public class main : MonoBehaviour
                 downCarsPresent[currentSecond] = downCars;
                 leftCarsPresent[currentSecond] = leftCars;
                 rightCarsPresent[currentSecond] = rightCars;
+                upLeftCarsPresent[currentSecond] = upLeftCars;
+                downLeftCarsPresent[currentSecond] = downLeftCars;
+                leftLeftCarsPresent[currentSecond] = leftLeftCars;
+                rightLeftCarsPresent[currentSecond] = rightLeftCars;
             }
             
 
@@ -316,6 +380,11 @@ public class main : MonoBehaviour
             int downCarsGenerated = (int) downStats["total cars generated"];
             int leftCarsGenerated = (int) leftStats["total cars generated"];
             int rightCarsGenerated = (int) rightStats["total cars generated"];
+
+            int upLeftCarsGenerated = (int) upStats["total cars generated"];
+            int downLeftCarsGenerated = (int) downStats["total cars generated"];
+            int leftLeftCarsGenerated = (int) leftStats["total cars generated"];
+            int rightLeftCarsGenerated = (int) rightStats["total cars generated"];
 
             // // If we are beyond the first second, copy the previous second's count
             // if (currentSecond > lastRecordedSecond && currentSecond < carCounts.Length && currentSecond > 0)
@@ -394,6 +463,8 @@ public class main : MonoBehaviour
                 if (upLeft >= 1 && doesSpawn()) {
                     if (SpawnCar("upLeft", new Vector2(0.8f, -21.5f), 90, typeof(going_up_left))) {
                         upLeft -= 1;
+                        upLeftCarsGenerated ++;
+                        upLeftStats["total cars generated"] = upLeftCarsGenerated;
                     }
                 }
             }
@@ -401,6 +472,8 @@ public class main : MonoBehaviour
                 if (downLeft >= 1 && doesSpawn()) {
                     if (SpawnCar("downLeft", new Vector2(-0.8f, 21.5f), 270, typeof(going_down_left))) {
                         downLeft -= 1;
+                        downLeftCarsGenerated ++;
+                        downLeftStats["total cars generated"] = downLeftCarsGenerated;
                     }
                 }
             }
@@ -408,6 +481,8 @@ public class main : MonoBehaviour
                 if (leftLeft >= 1 && doesSpawn()) {
                     if (SpawnCar("leftLeft", new Vector2(21.5f, 0.8f), 180, typeof(going_left_left))) {
                         leftLeft -= 1;
+                        leftLeftCarsGenerated ++;
+                        leftLeftStats["total cars generated"] = downLeftCarsGenerated;
                     }
                 }
             }
@@ -415,6 +490,8 @@ public class main : MonoBehaviour
                 if (rightLeft >= 1 && doesSpawn()) {
                     if (SpawnCar("rightLeft", new Vector2(-21.5f, -0.8f), 0, typeof(going_right_left))) {
                         rightLeft -= 1;
+                        rightLeftCarsGenerated ++;
+                        rightLeftStats["total cars generated"] = rightLeftCarsGenerated;
                     }
                 }
             }
@@ -581,7 +658,7 @@ public class main : MonoBehaviour
         }
         if (isOpen)
         {
-            bool isAmbulance = Random.Range(0, 10) < 1;
+            bool isAmbulance = Random.Range(0, 1000) < 1;
             if(isAmbulance)
             {
                 GameObject ambulance = new GameObject($"ambulance_{name}");

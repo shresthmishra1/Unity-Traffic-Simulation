@@ -16,10 +16,13 @@ public class going_right_left : MonoBehaviour
     public int currentWaypointIndex = 0; // Tracks the current waypoint
 
     public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
-    public float decelerationRate = 13f; // Rate to slow down smoothly.
+    public float decelerationRate = 10f; // Rate to slow down smoothly.
+    public float acelerationRate = 1f; 
     Vector2 size;
     Vector3 scale;
     Vector3 offset;
+    public float startTime;
+    
     void Start()
     {
         // Automatically find all GameObjects with the tag "Waypoint"
@@ -36,7 +39,7 @@ public class going_right_left : MonoBehaviour
         }
         gameObject.tag = "Car";
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
-        speed = UnityEngine.Random.Range(7.5f, 12f);
+        // speed = UnityEngine.Random.Range(7.5f, 12f);
         graduallyStartCar();
         gameObject.AddComponent<BoxCollider2D>();
         BoxCollider2D boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
@@ -44,6 +47,7 @@ public class going_right_left : MonoBehaviour
         scale = this.transform.localScale;
         // Debug.Log(size);
         // offset = size.x * 0.5f * scale.x + 0.000001f;
+        startTime = Time.time;
     }
 
     void FixedUpdate()
@@ -56,6 +60,11 @@ public class going_right_left : MonoBehaviour
         {
             if(currentWaypointIndex == waypoints.Length -1)
             {
+                GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+                main mainscript = mainObj.GetComponent<main>();
+                mainscript.AddCar();
+                float endTime = Time.time;
+                mainscript.timeSpent.Add(endTime - startTime);
                 Destroy(gameObject);
             }
             else

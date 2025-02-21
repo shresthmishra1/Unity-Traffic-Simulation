@@ -19,6 +19,7 @@ public class going_left_left : MonoBehaviour
     Vector2 size;
     Vector3 scale;
     Vector3 offset;
+    public float startTime;
     void Start()
     {
         // Automatically find all GameObjects with the tag "Waypoint"
@@ -44,6 +45,7 @@ public class going_left_left : MonoBehaviour
         scale = this.transform.localScale;
         // Debug.Log(size);
         // offset = size.x * 0.5f * scale.x + 0.000001f;
+        startTime = Time.time;
     }
 
     void FixedUpdate()
@@ -56,6 +58,11 @@ public class going_left_left : MonoBehaviour
         {
             if(currentWaypointIndex == waypoints.Length -1)
             {
+                GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+                main mainscript = mainObj.GetComponent<main>();
+                mainscript.AddCar();
+                float endTime = Time.time;
+                mainscript.timeSpent.Add(endTime - startTime);
                 Destroy(gameObject);
             }
             else

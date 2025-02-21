@@ -181,7 +181,7 @@ public class TrafficLightManager : MonoBehaviour
             {
                 Debug.Log("Received phase change command.");
                 // Toggle the phase. For example, if phase was 0, change to 1.
-                phasenum = (phasenum + 1) % 2;
+                phasenum = (phasenum + 1) % 4;
 
                 // Enqueue a lambda to start the traffic light transition coroutine on the main thread.
                 lock (mainThreadActions)
@@ -296,8 +296,8 @@ public class TrafficLightManager : MonoBehaviour
                 lightSwitchCount += 1;
             }
             
-            sortedLightList[2].lightPhase = 1;
-            sortedLightList[3].lightPhase = 1;
+            sortedLightList[6].lightPhase = 1;
+            sortedLightList[7].lightPhase = 1;
             
 
             // Ensure lights 0 and 1 remain green (or at least not red/yellow).
@@ -308,8 +308,8 @@ public class TrafficLightManager : MonoBehaviour
             yield return new WaitForSeconds(yellowDuration);
 
             // After 1 second, switch lights 2 and 3 to red.
-            sortedLightList[2].lightPhase = 2;
-            sortedLightList[3].lightPhase = 2;
+            sortedLightList[6].lightPhase = 2;
+            sortedLightList[7].lightPhase = 2;
 
 
             sortedLightList[0].lightPhase = 0;
@@ -341,6 +341,60 @@ public class TrafficLightManager : MonoBehaviour
             // After 1 second, switch lights 0 and 1 to red.
             sortedLightList[0].lightPhase = 2;
             sortedLightList[1].lightPhase = 2;
+            Debug.Log("Phase 1 transition: Lights 0 and 1 are now red.");
+        }
+        else if (newPhase == 2)
+        {
+            // In phase 1, lights 0 and 1 will become red.
+            // First, set them to yellow.
+            if(!timeup)
+            {
+                lightSwitchCount += 1;
+            }
+            sortedLightList[2].lightPhase = 1;
+            sortedLightList[3].lightPhase = 1;
+
+            // Ensure lights 2 and 3 remain red
+            sortedLightList[4].lightPhase = 2;
+            sortedLightList[5].lightPhase = 2;
+
+            Debug.Log("Phase 1 transition: Lights 0 and 1 set to yellow.");
+            yield return new WaitForSeconds(yellowDuration);
+
+            // set lights 2 and 3 to green
+            sortedLightList[4].lightPhase = 0;
+            sortedLightList[5].lightPhase = 0;
+            
+            // After 1 second, switch lights 0 and 1 to red.
+            sortedLightList[2].lightPhase = 2;
+            sortedLightList[3].lightPhase = 2;
+            Debug.Log("Phase 1 transition: Lights 0 and 1 are now red.");
+        }
+        else if (newPhase == 3)
+        {
+            // In phase 1, lights 0 and 1 will become red.
+            // First, set them to yellow.
+            if(!timeup)
+            {
+                lightSwitchCount += 1;
+            }
+            sortedLightList[4].lightPhase = 1;
+            sortedLightList[5].lightPhase = 1;
+
+            // Ensure lights 2 and 3 remain red
+            sortedLightList[6].lightPhase = 2;
+            sortedLightList[7].lightPhase = 2;
+
+            Debug.Log("Phase 1 transition: Lights 0 and 1 set to yellow.");
+            yield return new WaitForSeconds(yellowDuration);
+
+            // set lights 2 and 3 to green
+            sortedLightList[6].lightPhase = 0;
+            sortedLightList[7].lightPhase = 0;
+            
+            // After 1 second, switch lights 0 and 1 to red.
+            sortedLightList[4].lightPhase = 2;
+            sortedLightList[5].lightPhase = 2;
             Debug.Log("Phase 1 transition: Lights 0 and 1 are now red.");
         }
         Debug.Log("Traffic lights updated!");

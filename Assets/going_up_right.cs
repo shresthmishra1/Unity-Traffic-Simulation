@@ -15,6 +15,7 @@ public class going_up_right : MonoBehaviour
 
     public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
     public float decelerationRate = 13f; // Rate to slow down smoothly.
+    public float acelerationRate = 1f; 
     Vector2 size;
     Vector3 scale;
     Vector3 offset;
