@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class TrafficLightManager : MonoBehaviour
     private bool isRunning;
     private readonly Queue<Action> mainThreadActions = new Queue<Action>();
     // private int greenDuration = 45;
-    private int greenDuration = 30;
+    private static int greenDuration = 45;
     private float yellowDuration = 3f;
 
     // Use phasenum to track which phase is active:
@@ -26,6 +27,27 @@ public class TrafficLightManager : MonoBehaviour
     public int lightSwitchCount = 0;
     public Boolean optimized = true;
 
+    public Boolean realVals = true;
+
+    private float prevSwitchTime;
+    private float currTime;
+    private float currPhaseDurationSofar;
+
+    // # small config
+    //  MIN_PHASE_DURATION = 5
+    //  MAX_PHASE_DURATION = 15
+    
+    //  medium config
+    float MIN_PHASE_DURATION = (float) greenDuration/3f;
+    float MAX_PHASE_DURATION = (float) greenDuration;
+
+    // large config
+    // MIN_PHASE_DURATION = 15
+    // MAX_PHASE_DURATION = 45  
+
+
+    float RATIO_THRESHOLD = 2;
+    float ABS_DIFF_THRESHOLD = 7;
     
     public int GetGreenDuration()
     {
@@ -34,12 +56,20 @@ public class TrafficLightManager : MonoBehaviour
     void Start()
     {
         // Set the initial state of the lights.
+        prevSwitchTime = Time.time;
         SetInitialTrafficLights();
-        if(optimized)
+        // Debug.Log(optimized);
+        // Debug.Log(realVals);
+        if(optimized && !realVals)
         {
             StartServer();
         }
-        else
+        // else if(optimized && realVals)
+        // {
+        //     Debug.Log("LALALALA");
+        //     StartCoroutine(RealVals());
+        // }
+        else if(!optimized)
         {
             Debug.Log("KFWEKAFKWEKLFWELKKLFWEKLKLFKLKLKLKKLKLKLKLKLKWKELFJEFEWFEWFEWFEWFEWFEWFWEFEWFEWFEWFWEFEWFEWFWE");
             StartCoroutine(NonOptimized());
@@ -50,6 +80,7 @@ public class TrafficLightManager : MonoBehaviour
     void Update()
     {
         // Process any actions queued from background threads.
+        
         lock (mainThreadActions)
         {
             while (mainThreadActions.Count > 0)
@@ -57,6 +88,7 @@ public class TrafficLightManager : MonoBehaviour
                 mainThreadActions.Dequeue()?.Invoke();
             }
         }
+        currTime = Time.time;
         var Lightlist = new List<traffic_light>(FindObjectsOfType<traffic_light>());
         var sortedLightList = Lightlist.OrderBy(traffic_light => traffic_light.light_number).ToList();
         GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
@@ -71,8 +103,114 @@ public class TrafficLightManager : MonoBehaviour
         mainscript.rightStats["green time"] = sortedLightList[6].greenTime;
         mainscript.leftStats["green time"] = sortedLightList[7].greenTime;
 
+        if(optimized && realVals)
+        {
+            GameObject[] objects = GameObject.FindObjectsOfType<GameObject>();
+            int upCars = 0;
+            int downCars = 0;
+            int leftCars = 0;
+            int rightCars = 0;
+            int upLeftCars = 0;
+            int downLeftCars = 0;
+            int leftLeftCars = 0;
+            int rightLeftCars = 0;
+            foreach (GameObject obj in objects)
+            {
+                if (obj.name == "car_up")
+                {
+                    upCars++;
+                }
+                else if (obj.name == "car_down")
+                {
+                    downCars++;
+                }
+                else if(obj.name == "car_left")
+                {
+                    leftCars++;
+                }
+                else if(obj.name == "car_right")
+                {
+                    rightCars++;
+                }
+                else if (obj.name == "car_upLeft")
+                {
+                    upLeftCars++;
+                }
+                else if (obj.name == "car_downLeft")
+                {
+                    downLeftCars++;
+                }
+                else if(obj.name == "car_leftLeft")
+                {
+                    leftLeftCars++;
+                }
+                else if(obj.name == "car_rightLeft")
+                {
+                    rightLeftCars++;
+                }
+            }
+            // currTime = Time.time;
+            currPhaseDurationSofar = currTime - prevSwitchTime;
+            if(MAX_PHASE_DURATION < currPhaseDurationSofar)
+            {
+                Debug.Log("LALALALA");
+                phasenum = (phasenum + 1) % 4;
+                prevSwitchTime = currTime;
+                StartCoroutine(SwitchTrafficLights(phasenum));
+            }
+            else if(currPhaseDurationSofar < MIN_PHASE_DURATION)
+            {
+            }
+            else if(sortedLightList[0].isGreenLight() && sortedLightList[1].isGreenLight())
+            {
+                Debug.Log("LALALALA");
+                if((upCars + downCars) >= RATIO_THRESHOLD * (upLeftCars + downLeftCars) || (upCars + downCars) - (downLeftCars + upLeftCars) >= ABS_DIFF_THRESHOLD)
+                {
+                    phasenum = (phasenum + 1) % 4;
+                    prevSwitchTime = currTime;
+                    StartCoroutine(SwitchTrafficLights(phasenum));
+                }
+            }
+            else if(sortedLightList[2].isGreenLight() && sortedLightList[3].isGreenLight())
+            {
+                if((leftLeftCars + rightLeftCars) >= RATIO_THRESHOLD * (upCars + downCars) || (leftLeftCars + rightLeftCars) - (upCars + downCars) >= ABS_DIFF_THRESHOLD)
+                {
+                    phasenum = (phasenum + 1) % 4;
+                    prevSwitchTime = currTime;
+                    StartCoroutine(SwitchTrafficLights(phasenum));
+                }
+            }
+            else if(sortedLightList[4].isGreenLight() && sortedLightList[5].isGreenLight())
+            {
+                if((leftCars + rightCars) >= RATIO_THRESHOLD * (leftLeftCars + rightLeftCars) || (leftCars + rightCars) - (rightLeftCars + leftLeftCars) >= ABS_DIFF_THRESHOLD)
+                {
+                    phasenum = (phasenum + 1) % 4;
+                    prevSwitchTime = currTime;
+                    StartCoroutine(SwitchTrafficLights(phasenum));
+                }
+            }
+            else if(sortedLightList[6].isGreenLight() && sortedLightList[7].isGreenLight())
+            {
+                if((upLeftCars + downLeftCars) >= RATIO_THRESHOLD * (leftCars + rightCars) || (upLeftCars + rightCars) - (leftCars + rightCars) >= ABS_DIFF_THRESHOLD)
+                {
+                    phasenum = (phasenum + 1) % 4;
+                    prevSwitchTime = currTime;
+                    StartCoroutine(SwitchTrafficLights(phasenum));
+                }
+            }
+        }
+
     }
 
+    IEnumerator RealVals()
+    {
+
+        while(true)
+        {
+            
+        }
+        
+    }
 
     IEnumerator NonOptimized()
     {

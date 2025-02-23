@@ -51,8 +51,8 @@ public class main : MonoBehaviour
     // double var4 = 1;
 
     // static double sizeCoeff = 0.185; // small
-    static double sizeCoeff = 0.37; // medium
-    // static double sizeCoeff = 0.56; // large
+    // static double sizeCoeff = 0.37; // medium
+    static double sizeCoeff = 0.56; // large
 
 
     double upSpawn = sizeCoeff * var1;
@@ -234,6 +234,7 @@ public class main : MonoBehaviour
         Dictionary<string, object> metrics = new Dictionary<string, object>
         {
             {"optimized lights (bool)", optimized},
+            {"utilizing real vals", gameObject.GetComponent<TrafficLightManager>().realVals},
             {"duration", duration},
             {"green duration (if non optimized)", fixedGreenDuration},
             {"cars passed", carspassed},
@@ -649,10 +650,10 @@ public class main : MonoBehaviour
                     }
                 }
             }
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                UnityEngine.Debug.Log("A key was pressed");
-            }
+            // if (Input.GetKeyDown(KeyCode.A))
+            // {
+            //     UnityEngine.Debug.Log("A key was pressed");
+            // }
         }
     }
 
