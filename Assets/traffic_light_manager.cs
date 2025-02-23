@@ -14,7 +14,8 @@ public class TrafficLightManager : MonoBehaviour
     private Thread serverThread;
     private bool isRunning;
     private readonly Queue<Action> mainThreadActions = new Queue<Action>();
-    private int greenDuration = 15;
+    // private int greenDuration = 45;
+    private int greenDuration = 30;
     private float yellowDuration = 3f;
 
     // Use phasenum to track which phase is active:
@@ -26,7 +27,10 @@ public class TrafficLightManager : MonoBehaviour
     public Boolean optimized = true;
 
     
-
+    public int GetGreenDuration()
+    {
+        return greenDuration;
+    }
     void Start()
     {
         // Set the initial state of the lights.
@@ -53,6 +57,20 @@ public class TrafficLightManager : MonoBehaviour
                 mainThreadActions.Dequeue()?.Invoke();
             }
         }
+        var Lightlist = new List<traffic_light>(FindObjectsOfType<traffic_light>());
+        var sortedLightList = Lightlist.OrderBy(traffic_light => traffic_light.light_number).ToList();
+        GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+        main mainscript = mainObj.GetComponent<main>();
+
+        mainscript.upLeftStats["green time"] = sortedLightList[0].greenTime;
+        mainscript.downLeftStats["green time"] = sortedLightList[1].greenTime;
+        mainscript.upStats["green time"] = sortedLightList[2].greenTime;
+        mainscript.downStats["green time"] = sortedLightList[3].greenTime;
+        mainscript.rightLeftStats["green time"] = sortedLightList[4].greenTime;
+        mainscript.leftLeftStats["green time"] = sortedLightList[5].greenTime;
+        mainscript.rightStats["green time"] = sortedLightList[6].greenTime;
+        mainscript.leftStats["green time"] = sortedLightList[7].greenTime;
+
     }
 
 

@@ -57,7 +57,7 @@ public class going_up_right : MonoBehaviour
             {
                 GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
                 main mainscript = mainObj.GetComponent<main>();
-                mainscript.AddCar();
+                // mainscript.AddCar();
                 Destroy(gameObject);
             }
             else

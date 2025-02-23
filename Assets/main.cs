@@ -6,6 +6,8 @@ using System.Diagnostics;
 
 using Newtonsoft.Json;
 using JetBrains.Annotations;
+using System;
+using Mono.Cecil.Cil;
 
 public class main : MonoBehaviour
 {
@@ -21,18 +23,52 @@ public class main : MonoBehaviour
     double downRight = 0;
     double leftRight = 0;
     double rightRight = 0;
-    double upSpawn = 0.5;
-    double downSpawn = 0.5;
-    double leftSpawn = 0.5;  
-    double rightSpawn = 0.5;
-    double upLeftSpawn = 0.5;
-    double downLeftSpawn = 0.5;
-    double leftLeftSpawn = 0.5;
-    double rightLeftSpawn = 0.5;
-    double upRightSpawn = 0.75;
-    double downRightSpawn = 0.75;
-    double leftRightSpawn = 0.75;
-    double rightRightSpawn = 0.75;
+
+// config 1
+    // static double var1 = 1;
+    // static double var2 = 1;
+    // static double var3 = 1;
+    // static double var4 = 1;
+// config 2
+    // static double var1 = 1.5;
+    // static double var2 = 1.5;
+    // static double var3 = 1;
+    // static double var4 = 1;
+// config 3
+    static double var1 = 3;
+    static double var2 = 3;
+    static double var3 = 1;
+    static double var4 = 1;
+// config 4
+    // static double var1 = 1.5;
+    // static double var2 = 1;
+    // static double var3 = 1;
+    // static double var4 = 1;
+// config 5
+    // double var1 = 3;
+    // double var2 = 1;
+    // double var3 = 1;
+    // double var4 = 1;
+
+    // static double sizeCoeff = 0.185; // small
+    static double sizeCoeff = 0.37; // medium
+    // static double sizeCoeff = 0.56; // large
+
+
+    double upSpawn = sizeCoeff * var1;
+    double downSpawn = sizeCoeff * var2;
+    double leftSpawn = sizeCoeff * var3;  
+    double rightSpawn = sizeCoeff * var4;
+    double upLeftSpawn = sizeCoeff * var1;
+    double downLeftSpawn = sizeCoeff * var2;
+    double leftLeftSpawn = sizeCoeff * var3;
+    double rightLeftSpawn = sizeCoeff * var4;
+    double upRightSpawn = 1.5 * sizeCoeff;
+    double downRightSpawn = 1.5 * sizeCoeff;
+    double leftRightSpawn = 1.5 * sizeCoeff;
+    double rightRightSpawn = 1.5 * sizeCoeff;
+
+
     double upBike = 0;
     double downBike = 0;
     double leftBike = 0;
@@ -104,55 +140,63 @@ public class main : MonoBehaviour
         {
             { "spawn coeff", upSpawn },
             { "total cars generated", 0 },
-            {"cars present", new int[(int)duration]}
+            {"cars present", new int[(int)duration]},
+            {"green time", 0f}
         };
 
         downStats = new Dictionary<string, object> 
         {
             { "spawn coeff", downSpawn },
             { "total cars generated", 0 },
-            {"cars present", new int[(int)duration]}
+            {"cars present", new int[(int)duration]},
+            {"green time", 0f}
         };
 
         leftStats = new Dictionary<string, object> 
         {
             { "spawn coeff", leftSpawn },  // Fixed to use leftSpawn
             { "total cars generated", 0 },
-            {"cars present", new int[(int)duration]}
+            {"cars present", new int[(int)duration]},
+            {"green time", 0f}
         };
 
         rightStats = new Dictionary<string, object> 
         {
             { "spawn coeff", rightSpawn },  // Fixed to use rightSpawn
             { "total cars generated", 0 },
-            {"cars present", new int[(int)duration]}
+            {"cars present", new int[(int)duration]},
+            {"green time", 0f}
         };
         upLeftStats = new Dictionary<string, object> 
         {
             { "spawn coeff", upLeftSpawn },
             { "total cars generated", 0 },
-            {"cars present", new int[(int)duration]}
+            {"cars present", new int[(int)duration]},
+            {"green time", 0f}
         };
 
         downLeftStats = new Dictionary<string, object> 
         {
             { "spawn coeff", downLeftSpawn },
             { "total cars generated", 0 },
-            {"cars present", new int[(int)duration]}
+            {"cars present", new int[(int)duration]},
+            {"green time", 0f}
         };
 
         leftLeftStats = new Dictionary<string, object> 
         {
             { "spawn coeff", leftLeftSpawn },  // Fixed to use leftSpawn
             { "total cars generated", 0 },
-            {"cars present", new int[(int)duration]}
+            {"cars present", new int[(int)duration]},
+            {"green time", 0f}
         };
 
         rightLeftStats = new Dictionary<string, object> 
         {
             { "spawn coeff", rightLeftSpawn },  // Fixed to use rightSpawn
             { "total cars generated", 0 },
-            {"cars present", new int[(int)duration]}
+            {"cars present", new int[(int)duration]},
+            {"green time", 0f}
         };
         Application.targetFrameRate = 120;
         carCounts = new int[(int) duration];
@@ -181,10 +225,17 @@ public class main : MonoBehaviour
     void ExportDataToJSON()
     {
         // Create a dictionary to hold the metrics
+        Boolean optimized = gameObject.GetComponent<TrafficLightManager>().optimized;
+        int fixedGreenDuration = 0;
+        if(!optimized)
+        {
+            fixedGreenDuration = gameObject.GetComponent<TrafficLightManager>().GetGreenDuration();
+        }
         Dictionary<string, object> metrics = new Dictionary<string, object>
         {
-            {"optimized lights (bool)", gameObject.GetComponent<TrafficLightManager>().optimized},
+            {"optimized lights (bool)", optimized},
             {"duration", duration},
+            {"green duration (if non optimized)", fixedGreenDuration},
             {"cars passed", carspassed},
             {"congested car count", congestedCars},
             {"additional info", "N/A"}, // MAKE SURE TO ADJUST
@@ -304,10 +355,10 @@ public class main : MonoBehaviour
             int[] downCarsPresent = (int[]) downStats["cars present"];
             int[] leftCarsPresent = (int[]) leftStats["cars present"];
             int[] rightCarsPresent = (int[]) rightStats["cars present"];
-            int[] upLeftCarsPresent = (int[]) upStats["cars present"];
-            int[] downLeftCarsPresent = (int[]) downStats["cars present"];
-            int[] leftLeftCarsPresent = (int[]) leftStats["cars present"];
-            int[] rightLeftCarsPresent = (int[]) rightStats["cars present"];
+            int[] upLeftCarsPresent = (int[]) upLeftStats["cars present"];
+            int[] downLeftCarsPresent = (int[]) downLeftStats["cars present"];
+            int[] leftLeftCarsPresent = (int[]) leftLeftStats["cars present"];
+            int[] rightLeftCarsPresent = (int[]) rightLeftStats["cars present"];
             // upCarsGenerated[(int)elapsedTime] = upCarsGenerated[(int)elapsedTime - 1] + 1;
 
             
@@ -658,7 +709,11 @@ public class main : MonoBehaviour
         }
         if (isOpen)
         {
-            bool isAmbulance = Random.Range(0, 1000) < 1;
+            if(Vector2.Distance(new Vector2(0, 0), position) > gameObject.GetComponent<TrafficLightManager>().GetGreenDuration() * 3)
+            {
+                return true;
+            }
+            bool isAmbulance = UnityEngine.Random.Range(0, 1000) < -1;
             if(isAmbulance)
             {
                 GameObject ambulance = new GameObject($"ambulance_{name}");
@@ -681,7 +736,7 @@ public class main : MonoBehaviour
 
                 SpriteRenderer spriteRenderer = car.AddComponent<SpriteRenderer>();
                 spriteRenderer.sortingOrder = 1;
-                int typeOfCar = Random.Range(0, carColors.Length);
+                int typeOfCar = UnityEngine.Random.Range(0, carColors.Length);
                 spriteRenderer.sprite = Resources.Load<Sprite>(carColors[typeOfCar]);
                 // if (typeOfCar == 0) {
                 //     car.transform.localScale = new Vector2(0.07f, 0.07f);
@@ -710,7 +765,7 @@ public class main : MonoBehaviour
             
             SpriteRenderer spriteRenderer = bike.AddComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = 1;
-            int typeOfBike = Random.Range(0, bikeColors.Length);
+            int typeOfBike = UnityEngine.Random.Range(0, bikeColors.Length);
             spriteRenderer.sprite = Resources.Load<Sprite>(bikeColors[typeOfBike]);
             bike.AddComponent(componentType);
 

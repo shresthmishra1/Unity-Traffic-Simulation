@@ -16,6 +16,7 @@ public class going_left_left : MonoBehaviour
 
     public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
     public float decelerationRate = 13f; // Rate to slow down smoothly.
+    public float acelerationRate = 13f; 
     Vector2 size;
     Vector3 scale;
     Vector3 offset;
@@ -37,7 +38,7 @@ public class going_left_left : MonoBehaviour
         gameObject.tag = "Car";
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
         rb.angularVelocity = 0f;
-        speed = UnityEngine.Random.Range(7.5f, 12f);
+        // speed = UnityEngine.Random.Range(7.5f, 12f);
         graduallyStartCar();
         gameObject.AddComponent<BoxCollider2D>();
         BoxCollider2D boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
@@ -73,6 +74,7 @@ public class going_left_left : MonoBehaviour
         // graduallyStartCar();
 
         var direction = FindDirection().normalized;
+        // offset = direction * size.x * scale.x * 0.8f + 0.8f * direction;
         offset = direction * size.x * scale.x * 0.6f + 0.25f * direction;
         int layerNum = 0;
         string layerName = LayerMask.LayerToName(layerNum);
@@ -148,7 +150,7 @@ public class going_left_left : MonoBehaviour
         
         var direction = FindDirection();
         // Move the car towards the waypoint
-        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed * direction, decelerationRate * Time.fixedDeltaTime);
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed * direction, acelerationRate * Time.fixedDeltaTime);
         // rb.linearVelocity = speed*direction;
         RotateSprite(direction);
 
@@ -174,10 +176,10 @@ public class going_left_left : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 5f);
     }
 
-    // void OnDrawGizmos()
-    // {
-    //     // Visualize the ray in the Scene view.
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawRay(transform.transform.position + offset, FindDirection() * carStopDistance);
-    // }
+    void OnDrawGizmos()
+    {
+        // Visualize the ray in the Scene view.
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.transform.position + offset, FindDirection() * carStopDistance);
+    }
 }

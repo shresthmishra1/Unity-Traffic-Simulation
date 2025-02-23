@@ -16,8 +16,8 @@ public class going_right_left : MonoBehaviour
     public int currentWaypointIndex = 0; // Tracks the current waypoint
 
     public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
-    public float decelerationRate = 10f; // Rate to slow down smoothly.
-    public float acelerationRate = 1f; 
+    public float decelerationRate = 13f; // Rate to slow down smoothly.
+    public float acelerationRate = 13f; 
     Vector2 size;
     Vector3 scale;
     Vector3 offset;
@@ -75,7 +75,7 @@ public class going_right_left : MonoBehaviour
         // graduallyStartCar();
 
         var direction = FindDirection().normalized;
-        offset = direction * size.x * scale.x * 0.6f + 0.6f * direction;
+        offset = direction * size.x * scale.x * 0.5f + 0.25f * direction;
         int layerNum = 0;
         string layerName = LayerMask.LayerToName(layerNum);
         int layerMask = LayerMask.GetMask(layerName);
@@ -149,7 +149,7 @@ public class going_right_left : MonoBehaviour
         
         var direction = FindDirection();
         // Move the car towards the waypoint
-        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed * direction, decelerationRate * Time.fixedDeltaTime);
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed * direction, acelerationRate * Time.fixedDeltaTime);
         // rb.linearVelocity = speed*direction;
         RotateSprite(direction);
 
@@ -175,10 +175,10 @@ public class going_right_left : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 5f);
     }
 
-    // void OnDrawGizmos()
-    // {
-    //     // Visualize the ray in the Scene view.
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawRay(transform.transform.position + offset, FindDirection() * carStopDistance);
-    // }
+    void OnDrawGizmos()
+    {
+        // Visualize the ray in the Scene view.
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.transform.position + offset, FindDirection() * carStopDistance);
+    }
 }

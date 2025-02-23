@@ -34,7 +34,7 @@ public class going_down_right : MonoBehaviour
         }
         gameObject.tag = "Car";
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
-        speed = UnityEngine.Random.Range(7.5f, 12f);
+        // speed = UnityEngine.Random.Range(7.5f, 12f);
         graduallyStartCar();
         gameObject.AddComponent<BoxCollider2D>();
         BoxCollider2D boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
@@ -56,7 +56,7 @@ public class going_down_right : MonoBehaviour
             {
                 GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
                 main mainscript = mainObj.GetComponent<main>();
-                mainscript.AddCar();
+                // mainscript.AddCar();
                 Destroy(gameObject);
             }
             else
