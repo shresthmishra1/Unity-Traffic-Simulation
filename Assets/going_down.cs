@@ -7,19 +7,24 @@ using System.Linq;
 
 public class going_down : MonoBehaviour
 {
-    float speed = 10f;
+    static GameObject mainObj;
+    static main mainscript;
+    float speed;
     //[SerializeField] right_traffic_light trafficlight;
     bool startedCollision = false;
     // public float detectionDistance = 0.5f; // Distance to detect the car in front.
     public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
     public float decelerationRate = 10f; // Rate to slow down smoothly.
-    public float acelerationRate = 1f;
+    public float acelerationRate = 10f;
     float offset;
 
     public float startTime;
 
     void Start()
     {
+        mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+        mainscript = mainObj.GetComponent<main>();
+        speed = mainscript.carspeed;
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
         // float speed = UnityEngine.Random.Range(2.5f, 12.5f);
         // startCar();

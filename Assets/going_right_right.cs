@@ -8,7 +8,9 @@ using Unity.Mathematics;
 
 public class going_right_right : MonoBehaviour
 {
-    float speed = 10f;
+    static GameObject mainObj;
+    static main mainscript;
+    float speed;
     bool startedCollision = false;
     bool stopped = false;
 
@@ -22,6 +24,9 @@ public class going_right_right : MonoBehaviour
     Vector3 offset;
     void Start()
     {
+        mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+        mainscript = mainObj.GetComponent<main>();
+        speed = mainscript.carspeed;
         // Automatically find all GameObjects with the tag "Waypoint"
         GameObject[] waypointObjects = GameObject.FindGameObjectsWithTag("RightRightWaypoint");
 
@@ -36,7 +41,7 @@ public class going_right_right : MonoBehaviour
         }
         gameObject.tag = "Car";
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
-        speed = UnityEngine.Random.Range(7.5f, 12f);
+        // speed = UnityEngine.Random.Range(7.5f, 12f);
         graduallyStartCar();
         gameObject.AddComponent<BoxCollider2D>();
         BoxCollider2D boxCollider = this.gameObject.GetComponent<BoxCollider2D>();

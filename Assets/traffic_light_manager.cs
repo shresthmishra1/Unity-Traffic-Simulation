@@ -103,6 +103,62 @@ public class TrafficLightManager : MonoBehaviour
         mainscript.rightStats["green time"] = sortedLightList[6].greenTime;
         mainscript.leftStats["green time"] = sortedLightList[7].greenTime;
 
+        if(mainscript.currentSecond > mainscript.lastRecordedSecond)
+        {
+            if(phasenum == 0)
+            {
+                ((bool[]) mainscript.upLeftStats["is green"])[mainscript.currentSecond] = true;
+                ((bool[]) mainscript.downLeftStats["is green"])[mainscript.currentSecond] = true;
+                ((bool[]) mainscript.upStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.downStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.leftLeftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.rightLeftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.leftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.rightStats["is green"])[mainscript.currentSecond] = false;
+                   
+            }
+            else if(phasenum == 1)
+            {
+                ((bool[]) mainscript.upLeftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.downLeftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.upStats["is green"])[mainscript.currentSecond] = true;
+                ((bool[]) mainscript.downStats["is green"])[mainscript.currentSecond] = true;
+                ((bool[]) mainscript.leftLeftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.rightLeftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.leftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.rightStats["is green"])[mainscript.currentSecond] = false;
+                
+            }
+            else if(phasenum == 2)
+            {
+                ((bool[]) mainscript.upLeftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.downLeftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.upStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.downStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.leftLeftStats["is green"])[mainscript.currentSecond] = true;
+                ((bool[]) mainscript.rightLeftStats["is green"])[mainscript.currentSecond] = true;
+                ((bool[]) mainscript.leftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.rightStats["is green"])[mainscript.currentSecond] = false;
+                
+            }
+            else if(phasenum == 3)
+            {
+                ((bool[]) mainscript.upLeftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.downLeftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.upStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.downStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.leftLeftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.rightLeftStats["is green"])[mainscript.currentSecond] = false;
+                ((bool[]) mainscript.leftStats["is green"])[mainscript.currentSecond] = true;
+                ((bool[]) mainscript.rightStats["is green"])[mainscript.currentSecond] = true;
+                
+            }
+        }
+
+        
+
+
+
         if(optimized && realVals)
         {
             GameObject[] objects = GameObject.FindObjectsOfType<GameObject>();
@@ -153,7 +209,6 @@ public class TrafficLightManager : MonoBehaviour
             currPhaseDurationSofar = currTime - prevSwitchTime;
             if(MAX_PHASE_DURATION < currPhaseDurationSofar)
             {
-                Debug.Log("LALALALA");
                 phasenum = (phasenum + 1) % 4;
                 prevSwitchTime = currTime;
                 StartCoroutine(SwitchTrafficLights(phasenum));
@@ -163,11 +218,11 @@ public class TrafficLightManager : MonoBehaviour
             }
             else if(sortedLightList[0].isGreenLight() && sortedLightList[1].isGreenLight())
             {
-                Debug.Log("LALALALA");
                 if((upCars + downCars) >= RATIO_THRESHOLD * (upLeftCars + downLeftCars) || (upCars + downCars) - (downLeftCars + upLeftCars) >= ABS_DIFF_THRESHOLD)
                 {
                     phasenum = (phasenum + 1) % 4;
                     prevSwitchTime = currTime;
+                    Debug.Log((upCars + downCars) >= RATIO_THRESHOLD * (upLeftCars + downLeftCars));
                     StartCoroutine(SwitchTrafficLights(phasenum));
                 }
             }
@@ -177,6 +232,7 @@ public class TrafficLightManager : MonoBehaviour
                 {
                     phasenum = (phasenum + 1) % 4;
                     prevSwitchTime = currTime;
+                    Debug.Log((leftLeftCars + rightLeftCars) >= RATIO_THRESHOLD * (upCars + downCars));
                     StartCoroutine(SwitchTrafficLights(phasenum));
                 }
             }
@@ -186,6 +242,7 @@ public class TrafficLightManager : MonoBehaviour
                 {
                     phasenum = (phasenum + 1) % 4;
                     prevSwitchTime = currTime;
+                    Debug.Log((leftCars + rightCars) >= RATIO_THRESHOLD * (leftLeftCars + rightLeftCars));
                     StartCoroutine(SwitchTrafficLights(phasenum));
                 }
             }
@@ -195,6 +252,7 @@ public class TrafficLightManager : MonoBehaviour
                 {
                     phasenum = (phasenum + 1) % 4;
                     prevSwitchTime = currTime;
+                    Debug.Log((upLeftCars + downLeftCars) >= RATIO_THRESHOLD * (leftCars + rightCars));
                     StartCoroutine(SwitchTrafficLights(phasenum));
                 }
             }

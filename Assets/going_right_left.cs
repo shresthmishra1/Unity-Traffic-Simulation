@@ -8,7 +8,9 @@ using Unity.Mathematics;
 
 public class going_right_left : MonoBehaviour
 {
-    float speed = 10f;
+    static GameObject mainObj;
+    static main mainscript;
+    float speed;
     bool startedCollision = false;
     bool stopped = false;
 
@@ -16,8 +18,8 @@ public class going_right_left : MonoBehaviour
     public int currentWaypointIndex = 0; // Tracks the current waypoint
 
     public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
-    public float decelerationRate = 13f; // Rate to slow down smoothly.
-    public float acelerationRate = 13f; 
+    public float decelerationRate = 10f; // Rate to slow down smoothly.
+    public float acelerationRate = 10f; 
     Vector2 size;
     Vector3 scale;
     Vector3 offset;
@@ -25,6 +27,9 @@ public class going_right_left : MonoBehaviour
     
     void Start()
     {
+        mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+        mainscript = mainObj.GetComponent<main>();
+        speed = mainscript.carspeed;
         // Automatically find all GameObjects with the tag "Waypoint"
         GameObject[] waypointObjects = GameObject.FindGameObjectsWithTag("RightLeftWaypoint");
 
@@ -175,10 +180,10 @@ public class going_right_left : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 5f);
     }
 
-    void OnDrawGizmos()
-    {
-        // Visualize the ray in the Scene view.
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.transform.position + offset, FindDirection() * carStopDistance);
-    }
+    // void OnDrawGizmos()
+    // {
+    //     // Visualize the ray in the Scene view.
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawRay(transform.transform.position + offset, FindDirection() * carStopDistance);
+    // }
 }

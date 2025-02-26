@@ -4,10 +4,13 @@ using UnityEngine;
 using System;
 using System.Linq;
 using Unity.Mathematics;
+using JetBrains.Annotations;
 
 public class going_left_left : MonoBehaviour
 {
-    float speed = 10f;
+    static GameObject mainObj;
+    static main mainscript;
+    float speed;
     bool startedCollision = false;
     bool stopped = false;
 
@@ -15,14 +18,18 @@ public class going_left_left : MonoBehaviour
     public int currentWaypointIndex = 0; // Tracks the current waypoint
 
     public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
-    public float decelerationRate = 13f; // Rate to slow down smoothly.
-    public float acelerationRate = 13f; 
+    public float decelerationRate = 35f; // Rate to slow down smoothly.
+    public float acelerationRate = 10f; 
+    public float reactionTimeFactor = 0.25f;
     Vector2 size;
     Vector3 scale;
     Vector3 offset;
     public float startTime;
     void Start()
     {
+        mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+        mainscript = mainObj.GetComponent<main>();
+        speed = mainscript.carspeed;
         // Automatically find all GameObjects with the tag "Waypoint"
         GameObject[] waypointObjects = GameObject.FindGameObjectsWithTag("LeftLeftWaypoint");
 
@@ -75,10 +82,13 @@ public class going_left_left : MonoBehaviour
 
         var direction = FindDirection().normalized;
         // offset = direction * size.x * scale.x * 0.8f + 0.8f * direction;
-        offset = direction * size.x * scale.x * 0.6f + 0.25f * direction;
+        offset = direction * size.x * scale.x * 0.5f + 0.25f * direction;
         int layerNum = 0;
         string layerName = LayerMask.LayerToName(layerNum);
         int layerMask = LayerMask.GetMask(layerName);
+        // float dynamicDistance = carStopDistance + rb.linearVelocity.magnitude * reactionTimeFactor;
+        // RaycastHit2D hit = Physics2D.Raycast(transform.position + offset, direction, dynamicDistance);
+        // Debug.Log("KADOOOOOOOOONGAAAAAAAA");
         RaycastHit2D hit = Physics2D.Raycast(transform.position + offset, direction, carStopDistance);
         if (hit.collider != null) 
         {
@@ -159,6 +169,24 @@ public class going_left_left : MonoBehaviour
         
     }
 
+    // private void graduallyStartCar()
+    // {
+    //     Rigidbody2D rb = GetComponent<Rigidbody2D>();
+    //     // Get the desired normalized direction to the current waypoint.
+    //     Vector2 targetDirection = FindDirection().normalized;
+
+    //     // Update the current speed gradually toward the target speed.
+    //     float currentSpeed = rb.linearVelocity.magnitude;
+    //     float newSpeed = Mathf.MoveTowards(currentSpeed, speed, acelerationRate * Time.fixedDeltaTime);
+
+    //     // Apply the new speed in the exact desired direction.
+    //     rb.linearVelocity = targetDirection * newSpeed;
+
+    //     // Update the car's rotation to match its movement direction.
+    //     RotateSprite(targetDirection);
+    // }
+
+
     private void stopCar()
     {
         //Debug.Log("car will stop");
@@ -168,6 +196,30 @@ public class going_left_left : MonoBehaviour
         stopped = true;
     }
 
+    // private void stopCar()
+    // {
+    //     Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        
+    //     // Get the current speed (magnitude of the velocity)
+    //     float currentSpeed = rb.linearVelocity.magnitude;
+        
+    //     // Gradually reduce the speed to zero using MoveTowards
+    //     float newSpeed = Mathf.MoveTowards(currentSpeed, 0f, decelerationRate * Time.fixedDeltaTime);
+        
+    //     // Maintain the current direction if there's any velocity, otherwise just set to zero
+    //     if(newSpeed > 0f)
+    //         rb.linearVelocity = rb.linearVelocity.normalized * newSpeed;
+    //     else
+    //         rb.linearVelocity = Vector2.zero;
+
+    //     Debug.Log("Stopping car, new velocity: " + rb.linearVelocity);
+
+
+    //     // Rigidbody2D rb = GetComponent<Rigidbody2D>();
+    //     // // This will move the entire velocity vector toward zero at a fixed rate.
+    //     // rb.linearVelocity = Vector2.MoveTowards(rb.linearVelocity, Vector2.zero, decelerationRate * Time.fixedDeltaTime);
+    // }
+
     private void RotateSprite(Vector3 direction)
     {
         float angle = Mathf.Atan2(math.abs(direction.y), math.abs(direction.x)) * Mathf.Rad2Deg + 180;
@@ -176,10 +228,12 @@ public class going_left_left : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 5f);
     }
 
-    void OnDrawGizmos()
-    {
-        // Visualize the ray in the Scene view.
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.transform.position + offset, FindDirection() * carStopDistance);
-    }
+    // void OnDrawGizmos()
+    // {
+    //     // Visualize the ray in the Scene view.
+    //     Gizmos.color = Color.red;
+    //     Rigidbody2D rb = GetComponent<Rigidbody2D>();
+    //     float dynamicDistance = carStopDistance + rb.linearVelocity.magnitude * reactionTimeFactor;
+    //     Gizmos.DrawRay(transform.transform.position + offset, FindDirection() * dynamicDistance);
+    // }
 }

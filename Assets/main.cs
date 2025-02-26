@@ -30,15 +30,15 @@ public class main : MonoBehaviour
     // static double var3 = 1;
     // static double var4 = 1;
 // config 2
-    // static double var1 = 1.5;
-    // static double var2 = 1.5;
-    // static double var3 = 1;
-    // static double var4 = 1;
-// config 3
-    static double var1 = 3;
-    static double var2 = 3;
+    static double var1 = 1.5;
+    static double var2 = 1.5;
     static double var3 = 1;
     static double var4 = 1;
+// config 3
+    // static double var1 = 3;
+    // static double var2 = 3;
+    // static double var3 = 1;
+    // static double var4 = 1;
 // config 4
     // static double var1 = 1.5;
     // static double var2 = 1;
@@ -96,19 +96,22 @@ public class main : MonoBehaviour
     double rightRightBikeSpawn = 0;
     double frameCount = 0;
 
-    private int lastRecordedSecond = -1;
+    public int lastRecordedSecond = -1;
     public int congestedCars = 0;
 
     private string[] bikeColors = { "orange_bike", "green_bike"};
     private string[] carColors = { "red_car", "blue_car", "white_car", "pink_car" };
 
 
+    public int currentSecond;
      
     public int CARSPASSED = 0;
     //  public bool isTimerComplete { get; private set; } = false;
     public bool isTimerComplete = false;
     public float duration = 30f;
     public float elapsedTime;
+
+    public float carspeed = 5f;
 
     
     private int[] carCounts;
@@ -141,7 +144,8 @@ public class main : MonoBehaviour
             { "spawn coeff", upSpawn },
             { "total cars generated", 0 },
             {"cars present", new int[(int)duration]},
-            {"green time", 0f}
+            {"green time", 0f},
+            {"is green", new bool[(int) duration]}
         };
 
         downStats = new Dictionary<string, object> 
@@ -149,7 +153,8 @@ public class main : MonoBehaviour
             { "spawn coeff", downSpawn },
             { "total cars generated", 0 },
             {"cars present", new int[(int)duration]},
-            {"green time", 0f}
+            {"green time", 0f},
+            {"is green", new bool[(int) duration]}
         };
 
         leftStats = new Dictionary<string, object> 
@@ -157,7 +162,8 @@ public class main : MonoBehaviour
             { "spawn coeff", leftSpawn },  // Fixed to use leftSpawn
             { "total cars generated", 0 },
             {"cars present", new int[(int)duration]},
-            {"green time", 0f}
+            {"green time", 0f},
+            {"is green", new bool[(int) duration]}
         };
 
         rightStats = new Dictionary<string, object> 
@@ -165,14 +171,16 @@ public class main : MonoBehaviour
             { "spawn coeff", rightSpawn },  // Fixed to use rightSpawn
             { "total cars generated", 0 },
             {"cars present", new int[(int)duration]},
-            {"green time", 0f}
+            {"green time", 0f},
+            {"is green", new bool[(int) duration]}
         };
         upLeftStats = new Dictionary<string, object> 
         {
             { "spawn coeff", upLeftSpawn },
             { "total cars generated", 0 },
             {"cars present", new int[(int)duration]},
-            {"green time", 0f}
+            {"green time", 0f},
+            {"is green", new bool[(int) duration]}
         };
 
         downLeftStats = new Dictionary<string, object> 
@@ -180,7 +188,8 @@ public class main : MonoBehaviour
             { "spawn coeff", downLeftSpawn },
             { "total cars generated", 0 },
             {"cars present", new int[(int)duration]},
-            {"green time", 0f}
+            {"green time", 0f},
+            {"is green", new bool[(int) duration]}
         };
 
         leftLeftStats = new Dictionary<string, object> 
@@ -188,7 +197,8 @@ public class main : MonoBehaviour
             { "spawn coeff", leftLeftSpawn },  // Fixed to use leftSpawn
             { "total cars generated", 0 },
             {"cars present", new int[(int)duration]},
-            {"green time", 0f}
+            {"green time", 0f},
+            {"is green", new bool[(int) duration]}
         };
 
         rightLeftStats = new Dictionary<string, object> 
@@ -196,7 +206,8 @@ public class main : MonoBehaviour
             { "spawn coeff", rightLeftSpawn },  // Fixed to use rightSpawn
             { "total cars generated", 0 },
             {"cars present", new int[(int)duration]},
-            {"green time", 0f}
+            {"green time", 0f},
+            {"is green", new bool[(int) duration]}
         };
         Application.targetFrameRate = 120;
         carCounts = new int[(int) duration];
@@ -335,7 +346,7 @@ public class main : MonoBehaviour
     {
         if(!isTimerComplete)
         {
-            int currentSecond = Mathf.FloorToInt(elapsedTime);
+            currentSecond = Mathf.FloorToInt(elapsedTime);
             
             // update overall carcounts
             
@@ -349,6 +360,9 @@ public class main : MonoBehaviour
 
                 carspassed[currentSecond] = CARSPASSED;
             }
+
+
+
 
 
 
@@ -435,7 +449,7 @@ public class main : MonoBehaviour
 
             int upLeftCarsGenerated = (int) upStats["total cars generated"];
             int downLeftCarsGenerated = (int) downStats["total cars generated"];
-            int leftLeftCarsGenerated = (int) leftStats["total cars generated"];
+            int leftLeftCarsGenerated = (int) leftLeftStats["total cars generated"];
             int rightLeftCarsGenerated = (int) rightStats["total cars generated"];
 
             // // If we are beyond the first second, copy the previous second's count
@@ -477,7 +491,7 @@ public class main : MonoBehaviour
             rightRightBike += randomSpawnLane() * rightRightBikeSpawn;
             if (frameCount % 120 == 0) {
                 if (down >= 1 && doesSpawn()) {
-                    if (SpawnCar("down", new Vector2(-2.37f, 21.3f), 270, typeof(going_down))) {
+                    if (SpawnCar("down", new Vector2(-2.37f, 28.87f), 270, typeof(going_down))) {
                         down -= 1;
                         downCarsGenerated ++;
                         downStats["total cars generated"] = downCarsGenerated;
@@ -486,7 +500,7 @@ public class main : MonoBehaviour
             }
             if (frameCount % 120 == 5) {
                 if (up >= 1 && doesSpawn()) {
-                    if (SpawnCar("up", new Vector2(2.37f, -21.3f), 90, typeof(going_up))) {
+                    if (SpawnCar("up", new Vector2(2.37f, -28.87f), 90, typeof(going_up))) {
                         up -= 1;
                         upCarsGenerated ++;
                         upStats["total cars generated"] = upCarsGenerated;
@@ -495,7 +509,7 @@ public class main : MonoBehaviour
             }
             if (frameCount % 120 == 10) {
                 if (right >= 1 && doesSpawn()) {
-                    if (SpawnCar("right", new Vector2(-21.3f, -2.37f), 0, typeof(going_right))) {
+                    if (SpawnCar("right", new Vector2(-28.87f, -2.37f), 0, typeof(going_right))) {
                         right -= 1;
                         rightCarsGenerated ++;
                         rightStats["total cars generated"] = rightCarsGenerated;
@@ -504,7 +518,7 @@ public class main : MonoBehaviour
             }
             if (frameCount % 120 == 15) {
                 if (left >= 1 && doesSpawn()) {
-                    if (SpawnCar("left", new Vector2(21.3f, 2.4f), 180, typeof(going_left))) {
+                    if (SpawnCar("left", new Vector2(28.87f, 1.9f), 180, typeof(going_left))) {
                         left -= 1;
                         leftCarsGenerated ++;
                         leftStats["total cars generated"] = leftCarsGenerated;
@@ -513,16 +527,16 @@ public class main : MonoBehaviour
             }
             if (frameCount % 120 == 20) {
                 if (upLeft >= 1 && doesSpawn()) {
-                    if (SpawnCar("upLeft", new Vector2(0.8f, -21.5f), 90, typeof(going_up_left))) {
+                    if (SpawnCar("upLeft", new Vector2(0.8f, -28.87f), 90, typeof(going_up_left))) {
                         upLeft -= 1;
                         upLeftCarsGenerated ++;
                         upLeftStats["total cars generated"] = upLeftCarsGenerated;
                     }
                 }
             }
-            if (frameCount % 120 == 25) {
+            if (frameCount % 120 == 0) {
                 if (downLeft >= 1 && doesSpawn()) {
-                    if (SpawnCar("downLeft", new Vector2(-0.8f, 21.5f), 270, typeof(going_down_left))) {
+                    if (SpawnCar("downLeft", new Vector2(-0.8f, 28.87f), 270, typeof(going_down_left))) {
                         downLeft -= 1;
                         downLeftCarsGenerated ++;
                         downLeftStats["total cars generated"] = downLeftCarsGenerated;
@@ -531,7 +545,7 @@ public class main : MonoBehaviour
             }
             if (frameCount % 120 == 30) {
                 if (leftLeft >= 1 && doesSpawn()) {
-                    if (SpawnCar("leftLeft", new Vector2(21.5f, 0.8f), 180, typeof(going_left_left))) {
+                    if (SpawnCar("leftLeft", new Vector2(28.87f, 0.8f), 180, typeof(going_left_left))) {
                         leftLeft -= 1;
                         leftLeftCarsGenerated ++;
                         leftLeftStats["total cars generated"] = downLeftCarsGenerated;
@@ -540,7 +554,7 @@ public class main : MonoBehaviour
             }
             if (frameCount % 120 == 35) {
                 if (rightLeft >= 1 && doesSpawn()) {
-                    if (SpawnCar("rightLeft", new Vector2(-21.5f, -0.8f), 0, typeof(going_right_left))) {
+                    if (SpawnCar("rightLeft", new Vector2(-28.87f, -0.8f), 0, typeof(going_right_left))) {
                         rightLeft -= 1;
                         rightLeftCarsGenerated ++;
                         rightLeftStats["total cars generated"] = rightLeftCarsGenerated;
@@ -549,28 +563,28 @@ public class main : MonoBehaviour
             }
             if (frameCount % 120 == 40) {
                 if (upRight >= 1 && doesSpawn()) {
-                    if (SpawnCar("upRight", new Vector2(3.94f, -21.5f), 90, typeof(going_up_right))) {
+                    if (SpawnCar("upRight", new Vector2(3.94f, -28.87f), 90, typeof(going_up_right))) {
                         upRight -= 1;
                     }
                 }
             }
             if (frameCount % 120 == 45) {
                 if (downRight >= 1 && doesSpawn()) {
-                    if (SpawnCar("downRight", new Vector2(-3.94f, 21.5f), 270, typeof(going_down_right))) {
+                    if (SpawnCar("downRight", new Vector2(-3.94f, 28.87f), 270, typeof(going_down_right))) {
                         downRight -= 1;
                     }
                 }
             }
             if (frameCount % 120 == 50) {
                 if (leftRight >= 1 && doesSpawn()) {
-                    if (SpawnCar("leftRight", new Vector2(21.5f, 3.94f), 180, typeof(going_left_right))) {
+                    if (SpawnCar("leftRight", new Vector2(28.87f, 3.94f), 180, typeof(going_left_right))) {
                         leftRight -= 1;
                     }
                 }
             }
             if (frameCount % 120 == 55) {
                 if (rightRight >= 1 && doesSpawn()) {
-                    if (SpawnCar("rightRight", new Vector2(-21.5f, -3.94f), 0, typeof(going_right_right))) {
+                    if (SpawnCar("rightRight", new Vector2(-28.87f, -3.94f), 0, typeof(going_right_right))) {
                         rightRight -= 1;
                     }
                 }

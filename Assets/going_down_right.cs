@@ -6,7 +6,9 @@ using System.Linq;
 using Unity.Mathematics;
 public class going_down_right : MonoBehaviour
 {
-    float speed = 10f;
+    static GameObject mainObj;
+    static main mainscript;
+    float speed;
     bool startedCollision = false;
     bool stopped = false;
 
@@ -20,6 +22,9 @@ public class going_down_right : MonoBehaviour
     Vector3 offset;
     void Start()
     {
+        mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+        mainscript = mainObj.GetComponent<main>();
+        speed = mainscript.carspeed;
         // Automatically find all GameObjects with the tag "Waypoint"
         GameObject[] waypointObjects = GameObject.FindGameObjectsWithTag("DownRightWaypoint");
 
