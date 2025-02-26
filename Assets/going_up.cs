@@ -55,7 +55,7 @@ public class going_up : MonoBehaviour
 
         
 
-        if(transform.position.y >= 21) 
+        if(transform.position.y >= 29) 
         {
 
             GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");

@@ -58,7 +58,7 @@ public class going_right : MonoBehaviour
         var sortedLightList = Lightlist.OrderBy(traffic_light => traffic_light.light_number).ToList();
 
         // Step 1: resets car position if car goes off screen
-        if (transform.position.x >= 21)
+        if (transform.position.x >= 29)
         {
             GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
             main mainscript = mainObj.GetComponent<main>();
