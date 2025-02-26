@@ -8,7 +8,9 @@ using Unity.Mathematics;
 
 public class going_right_left : MonoBehaviour
 {
-    float speed = 10f;
+    static GameObject mainObj;
+    static main mainscript;
+    float speed;
     bool startedCollision = false;
     bool stopped = false;
 
@@ -16,12 +18,18 @@ public class going_right_left : MonoBehaviour
     public int currentWaypointIndex = 0; // Tracks the current waypoint
 
     public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
-    public float decelerationRate = 13f; // Rate to slow down smoothly.
+    public float decelerationRate = 10f; // Rate to slow down smoothly.
+    public float acelerationRate = 10f; 
     Vector2 size;
     Vector3 scale;
     Vector3 offset;
+    public float startTime;
+    
     void Start()
     {
+        mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+        mainscript = mainObj.GetComponent<main>();
+        speed = mainscript.carspeed;
         // Automatically find all GameObjects with the tag "Waypoint"
         GameObject[] waypointObjects = GameObject.FindGameObjectsWithTag("RightLeftWaypoint");
 
@@ -36,7 +44,7 @@ public class going_right_left : MonoBehaviour
         }
         gameObject.tag = "Car";
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
-        speed = UnityEngine.Random.Range(7.5f, 12f);
+        // speed = UnityEngine.Random.Range(7.5f, 12f);
         graduallyStartCar();
         gameObject.AddComponent<BoxCollider2D>();
         BoxCollider2D boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
@@ -44,6 +52,7 @@ public class going_right_left : MonoBehaviour
         scale = this.transform.localScale;
         // Debug.Log(size);
         // offset = size.x * 0.5f * scale.x + 0.000001f;
+        startTime = Time.time;
     }
 
     void FixedUpdate()
@@ -56,6 +65,11 @@ public class going_right_left : MonoBehaviour
         {
             if(currentWaypointIndex == waypoints.Length -1)
             {
+                GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+                main mainscript = mainObj.GetComponent<main>();
+                mainscript.AddCar();
+                float endTime = Time.time;
+                mainscript.timeSpent.Add(endTime - startTime);
                 Destroy(gameObject);
             }
             else
@@ -66,7 +80,7 @@ public class going_right_left : MonoBehaviour
         // graduallyStartCar();
 
         var direction = FindDirection().normalized;
-        offset = direction * size.x * scale.x * 0.6f + 0.6f * direction;
+        offset = direction * size.x * scale.x * 0.5f + 0.25f * direction;
         int layerNum = 0;
         string layerName = LayerMask.LayerToName(layerNum);
         int layerMask = LayerMask.GetMask(layerName);
@@ -74,8 +88,8 @@ public class going_right_left : MonoBehaviour
         if (hit.collider != null) 
         {
             //Debug.Log("raycast hitting something");
-            bool isRed = sortedLightList[6].isRed;
-            bool isYellow = sortedLightList[6].isYellow;
+            bool isRed = sortedLightList[4].lightPhase == 2;
+            bool isYellow = sortedLightList[4].lightPhase == 1;
         // Debug.Log("inStopRange true block");
         
             // Debug.Log(hit.collider.gameObject.tag + " THIS IS WHAT THE CAR IS DETECTING");
@@ -140,7 +154,7 @@ public class going_right_left : MonoBehaviour
         
         var direction = FindDirection();
         // Move the car towards the waypoint
-        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed * direction, decelerationRate * Time.fixedDeltaTime);
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed * direction, acelerationRate * Time.fixedDeltaTime);
         // rb.linearVelocity = speed*direction;
         RotateSprite(direction);
 

@@ -11,18 +11,29 @@ using System.Linq;
 
 public class going_right : MonoBehaviour
 {
-    float speed = 10f;
+    static GameObject mainObj;
+    static main mainscript;
+    float speed;
     //[SerializeField] right_traffic_light trafficlight;
     bool startedCollision = false;
     // public float detectionDistance = 0.5f; // Distance to detect the car in front.
     public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
-    public float decelerationRate = 13f; // Rate to slow down smoothly.
+    public float decelerationRate = 10f; // Rate to slow down smoothly.
+    public float acelerationRate = 10f;
     float offset;
 
+    public float startTime;
     void Start()
     {
+        mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+        mainscript = mainObj.GetComponent<main>();
+        speed = mainscript.carspeed;
+        mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+        mainscript = mainObj.GetComponent<main>();
+        speed = mainscript.carspeed;
+
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
-        float speed = UnityEngine.Random.Range(2.5f, 12.5f);
+        // float speed = UnityEngine.Random.Range(2.5f, 12.5f);
         // startCar();
         graduallyStartCar();
         gameObject.AddComponent<BoxCollider2D>();
@@ -32,6 +43,8 @@ public class going_right : MonoBehaviour
         Vector3 scale = this.transform.localScale;
         offset = size.x * 0.5f * scale.x + 0.4f;
         // offset = size.x*0.5f;
+
+        startTime = Time.time;
 
     }
 
@@ -47,6 +60,11 @@ public class going_right : MonoBehaviour
         // Step 1: resets car position if car goes off screen
         if (transform.position.x >= 21)
         {
+            GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+            main mainscript = mainObj.GetComponent<main>();
+            mainscript.AddCar();
+            float endTime = Time.time;
+            mainscript.timeSpent.Add(endTime - startTime);
             Destroy(gameObject);
         }
         else
@@ -58,8 +76,8 @@ public class going_right : MonoBehaviour
             
             if (hit.collider != null) 
             {
-                bool isRed = sortedLightList[4].isRed;
-                bool isYellow = sortedLightList[4].isYellow;
+                bool isRed = sortedLightList[7].lightPhase == 2;
+                bool isYellow = sortedLightList[7].lightPhase == 1;
             // Debug.Log("inStopRange true block");
             
                 // Debug.Log(hit.collider.gameObject.tag + " THIS IS WHAT THE CAR IS DETECTING");
@@ -116,7 +134,7 @@ public class going_right : MonoBehaviour
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         // rb.linearVelocity = new Vector2(0, 0);
-        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed * Vector2.right, decelerationRate * Time.fixedDeltaTime);
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed * Vector2.right, acelerationRate * Time.fixedDeltaTime);
 
     }
     private void stopCar()

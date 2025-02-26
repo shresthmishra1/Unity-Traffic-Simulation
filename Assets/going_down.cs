@@ -7,19 +7,26 @@ using System.Linq;
 
 public class going_down : MonoBehaviour
 {
-    float speed = 10f;
+    static GameObject mainObj;
+    static main mainscript;
+    float speed;
     //[SerializeField] right_traffic_light trafficlight;
     bool startedCollision = false;
     // public float detectionDistance = 0.5f; // Distance to detect the car in front.
     public float carStopDistance = 1f; // Minimum distance to stop the car a little before.
-    public float decelerationRate = 13f; // Rate to slow down smoothly.
+    public float decelerationRate = 10f; // Rate to slow down smoothly.
+    public float acelerationRate = 10f;
     float offset;
 
+    public float startTime;
 
     void Start()
     {
+        mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+        mainscript = mainObj.GetComponent<main>();
+        speed = mainscript.carspeed;
         Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
-        float speed = UnityEngine.Random.Range(2.5f, 12.5f);
+        // float speed = UnityEngine.Random.Range(2.5f, 12.5f);
         // startCar();
         graduallyStartCar();
         gameObject.AddComponent<BoxCollider2D>();
@@ -28,8 +35,9 @@ public class going_down : MonoBehaviour
         Vector2 size = boxCollider.size;
         Vector3 scale = this.transform.localScale;
         // Debug.Log(size);
-        offset = size.y*0.5f*scale.y+0.6f;
+        offset = size.y*0.5f*scale.y+0.95f;
         // offset = size.x*0.5f;
+        startTime = Time.time;
     }
     
 
@@ -42,6 +50,13 @@ public class going_down : MonoBehaviour
         // Step 1: resets car position if car goes off screen
         if(-21 >= transform.position.y) 
         {
+            GameObject mainObj = GameObject.FindGameObjectWithTag("MainCamera");
+            main mainscript = mainObj.GetComponent<main>();
+            mainscript.AddCar();
+            float endTime = Time.time;
+
+            mainscript.timeSpent.Add(endTime - startTime);
+
             Destroy(gameObject);
         }
         else
@@ -53,8 +68,8 @@ public class going_down : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0f,-offset,0f), Vector2.down, carStopDistance);
             if(hit.collider != null ) 
             {
-            bool isRed = sortedLightList[1].isRed;
-            bool isYellow = sortedLightList[1].isYellow;
+            bool isRed = sortedLightList[3].lightPhase == 2;
+            bool isYellow = sortedLightList[3].lightPhase == 1;
             // Debug.Log("inStopRange true block");
                 // Debug.Log(hit.transform);
                 float distanceToOther = hit.distance;
@@ -106,7 +121,7 @@ public class going_down : MonoBehaviour
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         // rb.linearVelocity = new Vector2(0, 0);
-        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed*Vector2.down, decelerationRate*Time.fixedDeltaTime); 
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, speed*Vector2.down, acelerationRate*Time.fixedDeltaTime); 
 
     }
     private void stopCar()
