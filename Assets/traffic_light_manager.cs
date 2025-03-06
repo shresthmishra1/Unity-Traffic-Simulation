@@ -16,7 +16,7 @@ public class TrafficLightManager : MonoBehaviour
     private bool isRunning;
     private readonly Queue<Action> mainThreadActions = new Queue<Action>();
     // private int greenDuration = 45;
-    private static int greenDuration = 45;
+    private static int greenDuration = 30;
     private float yellowDuration = 3f;
 
     // Use phasenum to track which phase is active:
@@ -172,35 +172,36 @@ public class TrafficLightManager : MonoBehaviour
             int rightLeftCars = 0;
             foreach (GameObject obj in objects)
             {
-                if (obj.name == "car_up")
+                if (obj.name == "car_up" && obj.transform.position.y < -3.75)
                 {
                     upCars++;
+                    
                 }
-                else if (obj.name == "car_down")
+                else if (obj.name == "car_down" && obj.transform.position.y > 3.75)
                 {
                     downCars++;
                 }
-                else if(obj.name == "car_left")
+                else if(obj.name == "car_left" && obj.transform.position.x > 3)
                 {
                     leftCars++;
                 }
-                else if(obj.name == "car_right")
+                else if(obj.name == "car_right" && obj.transform.position.x < -3.5)
                 {
                     rightCars++;
                 }
-                else if (obj.name == "car_upLeft")
+                else if (obj.name == "car_upLeft" && obj.transform.position.y < -3.75)
                 {
                     upLeftCars++;
                 }
-                else if (obj.name == "car_downLeft")
+                else if (obj.name == "car_downLeft" && obj.transform.position.y > 3.75)
                 {
                     downLeftCars++;
                 }
-                else if(obj.name == "car_leftLeft")
+                else if(obj.name == "car_leftLeft" && obj.transform.position.x > 3)
                 {
                     leftLeftCars++;
                 }
-                else if(obj.name == "car_rightLeft")
+                else if(obj.name == "car_rightLeft" && obj.transform.position.x < -3.5)
                 {
                     rightLeftCars++;
                 }

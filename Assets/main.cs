@@ -30,15 +30,15 @@ public class main : MonoBehaviour
     // static double var3 = 1;
     // static double var4 = 1;
 // config 2
-    static double var1 = 1.5;
-    static double var2 = 1.5;
-    static double var3 = 1;
-    static double var4 = 1;
-// config 3
-    // static double var1 = 3;
-    // static double var2 = 3;
+    // static double var1 = 1.5;
+    // static double var2 = 1.5;
     // static double var3 = 1;
     // static double var4 = 1;
+// config 3
+    static double var1 = 3;
+    static double var2 = 3;
+    static double var3 = 1;
+    static double var4 = 1;
 // config 4
     // static double var1 = 1.5;
     // static double var2 = 1;
@@ -52,21 +52,24 @@ public class main : MonoBehaviour
 
     // static double sizeCoeff = 0.185; // small
     // static double sizeCoeff = 0.37; // medium
-    static double sizeCoeff = 0.56; // large
+    // public static double sizeCoeff = 0.56; // large
+    public static double sizeCoeff;
 
 
-    double upSpawn = sizeCoeff * var1;
-    double downSpawn = sizeCoeff * var2;
-    double leftSpawn = sizeCoeff * var3;  
-    double rightSpawn = sizeCoeff * var4;
-    double upLeftSpawn = sizeCoeff * var1;
-    double downLeftSpawn = sizeCoeff * var2;
-    double leftLeftSpawn = sizeCoeff * var3;
-    double rightLeftSpawn = sizeCoeff * var4;
-    double upRightSpawn = 1.5 * sizeCoeff;
-    double downRightSpawn = 1.5 * sizeCoeff;
-    double leftRightSpawn = 1.5 * sizeCoeff;
-    double rightRightSpawn = 1.5 * sizeCoeff;
+    double upSpawn;
+    double downSpawn;
+    double leftSpawn;  
+    double rightSpawn;
+    double upLeftSpawn;
+    double downLeftSpawn;
+    double leftLeftSpawn;
+    double rightLeftSpawn;
+    double upRightSpawn;
+    double downRightSpawn;
+    double leftRightSpawn;
+    double rightRightSpawn;
+
+    
 
 
     double upBike = 0;
@@ -118,6 +121,7 @@ public class main : MonoBehaviour
 
     private int[] carspassed;
 
+    public Boolean changingLights = true;
     // File paths (update these paths according to your system)
     private string jsonDataFolderPath = "/Users/shresthmishra/Documents/Code/unity_data_handling/data";
     private string pythonScriptPath = "/Users/shresthmishra/Documents/Code/other/traffic_data_to_graph.py"; // Update this path!
@@ -137,8 +141,87 @@ public class main : MonoBehaviour
     public Dictionary<string, object> leftLeftStats;
     public Dictionary<string, object> rightLeftStats;
 
+
+    // private int[] sizeCoeffArr = [0.56, 0.39, 0.24, 0.13, 0.48, 63];
+    // private double[] sizeCoeffArr = {0.56, 0.39, 0.13, 0.48, 63};
+    // private double[] sizeCoeffArr = {0.56, 0.56, 0.56, 0.56, 0.56, 0.56, 0.56};
+    
+    // private double[] sizeCoeffArr = {0.03, 0.56, 0.18, 0.39, 0.13, 0.98, 0.10};
+
+    // private double[] sizeCoeffArr = {0.47, 0.55, 0.08, 0.53, 0.01, 0.48, 0.17};
+
+
+    // private double[] sizeCoeffArr = {0.29, 0.18, 0.89, 0.31, 0.49, 0.79, 0.98};
+    // private double[] sizeCoeffArr = {0.38, 0.60, 0.47, 0.24, 0.09, 0.10, 0.47};
+
+    // private double[] sizeCoeffArr = {0.11, 0.91, 0.45, 0.79, 0.32, 0.24, 0.31};
+    private double[] sizeCoeffArr = {0.58, 0.10, 0.7, 0.38, 0.53, 0.40, 0.60};
+
+    // Optional override flag
+    public bool useConfigOverride = true;
+    
+    // New configArr: each sub-array has 4 values for var1, var2, var3, and var4.
+    // These values are chosen to be "spread out" and appear non-sequential but are predetermined.
+    // private double[][] configArr = new double[][] {
+    //     new double[]{ 1.0, 1.0, 1.0, 1.0 },    // config 1
+    //     new double[]{ 1.5, 1.5, 1.0, 1.0 },    // config 2
+    //     new double[]{ 3.0, 3.0, 1.0, 1.0 },    // config 3
+    //     new double[]{ 1.5, 1.0, 1.0, 1.0 },    // config 4
+    //     new double[]{ 3.0, 1.0, 1.0, 1.0 },    // config 5
+    //     new double[]{ 2.5, 2.0, 1.2, 1.8 },    // config 6
+    //     new double[]{ 0.8, 1.2, 0.8, 0.8 }     // config 7
+    // };
+
+
+    // private double[][] configArr = new double[][] {
+    //     new double[]{ 2.2, 1.8, 1.1, 0.9 },    // config 8
+    //     new double[]{ 1.3, 2.7, 0.9, 1.4 },    // config 9
+    //     new double[]{ 2.8, 1.4, 1.5, 1.2 },    // config 10
+    //     new double[]{ 1.7, 2.1, 1.3, 1.6 },    // config 11
+    //     new double[]{ 3.2, 0.8, 1.7, 1.1 },    // config 12
+    //     new double[]{ 2.0, 2.5, 1.0, 1.3 },    // config 13
+    //     new double[]{ 0.9, 1.6, 1.2, 2.4 }     // config 14
+    // };
+
+    // private double[][] configArr = new double[][] {
+    // new double[]{ 1.3, 1.0, 1.7, 0.9 },   // Config 8
+    //     new double[]{ 1.5, 1.2, 0.8, 1.6 },   // Config 9
+    //     new double[]{ 1.0, 1.7, 1.4, 0.85 },  // Config 10
+    //     new double[]{ 1.6, 0.9, 1.2, 1.1 },   // Config 11
+    //     new double[]{ 1.2, 1.5, 0.95, 1.3 },  // Config 12
+    //     new double[]{ 0.9, 1.0, 1.7, 1.4 },   // Config 13
+    //     new double[]{ 1.4, 1.2, 0.85, 1.6 }   // Config 14
+    // };
+
+    // private double[][] configArr = new double[][] {
+    // new double[]{ 1.1, 1.4, 0.9, 1.6 },   // Config 1
+    //     new double[]{ 1.3, 1.0, 1.7, 0.85 },  // Config 2
+    //     new double[]{ 0.95, 1.5, 1.2, 1.4 },  // Config 3
+    //     new double[]{ 1.6, 0.9, 1.3, 1.1 },   // Config 4
+    //     new double[]{ 1.0, 1.7, 1.4, 0.8 },   // Config 5
+    //     new double[]{ 1.5, 1.2, 1.0, 0.95 },  // Config 6
+    //     new double[]{ 0.85, 1.3, 1.6, 1.1 },  // Config 7
+    // };
+
+    private double[][] configArr = new double[][] {
+    new double[]{ 1.8, 1.4, 0.9, 1.1 },   // Config 8
+        new double[]{ 0.8, 1.5, 1.3, 1.2 },   // Config 9
+        new double[]{ 1.6, 1.0, 1.4, 0.9 },   // Config 10
+        new double[]{ 1.3, 0.7, 1.5, 1.2 },   // Config 11
+        new double[]{ 0.9, 1.8, 1.0, 1.4 },   // Config 12
+        new double[]{ 1.2, 1.5, 0.8, 1.6 },   // Config 13
+        new double[]{ 1.4, 1.1, 1.7, 0.8 }    // Config 14
+    };
+
+
+    
+
+
+
+
     void Start()
     {
+        SetSpawnVals();
         upStats = new Dictionary<string, object> 
         {
             { "spawn coeff", upSpawn },
@@ -342,12 +425,66 @@ public class main : MonoBehaviour
         }
     }
 
+    private void SetSpawnVals()
+    {
+        upSpawn = sizeCoeff * var1;
+        downSpawn = sizeCoeff * var2;
+        leftSpawn = sizeCoeff * var3;  
+        rightSpawn = sizeCoeff * var4;
+        upLeftSpawn = sizeCoeff * var1;
+        downLeftSpawn = sizeCoeff * var2;
+        leftLeftSpawn = sizeCoeff * var3;
+        rightLeftSpawn = sizeCoeff * var4;
+        upRightSpawn = 1.5 * sizeCoeff;
+        downRightSpawn = 1.5 * sizeCoeff;
+        leftRightSpawn = 1.5 * sizeCoeff;
+        rightRightSpawn = 1.5 * sizeCoeff;
+    }
+    void ChangeTraffic()
+    {
+        // UnityEngine.Debug.Log(sizeCoeff);
+        // sizeCoeff = sizeCoeffArr[(int)(currentSecond/30)];
+        // SetSpawnVals();
+
+        UnityEngine.Debug.Log(sizeCoeff);
+
+        // Update sizeCoeff using the predetermined sizeCoeffArr (unchanged)
+        sizeCoeff = sizeCoeffArr[(int)(currentSecond / 30)];
+
+        UnityEngine.Debug.Log(useConfigOverride);
+
+        // Optional override: update var1, var2, var3, and var4 from configArr every 30 seconds.
+        if (useConfigOverride)
+        {
+            
+            int configIndex = (int)(currentSecond / 30);
+            // Make sure we don't go out of bounds (duration is 210 so there should be exactly 7 intervals)
+            if (configIndex < configArr.Length)
+            {
+                double[] currentConfig = configArr[configIndex];
+                var1 = currentConfig[0];
+                var2 = currentConfig[1];
+                var3 = currentConfig[2];
+                var4 = currentConfig[3];
+                UnityEngine.Debug.Log($"Config override applied: var1={var1}, var2={var2}, var3={var3}, var4={var4}");
+            }
+        }
+
+        // Refresh spawn values with the updated var's and sizeCoeff.
+        SetSpawnVals();
+    }
     void Update()
     {
         if(!isTimerComplete)
         {
             currentSecond = Mathf.FloorToInt(elapsedTime);
             
+
+            if(changingLights && currentSecond % 30 == 0)
+            {
+                ChangeTraffic();
+            }
+
             // update overall carcounts
             
             if(currentSecond > lastRecordedSecond && currentSecond < carCounts.Length)
@@ -389,35 +526,36 @@ public class main : MonoBehaviour
             int rightLeftCars = 0;
             foreach (GameObject obj in objects)
             {
-                if (obj.name == "car_up")
+                if (obj.name == "car_up" && obj.transform.position.y < -3.75)
                 {
                     upCars++;
+                    
                 }
-                else if (obj.name == "car_down")
+                else if (obj.name == "car_down" && obj.transform.position.y > 3.75)
                 {
                     downCars++;
                 }
-                else if(obj.name == "car_left")
+                else if(obj.name == "car_left" && obj.transform.position.x > 3)
                 {
                     leftCars++;
                 }
-                else if(obj.name == "car_right")
+                else if(obj.name == "car_right" && obj.transform.position.x < -3.5)
                 {
                     rightCars++;
                 }
-                else if (obj.name == "car_upLeft")
+                else if (obj.name == "car_upLeft" && obj.transform.position.y < -3.75)
                 {
                     upLeftCars++;
                 }
-                else if (obj.name == "car_downLeft")
+                else if (obj.name == "car_downLeft" && obj.transform.position.y > 3.75)
                 {
                     downLeftCars++;
                 }
-                else if(obj.name == "car_leftLeft")
+                else if(obj.name == "car_leftLeft" && obj.transform.position.x > 3)
                 {
                     leftLeftCars++;
                 }
-                else if(obj.name == "car_rightLeft")
+                else if(obj.name == "car_rightLeft" && obj.transform.position.x < -3.5)
                 {
                     rightLeftCars++;
                 }
@@ -728,7 +866,7 @@ public class main : MonoBehaviour
             {
                 return true;
             }
-            bool isAmbulance = UnityEngine.Random.Range(0, 1000) < -1;
+            bool isAmbulance = UnityEngine.Random.Range(0, 100) < -1;
             if(isAmbulance)
             {
                 GameObject ambulance = new GameObject($"ambulance_{name}");
